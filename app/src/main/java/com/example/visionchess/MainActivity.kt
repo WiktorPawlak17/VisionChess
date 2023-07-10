@@ -15,10 +15,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.example.visionchess.ui.theme.ThemeHelper
 
 
 class MainActivity : ComponentActivity() {
     private val handler = Handler(Looper.getMainLooper())
+    private val themeHelper = ThemeHelper()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -36,7 +38,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.offset(y = (-100).dp)
                 )
                 ProgressBar(percentage = 1f, number = 100)
-
+                themeHelper.VisionChessTheme(){}
             }
         }
         handler.postDelayed({
