@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">VisionChess</string>
+    <string name="just_a_black_screen">Just a Black Screen</string>
+    <string name="Big_Logo" />
 </resources>

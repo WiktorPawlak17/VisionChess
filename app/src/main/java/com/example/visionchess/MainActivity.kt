@@ -3,6 +3,8 @@ package com.example.visionchess
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.view.animation.AnimationUtils
+import android.widget.ImageView
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
@@ -18,14 +20,20 @@ import androidx.compose.ui.unit.dp
 import com.example.visionchess.ui.theme.ThemeHelper
 
 
+
 class MainActivity : ComponentActivity() {
+
     private val handler = Handler(Looper.getMainLooper())
     private val themeHelper = ThemeHelper()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContent {
 
+        //////////////////////////////////////////////////////////////////////////////////////////////
+        // This is the code that makes the loading screen
+        //////////////////////////////////////////////////////////////////////////////////////////////
+        setContent {
             Box(
                 contentAlignment = Alignment.Center,
                 modifier = Modifier
@@ -38,12 +46,33 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.offset(y = (-100).dp)
                 )
                 ProgressBar(percentage = 1f, number = 100)
-                themeHelper.VisionChessTheme(){}
+                themeHelper.VisionChessTheme{}
             }
+
         }
+        //////////////////////////////////////////////////////////////////////////////////////////////
+        // This is the code that makes the Fade In and Fade Out animation
+        //////////////////////////////////////////////////////////////////////////////////////////////
         handler.postDelayed({
             setContentView(R.layout.activity_main)
+            val blackScreen = findViewById<ImageView>(R.id.myBlackScreen)
+            val bigLogo = findViewById<ImageView>(R.id.bigLogo)
+            val animationFadeIn = AnimationUtils.loadAnimation(this, R.anim.fade_in)
+            val animationFadeOut = AnimationUtils.loadAnimation(this, R.anim.fade_out)
+            blackScreen.startAnimation(animationFadeIn)
+            blackScreen.startAnimation(animationFadeOut)
+            bigLogo.startAnimation(animationFadeIn)
+            bigLogo.startAnimation(animationFadeOut)
+
         }, 3000)
+        handler.postDelayed({
+            setContentView(R.layout.activity_main)
+            val blackScreen = findViewById<ImageView>(R.id.myBlackScreen)
+            blackScreen.visibility = ImageView.INVISIBLE
+            val bigLogo = findViewById<ImageView>(R.id.bigLogo)
+            bigLogo.visibility = ImageView.INVISIBLE
+        }, 4500)
+
     }
 
     override fun onDestroy() {

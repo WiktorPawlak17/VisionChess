@@ -1,11 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:background="@color/background"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+
+    <ImageView
+        android:id="@+id/myBlackScreen"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/just_a_black_screen"
+        android:scaleType="centerCrop"
+        android:src="@drawable/justablackscreen" />
+
+    <ImageView
+        android:id="@+id/bigLogo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="193.75dp"
+        android:contentDescription="@string/Big_Logo"
+        android:src="@drawable/actuallogobig"
+        tools:ignore="ImageContrastCheck" />
+
     <androidx.compose.ui.platform.ComposeView
         android:id="@+id/myComposeView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-</LinearLayout>
+        android:layout_height="wrap_content">
+
+    </androidx.compose.ui.platform.ComposeView>
+
+</RelativeLayout>
