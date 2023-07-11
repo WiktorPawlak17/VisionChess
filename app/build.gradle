@@ -5,12 +5,13 @@ plugins {
 
 android {
     namespace 'com.example.visionchess'
-    compileSdk 34
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.example.visionchess"
         minSdk 21
-        targetSdk 34
+        //noinspection OldTargetApi
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 
