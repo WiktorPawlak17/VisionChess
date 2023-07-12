@@ -1,5 +1,6 @@
 package com.example.visionchess
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -20,7 +21,6 @@ import androidx.compose.ui.unit.dp
 import com.example.visionchess.ui.theme.ThemeHelper
 
 
-
 class MainActivity : ComponentActivity() {
 
     private val handler = Handler(Looper.getMainLooper())
@@ -28,8 +28,6 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
         //////////////////////////////////////////////////////////////////////////////////////////////
         // This is the code that makes the loading screen
         //////////////////////////////////////////////////////////////////////////////////////////////
@@ -71,9 +69,18 @@ class MainActivity : ComponentActivity() {
             blackScreen.visibility = ImageView.INVISIBLE
             val bigLogo = findViewById<ImageView>(R.id.bigLogo)
             bigLogo.visibility = ImageView.INVISIBLE
+            switchToHomeScreen()
         }, 4500)
 
     }
+
+    private fun switchToHomeScreen() {
+        handler.postDelayed({
+            startActivity(Intent(applicationContext,HomeScreen::class.java))
+                    overridePendingTransition(0,0)
+        }, 250)
+    }
+
 
     override fun onDestroy() {
         super.onDestroy()

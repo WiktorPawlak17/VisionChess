@@ -10,7 +10,7 @@
 
     <ImageView
         android:id="@+id/myBlackScreen"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:contentDescription="@string/just_a_black_screen"
         android:scaleType="centerCrop"

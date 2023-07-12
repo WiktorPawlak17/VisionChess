@@ -2,4 +2,6 @@
     <string name="app_name">VisionChess</string>
     <string name="just_a_black_screen">Just a Black Screen</string>
     <string name="Big_Logo" />
+    <string name="Welcome">Welcome\n</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
