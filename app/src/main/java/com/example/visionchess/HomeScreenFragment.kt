@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
+import android.widget.TextView
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -28,10 +29,27 @@ class HomeScreenFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
+        ////////////////////////////////////////////////////////////////////////////////////////////////
+        // This is the code the stuff fade in
+        ////////////////////////////////////////////////////////////////////////////////////////////////
         val rootView = inflater.inflate(R.layout.fragment_home_screen, container, false)
         val menucirclewithbuttons = rootView.findViewById<ImageView>(R.id.menucirclewithbuttons)
+        val playTextView = rootView.findViewById<TextView>(R.id.play_textview)
+        val trainingTextView = rootView.findViewById<TextView>(R.id.training_textview)
+        val historyTextView = rootView.findViewById<TextView>(R.id.history_textview)
+        val settingsTextView = rootView.findViewById<TextView>(R.id.settings_textview)
+        val tutorialTextView = rootView.findViewById<TextView>(R.id.tutorial_textview)
+        val friendsTextView = rootView.findViewById<TextView>(R.id.friends_textview)
+        val profileTextView = rootView.findViewById<TextView>(R.id.profile_textview)
         val animationFadeIn = AnimationUtils.loadAnimation(context, R.anim.fade_in_quick)
         menucirclewithbuttons.startAnimation(animationFadeIn)
+        playTextView.startAnimation(animationFadeIn)
+        trainingTextView.startAnimation(animationFadeIn)
+        historyTextView.startAnimation(animationFadeIn)
+        settingsTextView.startAnimation(animationFadeIn)
+        tutorialTextView.startAnimation(animationFadeIn)
+        friendsTextView.startAnimation(animationFadeIn)
+        profileTextView.startAnimation(animationFadeIn)
 
         /*
         //This is here for me to have the code for the future
@@ -43,6 +61,7 @@ class HomeScreenFragment : Fragment() {
          */
         return rootView
     }
+
 
     override fun onDestroy() {
         super.onDestroy()

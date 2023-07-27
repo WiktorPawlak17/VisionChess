@@ -5,4 +5,19 @@
     <string name="Welcome">Welcome</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="Main_Menu">Main_Menu</string>
+    <string name="Play_Button">Play</string>
+    <string name="Training_Button">Training</string>
+    <string name="Playing_Button">Play</string>
+    <string name="History_Button">History</string>
+    <string name="Settings_Button">Settings</string>
+    <string name="Tutorial_Button">Tutorial</string>
+    <string name="Friends_Button">Friends</string>
+    <string name="Profile_Button">Profile</string>
+    <string name="Play">Play</string>
+    <string name="Settings">Settings</string>
+    <string name="History">History</string>
+    <string name="Training">Training</string>
+    <string name="Tutorial">Tutorial</string>
+    <string name="Friends">Friends</string>
+    <string name="Profile">Profile</string>
 </resources>
