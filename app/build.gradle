@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.visionchess"
-        minSdk 21
+        minSdk 26
         //noinspection OldTargetApi
         targetSdk 33
         versionCode 1
