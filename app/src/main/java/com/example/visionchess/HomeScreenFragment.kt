@@ -1,13 +1,17 @@
 package com.example.visionchess
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -21,9 +25,9 @@ private const val ARG_PARAM2 = "param2"
  */
 class HomeScreenFragment : Fragment() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//      super.onCreate(savedInstanceState)
+//    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,21 +55,119 @@ class HomeScreenFragment : Fragment() {
         friendsTextView.startAnimation(animationFadeIn)
         profileTextView.startAnimation(animationFadeIn)
 
-        /*
-        //This is here for me to have the code for the future
-        val handler = android.os.Handler(android.os.Looper.getMainLooper())
-        handler.postDelayed({
-            val animationFadeIn = AnimationUtils.loadAnimation(context, R.anim.fade_in_very_quick)
-            menucirclewithbuttons.startAnimation(animationFadeIn)
-        }, 0)
-         */
+        ////////////////////////////////////////////////////////////////////////////////////////////////
+        // This is the code that makes the buttons fade out and then go to the next fragment
+        ////////////////////////////////////////////////////////////////////////////////////////////////
+        val playButton = rootView.findViewById<Button>(R.id.play_Button)
+        val trainingButton = rootView.findViewById<Button>(R.id.training_Button)
+        val historyButton = rootView.findViewById<Button>(R.id.history_Button)
+        val settingsButton = rootView.findViewById<Button>(R.id.settings_Button)
+        val tutorialButton = rootView.findViewById<Button>(R.id.tutorial_Button)
+        val friendsButton = rootView.findViewById<Button>(R.id.friends_Button)
+        val profileButton = rootView.findViewById<Button>(R.id.profile_Button)
+        val fragmentManager = activity?.supportFragmentManager
+        val handler = Handler(Looper.getMainLooper())
+        val animationFadeOut = AnimationUtils.loadAnimation(context, R.anim.fade_out_very_quick)
+        playButton.setOnClickListener{
+            menucirclewithbuttons.startAnimation(animationFadeOut)
+            playTextView.startAnimation(animationFadeOut)
+            trainingTextView.startAnimation(animationFadeOut)
+            historyTextView.startAnimation(animationFadeOut)
+            settingsTextView.startAnimation(animationFadeOut)
+            tutorialTextView.startAnimation(animationFadeOut)
+            friendsTextView.startAnimation(animationFadeOut)
+            profileTextView.startAnimation(animationFadeOut)
+            handler.postDelayed({
+                fragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView, PlayFragment())?.commit()
+            }, 250)
+        }
+        trainingButton.setOnClickListener {
+            menucirclewithbuttons.startAnimation(animationFadeOut)
+            playTextView.startAnimation(animationFadeOut)
+            trainingTextView.startAnimation(animationFadeOut)
+            historyTextView.startAnimation(animationFadeOut)
+            settingsTextView.startAnimation(animationFadeOut)
+            tutorialTextView.startAnimation(animationFadeOut)
+            friendsTextView.startAnimation(animationFadeOut)
+            profileTextView.startAnimation(animationFadeOut)
+            handler.postDelayed({
+                fragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView, TrainingFragment())?.commit()
+            }, 250)
+
+        }
+        historyButton.setOnClickListener{
+            menucirclewithbuttons.startAnimation(animationFadeOut)
+            playTextView.startAnimation(animationFadeOut)
+            trainingTextView.startAnimation(animationFadeOut)
+            historyTextView.startAnimation(animationFadeOut)
+            settingsTextView.startAnimation(animationFadeOut)
+            tutorialTextView.startAnimation(animationFadeOut)
+            friendsTextView.startAnimation(animationFadeOut)
+            profileTextView.startAnimation(animationFadeOut)
+            handler.postDelayed({
+                fragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView, HistoryFragment())?.commit()
+            }, 250)
+        }
+        settingsButton.setOnClickListener{
+            menucirclewithbuttons.startAnimation(animationFadeOut)
+            playTextView.startAnimation(animationFadeOut)
+            trainingTextView.startAnimation(animationFadeOut)
+            historyTextView.startAnimation(animationFadeOut)
+            settingsTextView.startAnimation(animationFadeOut)
+            tutorialTextView.startAnimation(animationFadeOut)
+            friendsTextView.startAnimation(animationFadeOut)
+            profileTextView.startAnimation(animationFadeOut)
+            handler.postDelayed({
+                fragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView, SettingsFragment())?.commit()
+            }, 250)
+        }
+        tutorialButton.setOnClickListener{
+            menucirclewithbuttons.startAnimation(animationFadeOut)
+            playTextView.startAnimation(animationFadeOut)
+            trainingTextView.startAnimation(animationFadeOut)
+            historyTextView.startAnimation(animationFadeOut)
+            settingsTextView.startAnimation(animationFadeOut)
+            tutorialTextView.startAnimation(animationFadeOut)
+            friendsTextView.startAnimation(animationFadeOut)
+            profileTextView.startAnimation(animationFadeOut)
+            handler.postDelayed({
+                fragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView, TutorialFragment())?.commit()
+            }, 250)
+        }
+        friendsButton.setOnClickListener{
+            menucirclewithbuttons.startAnimation(animationFadeOut)
+            playTextView.startAnimation(animationFadeOut)
+            trainingTextView.startAnimation(animationFadeOut)
+            historyTextView.startAnimation(animationFadeOut)
+            settingsTextView.startAnimation(animationFadeOut)
+            tutorialTextView.startAnimation(animationFadeOut)
+            friendsTextView.startAnimation(animationFadeOut)
+            profileTextView.startAnimation(animationFadeOut)
+            handler.postDelayed({
+                fragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView, FriendsFragment())?.commit()
+            }, 250)
+        }
+        profileButton.setOnClickListener{
+            menucirclewithbuttons.startAnimation(animationFadeOut)
+            playTextView.startAnimation(animationFadeOut)
+            trainingTextView.startAnimation(animationFadeOut)
+            historyTextView.startAnimation(animationFadeOut)
+            settingsTextView.startAnimation(animationFadeOut)
+            tutorialTextView.startAnimation(animationFadeOut)
+            friendsTextView.startAnimation(animationFadeOut)
+            profileTextView.startAnimation(animationFadeOut)
+            handler.postDelayed({
+                fragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView, ProfileFragment())?.commit()
+            }, 250)
+        }
+
         return rootView
     }
 
 
     override fun onDestroy() {
         super.onDestroy()
-        val handler = android.os.Handler(android.os.Looper.getMainLooper())
+        val handler = Handler(Looper.getMainLooper())
         handler.removeCallbacksAndMessages(null)
     }
 

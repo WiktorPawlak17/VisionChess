@@ -20,4 +20,10 @@
     <string name="Tutorial">Tutorial</string>
     <string name="Friends">Friends</string>
     <string name="Profile">Profile</string>
+    <string name="ranked_game">Ranked Game</string>
+    <string name="last_played">Last Played</string>
+    <string name="Unrankedgame">Unranked game</string>
+    <string name="hot_seat_game">Hot Seat</string>
+    <string name="blindfold_vs_non_blindfold">Blindfold vs Non Blindfold</string>
+    <string name="non_blindfold_vs_blindfold">Non Blindfold vs Blindfold</string>
 </resources>

@@ -27,9 +27,9 @@
         android:layout_width="260dp"
         android:layout_height="65dp"
         android:layout_marginBottom="144dp"
-
+        android:background="@android:color/transparent"
         android:contentDescription="@string/Profile_Button"
-        android:visibility="invisible"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@+id/menucirclewithbuttons"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -56,9 +56,9 @@
         android:id="@+id/friends_Button"
         android:layout_width="294dp"
         android:layout_height="56dp"
-
+        android:background="@android:color/transparent"
         android:contentDescription="@string/Friends_Button"
-        android:visibility="invisible"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@+id/menucirclewithbuttons"
         app:layout_constraintEnd_toEndOf="parent"
 
@@ -87,9 +87,9 @@
         android:id="@+id/tutorial_Button"
         android:layout_width="307dp"
         android:layout_height="54dp"
-
+        android:background="@android:color/transparent"
         android:contentDescription="@string/Tutorial_Button"
-        android:visibility="invisible"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@+id/menucirclewithbuttons"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -101,6 +101,7 @@
         android:id="@+id/tutorial_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+
         android:fontFamily="@font/dejavuserifcondensedbold"
         android:text="@string/Tutorial"
         android:textColor="@color/black"
@@ -116,9 +117,9 @@
         android:id="@+id/settings_Button"
         android:layout_width="316dp"
         android:layout_height="48dp"
-
+        android:background="@android:color/transparent"
         android:contentDescription="@string/Settings_Button"
-        android:visibility="invisible"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@+id/menucirclewithbuttons"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
@@ -146,9 +147,9 @@
         android:id="@+id/history_Button"
         android:layout_width="302dp"
         android:layout_height="55dp"
-
+        android:background="@android:color/transparent"
         android:contentDescription="@string/History_Button"
-        android:visibility="invisible"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@+id/menucirclewithbuttons"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.477"
@@ -172,21 +173,6 @@
         app:layout_constraintTop_toTopOf="@+id/menucirclewithbuttons"
         app:layout_constraintVertical_bias="0.384" />
 
-    <Button
-        android:id="@+id/training_Button"
-        android:layout_width="280dp"
-        android:layout_height="61dp"
-        android:contentDescription="@string/Training_Button"
-
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@+id/menucirclewithbuttons"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.564"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.286"
-        tools:visibility="invisible" />
-
     <TextView
         android:id="@+id/training_textview"
         android:layout_width="wrap_content"
@@ -203,18 +189,20 @@
         app:layout_constraintVertical_bias="0.283" />
 
     <Button
-        android:id="@+id/play_Button"
-        android:layout_width="240dp"
-        android:layout_height="53dp"
-        android:contentDescription="@string/Playing_Button"
+        android:id="@+id/training_Button"
+        android:layout_width="280dp"
+        android:layout_height="61dp"
+        android:background="@android:color/transparent"
 
-        android:visibility="invisible"
+        android:contentDescription="@string/Training_Button"
+
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@+id/menucirclewithbuttons"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.564"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.191"
+        app:layout_constraintVertical_bias="0.286"
         tools:visibility="invisible" />
 
     <TextView
@@ -231,6 +219,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/menucirclewithbuttons"
         app:layout_constraintVertical_bias="0.19" />
+
+    <Button
+        android:id="@+id/play_Button"
+        android:layout_width="240dp"
+        android:layout_height="53dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/Playing_Button"
+
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/menucirclewithbuttons"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.191"
+        tools:visibility="invisible" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
