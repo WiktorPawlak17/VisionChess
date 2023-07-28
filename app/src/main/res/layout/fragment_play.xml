@@ -8,7 +8,7 @@
     tools:context=".PlayFragment">
 
     <Button
-        android:id="@+id/nonBlindfoldVsBlindfold"
+        android:id="@+id/buttonNonBlindfoldVsBlindfold"
         android:layout_width="180dp"
         android:layout_height="180dp"
         android:layout_marginEnd="16dp"
@@ -18,13 +18,13 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/buttonUnRankedGame"
-        app:layout_constraintTop_toBottomOf="@+id/hotSeatGame"
+        app:layout_constraintStart_toEndOf="@+id/buttonCasualGame"
+        app:layout_constraintTop_toBottomOf="@+id/buttonHotSeatGame"
         app:layout_constraintVertical_bias="0.0"
         tools:ignore="TextSizeCheck" />
 
     <Button
-        android:id="@+id/blindfoldVsNonBlindfold"
+        android:id="@+id/buttonBlindfoldVsNonBlindfold"
         android:layout_width="180dp"
         android:layout_height="180dp"
         android:layout_marginStart="16dp"
@@ -35,12 +35,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonUnRankedGame"
+        app:layout_constraintTop_toBottomOf="@+id/buttonCasualGame"
         app:layout_constraintVertical_bias="0.0"
         tools:ignore="TextSizeCheck" />
 
     <Button
-        android:id="@+id/hotSeatGame"
+        android:id="@+id/buttonHotSeatGame"
         android:layout_width="180dp"
         android:layout_height="180dp"
         android:layout_marginEnd="16dp"
@@ -50,18 +50,18 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/buttonUnRankedGame"
+        app:layout_constraintStart_toEndOf="@+id/buttonCasualGame"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.439" />
 
     <Button
-        android:id="@+id/buttonUnRankedGame"
+        android:id="@+id/buttonCasualGame"
         android:layout_width="180dp"
         android:layout_height="180dp"
         android:layout_marginStart="16dp"
         android:background="@drawable/button_with_shadows"
         android:font="@font/dejavu1"
-        android:text="@string/Unrankedgame"
+        android:text="@string/Casual_game"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -78,7 +78,7 @@
         android:background="@drawable/button_with_shadows"
         android:text="@string/ranked_game"
         android:font="@font/dejavu1"
-        app:layout_constraintBottom_toTopOf="@+id/hotSeatGame"
+        app:layout_constraintBottom_toTopOf="@+id/buttonHotSeatGame"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/buttonLastPlayed"
@@ -94,7 +94,7 @@
         android:background="@drawable/button_with_shadows"
         android:text="@string/last_played"
         android:font="@font/dejavu1"
-        app:layout_constraintBottom_toTopOf="@+id/buttonUnRankedGame"
+        app:layout_constraintBottom_toTopOf="@+id/buttonCasualGame"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"

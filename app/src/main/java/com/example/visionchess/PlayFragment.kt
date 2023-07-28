@@ -5,6 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
+import android.widget.Button
+
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -34,6 +37,21 @@ class PlayFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
+        val rootView = inflater.inflate(R.layout.fragment_play, container, false)
+        val buttonLastPlayed = rootView.findViewById<Button>(R.id.buttonLastPlayed)
+        val buttonRankedGame = rootView.findViewById<Button>(R.id.buttonRankedGame)
+        val buttonCasualGame = rootView.findViewById<Button>(R.id.buttonCasualGame)
+        val buttonHotSeat = rootView.findViewById<Button>(R.id.buttonHotSeatGame)
+        val buttonNonBlindfoldVsBlindfold = rootView.findViewById<Button>(R.id.buttonNonBlindfoldVsBlindfold)
+        val buttonBlindfoldVsNonBlindfold = rootView.findViewById<Button>(R.id.buttonBlindfoldVsNonBlindfold)
+        val animationFadeIn = AnimationUtils.loadAnimation(context, R.anim.fade_in_very_quick)
+        buttonLastPlayed.startAnimation(animationFadeIn)
+        buttonRankedGame.startAnimation(animationFadeIn)
+        buttonCasualGame.startAnimation(animationFadeIn)
+        buttonHotSeat.startAnimation(animationFadeIn)
+        buttonNonBlindfoldVsBlindfold.startAnimation(animationFadeIn)
+        buttonBlindfoldVsNonBlindfold.startAnimation(animationFadeIn)
+
 
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_play, container, false)
