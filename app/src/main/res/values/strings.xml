@@ -26,4 +26,5 @@
     <string name="blindfold_vs_non_blindfold">Blindfold vs Non Blindfold</string>
     <string name="non_blindfold_vs_blindfold">Non Blindfold vs Blindfold</string>
     <string name="Casual_game">Casual Game</string>
+    <string name="go_back">Go back</string>
 </resources>

@@ -1,6 +1,8 @@
 package com.example.visionchess
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -44,6 +46,7 @@ class PlayFragment : Fragment() {
         val buttonHotSeat = rootView.findViewById<Button>(R.id.buttonHotSeatGame)
         val buttonNonBlindfoldVsBlindfold = rootView.findViewById<Button>(R.id.buttonNonBlindfoldVsBlindfold)
         val buttonBlindfoldVsNonBlindfold = rootView.findViewById<Button>(R.id.buttonBlindfoldVsNonBlindfold)
+        val goBackButton = rootView.findViewById<Button>(R.id.buttonGoBack)
         val animationFadeIn = AnimationUtils.loadAnimation(context, R.anim.fade_in_very_quick)
         buttonLastPlayed.startAnimation(animationFadeIn)
         buttonRankedGame.startAnimation(animationFadeIn)
@@ -51,11 +54,20 @@ class PlayFragment : Fragment() {
         buttonHotSeat.startAnimation(animationFadeIn)
         buttonNonBlindfoldVsBlindfold.startAnimation(animationFadeIn)
         buttonBlindfoldVsNonBlindfold.startAnimation(animationFadeIn)
-
-
+        goBackButton.startAnimation(animationFadeIn)
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_play, container, false)
+        val handler = Handler(Looper.getMainLooper())
+        handler.postDelayed({
+            inflater.inflate(R.layout.fragment_play, container, false)
+        }, 250)
+        val fragmentManager = activity?.supportFragmentManager
+        goBackButton.setOnClickListener {
+            fragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView, HomeScreenFragment())?.commit()
+        }
+        return rootView
     }
+
+
 
     companion object {
         /**

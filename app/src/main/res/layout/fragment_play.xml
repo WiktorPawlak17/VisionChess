@@ -12,6 +12,7 @@
         android:layout_width="180dp"
         android:layout_height="180dp"
         android:layout_marginEnd="16dp"
+        android:textSize="20sp"
         android:background="@drawable/button_with_shadows"
         android:font="@font/dejavu1"
         android:text="@string/non_blindfold_vs_blindfold"
@@ -27,6 +28,7 @@
         android:id="@+id/buttonBlindfoldVsNonBlindfold"
         android:layout_width="180dp"
         android:layout_height="180dp"
+        android:textSize="20sp"
         android:layout_marginStart="16dp"
         android:background="@drawable/button_with_shadows"
         android:font="@font/dejavu1"
@@ -44,6 +46,7 @@
         android:layout_width="180dp"
         android:layout_height="180dp"
         android:layout_marginEnd="16dp"
+        android:textSize="20sp"
         android:background="@drawable/button_with_shadows"
         android:font="@font/dejavu1"
         android:text="@string/hot_seat_game"
@@ -62,12 +65,14 @@
         android:background="@drawable/button_with_shadows"
         android:font="@font/dejavu1"
         android:text="@string/Casual_game"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.439" />
+        app:layout_constraintVertical_bias="0.439"
+        tools:ignore="TextSizeCheck" />
 
     <Button
         android:id="@+id/buttonRankedGame"
@@ -76,14 +81,16 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:background="@drawable/button_with_shadows"
-        android:text="@string/ranked_game"
         android:font="@font/dejavu1"
+        android:text="@string/ranked_game"
+        android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/buttonHotSeatGame"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/buttonLastPlayed"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        tools:ignore="TextSizeCheck" />
 
     <Button
         android:id="@+id/buttonLastPlayed"
@@ -92,12 +99,32 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:background="@drawable/button_with_shadows"
-        android:text="@string/last_played"
         android:font="@font/dejavu1"
+        android:text="@string/last_played"
+        android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/buttonCasualGame"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        tools:ignore="TextSizeCheck" />
+
+    <Button
+        android:id="@+id/buttonGoBack"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/button_with_shadows"
+        android:font="@font/dejavu1"
+        android:text="@string/go_back"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        tools:ignore="VisualLintButtonSize" />
 </androidx.constraintlayout.widget.ConstraintLayout>
