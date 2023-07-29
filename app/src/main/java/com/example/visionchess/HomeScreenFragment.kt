@@ -45,16 +45,28 @@ class HomeScreenFragment : Fragment() {
         val tutorialTextView = rootView.findViewById<TextView>(R.id.tutorial_textview)
         val friendsTextView = rootView.findViewById<TextView>(R.id.friends_textview)
         val profileTextView = rootView.findViewById<TextView>(R.id.profile_textview)
-        val animationFadeIn = AnimationUtils.loadAnimation(context, R.anim.fade_in_quick)
-        menucirclewithbuttons.startAnimation(animationFadeIn)
-        playTextView.startAnimation(animationFadeIn)
-        trainingTextView.startAnimation(animationFadeIn)
-        historyTextView.startAnimation(animationFadeIn)
-        settingsTextView.startAnimation(animationFadeIn)
-        tutorialTextView.startAnimation(animationFadeIn)
-        friendsTextView.startAnimation(animationFadeIn)
-        profileTextView.startAnimation(animationFadeIn)
-
+        if(isFirstLaunch){
+            val animationFadeIn = AnimationUtils.loadAnimation(context, R.anim.fade_in_quick)
+            isFirstLaunch = false
+            menucirclewithbuttons.startAnimation(animationFadeIn)
+            playTextView.startAnimation(animationFadeIn)
+            trainingTextView.startAnimation(animationFadeIn)
+            historyTextView.startAnimation(animationFadeIn)
+            settingsTextView.startAnimation(animationFadeIn)
+            tutorialTextView.startAnimation(animationFadeIn)
+            friendsTextView.startAnimation(animationFadeIn)
+            profileTextView.startAnimation(animationFadeIn)
+        } else {
+            val animationFadeIn = AnimationUtils.loadAnimation(context, R.anim.fade_in_very_quick)
+            menucirclewithbuttons.startAnimation(animationFadeIn)
+            playTextView.startAnimation(animationFadeIn)
+            trainingTextView.startAnimation(animationFadeIn)
+            historyTextView.startAnimation(animationFadeIn)
+            settingsTextView.startAnimation(animationFadeIn)
+            tutorialTextView.startAnimation(animationFadeIn)
+            friendsTextView.startAnimation(animationFadeIn)
+            profileTextView.startAnimation(animationFadeIn)
+        }
         ////////////////////////////////////////////////////////////////////////////////////////////////
         // This is the code that makes the buttons fade out and then go to the next fragment
         ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -177,11 +189,12 @@ class HomeScreenFragment : Fragment() {
          * Use this factory method to create a new instance of
          * this fragment using the provided parameters.
          *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
+
+
          * @return A new instance of fragment HomeScreenFragment.
          */
         // TODO: Rename and change types and number of parameters
+        private var isFirstLaunch = true
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
             HomeScreenFragment().apply {

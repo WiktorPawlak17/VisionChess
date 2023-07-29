@@ -61,8 +61,19 @@ class PlayFragment : Fragment() {
             inflater.inflate(R.layout.fragment_play, container, false)
         }, 250)
         val fragmentManager = activity?.supportFragmentManager
+        val animationFadeOut = AnimationUtils.loadAnimation(context, R.anim.fade_out_very_quick)
         goBackButton.setOnClickListener {
-            fragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView, HomeScreenFragment())?.commit()
+            goBackButton.startAnimation(animationFadeOut)
+            buttonLastPlayed.startAnimation(animationFadeOut)
+            buttonRankedGame.startAnimation(animationFadeOut)
+            buttonCasualGame.startAnimation(animationFadeOut)
+            buttonHotSeat.startAnimation(animationFadeOut)
+            buttonNonBlindfoldVsBlindfold.startAnimation(animationFadeOut)
+            buttonBlindfoldVsNonBlindfold.startAnimation(animationFadeOut)
+            handler.postDelayed({
+                fragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView, HomeScreenFragment())?.commit()
+            }, 250)
+
         }
         return rootView
     }
