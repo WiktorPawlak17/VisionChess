@@ -90,7 +90,9 @@ class HomeScreenFragment : Fragment() {
             friendsTextView.startAnimation(animationFadeOut)
             profileTextView.startAnimation(animationFadeOut)
             handler.postDelayed({
-                fragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView, PlayFragment())?.commit()
+                fragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView, PlayFragment())?.addToBackStack(null)
+                    ?.commit()
+
             }, 250)
         }
         trainingButton.setOnClickListener {
@@ -103,7 +105,8 @@ class HomeScreenFragment : Fragment() {
             friendsTextView.startAnimation(animationFadeOut)
             profileTextView.startAnimation(animationFadeOut)
             handler.postDelayed({
-                fragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView, TrainingFragment())?.commit()
+                fragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView, TrainingFragment())?.addToBackStack(null)
+                    ?.commit()
             }, 250)
 
         }
@@ -117,7 +120,8 @@ class HomeScreenFragment : Fragment() {
             friendsTextView.startAnimation(animationFadeOut)
             profileTextView.startAnimation(animationFadeOut)
             handler.postDelayed({
-                fragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView, HistoryFragment())?.commit()
+                fragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView, HistoryFragment())?.addToBackStack(null)
+                    ?.commit()
             }, 250)
         }
         settingsButton.setOnClickListener{
@@ -130,7 +134,8 @@ class HomeScreenFragment : Fragment() {
             friendsTextView.startAnimation(animationFadeOut)
             profileTextView.startAnimation(animationFadeOut)
             handler.postDelayed({
-                fragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView, SettingsFragment())?.commit()
+                fragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView, SettingsFragment())?.addToBackStack(null)
+                    ?.commit()
             }, 250)
         }
         tutorialButton.setOnClickListener{
@@ -143,7 +148,8 @@ class HomeScreenFragment : Fragment() {
             friendsTextView.startAnimation(animationFadeOut)
             profileTextView.startAnimation(animationFadeOut)
             handler.postDelayed({
-                fragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView, TutorialFragment())?.commit()
+                fragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView, TutorialFragment())?.addToBackStack(null)
+                    ?.commit()
             }, 250)
         }
         friendsButton.setOnClickListener{
@@ -156,7 +162,8 @@ class HomeScreenFragment : Fragment() {
             friendsTextView.startAnimation(animationFadeOut)
             profileTextView.startAnimation(animationFadeOut)
             handler.postDelayed({
-                fragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView, FriendsFragment())?.commit()
+                fragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView, FriendsFragment())?.addToBackStack(null)
+                    ?.commit()
             }, 250)
         }
         profileButton.setOnClickListener{
@@ -169,7 +176,8 @@ class HomeScreenFragment : Fragment() {
             friendsTextView.startAnimation(animationFadeOut)
             profileTextView.startAnimation(animationFadeOut)
             handler.postDelayed({
-                fragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView, ProfileFragment())?.commit()
+                fragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView, ProfileFragment())?.addToBackStack(null)
+                    ?.commit()
             }, 250)
         }
 
