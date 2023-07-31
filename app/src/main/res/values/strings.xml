@@ -27,4 +27,6 @@
     <string name="non_blindfold_vs_blindfold">Non Blindfold vs Blindfold</string>
     <string name="Casual_game">Casual Game</string>
     <string name="go_back">Go back</string>
+    <string name="saying_pawn_when_moving_pawn">Saying pawn when moving pawn ?</string>
+    <string name="saying_takes_when_taking_a_piece">Saying \"takes\" when taking a piece ?</string>
 </resources>

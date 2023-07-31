@@ -1,10 +1,16 @@
 package com.example.visionchess
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
+import android.widget.Button
+import android.widget.Switch
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -33,8 +39,37 @@ class SettingsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
+        val rootView = inflater.inflate(R.layout.fragment_settings, container, false)
+        ////////////////////////////
+        //Well this is kind of a problem ????????
+        ////////////////////////////
+        val pawnToSquare = rootView.findViewById<Switch>(R.id.sayPawn)
+        val pawnTakes = rootView.findViewById<Switch>(R.id.sayTakes)
+        val pawnPromotion = rootView.findViewById<Switch>(R.id.sayPromotion)
+        val handler = Handler(Looper.getMainLooper())
+        handler.postDelayed({
+            inflater.inflate(R.layout.fragment_settings, container, false)
+        }, 250)
+        val goBackButton = rootView.findViewById<Button>(R.id.buttonGoBackFromSettings)
+        val animationFadeIn = AnimationUtils.loadAnimation(context, R.anim.fade_in_very_quick)
+        val animationFadeOut = AnimationUtils.loadAnimation(context, R.anim.fade_out_very_quick)
+        val fragmentManager = activity?.supportFragmentManager
+        pawnToSquare.startAnimation(animationFadeIn)
+        pawnTakes.startAnimation(animationFadeIn)
+        pawnPromotion.startAnimation(animationFadeIn)
+        goBackButton.setOnClickListener{
+            goBackButton.startAnimation(animationFadeOut)
+            pawnToSquare.startAnimation(animationFadeOut)
+            pawnTakes.startAnimation(animationFadeOut)
+            pawnPromotion.startAnimation(animationFadeOut)
+            fragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView, HomeScreenFragment())?.addToBackStack(null)?.commit()
+        }
+
+
+
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_settings, container, false)
+        return rootView
     }
 
     companion object {
