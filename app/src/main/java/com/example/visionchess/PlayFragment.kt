@@ -71,7 +71,7 @@ class PlayFragment : Fragment() {
             buttonNonBlindfoldVsBlindfold.startAnimation(animationFadeOut)
             buttonBlindfoldVsNonBlindfold.startAnimation(animationFadeOut)
             handler.postDelayed({
-                fragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView, HomeScreenFragment())?.commit()
+                fragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView, HomeScreenFragment())?.addToBackStack(null)?.commit()
             }, 250)
 
         }
