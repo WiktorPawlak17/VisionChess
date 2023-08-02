@@ -37,6 +37,7 @@ class HomeScreenFragment : Fragment() {
         // This is the code the stuff fade in
         ////////////////////////////////////////////////////////////////////////////////////////////////
         val rootView = inflater.inflate(R.layout.fragment_home_screen, container, false)
+
         val menucirclewithbuttons = rootView.findViewById<ImageView>(R.id.menucirclewithbuttons)
         val playTextView = rootView.findViewById<TextView>(R.id.play_textview)
         val trainingTextView = rootView.findViewById<TextView>(R.id.training_textview)

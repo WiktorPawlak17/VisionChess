@@ -1,5 +1,6 @@
 package com.example.visionchess
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -10,6 +11,7 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.Switch
+
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -35,14 +37,12 @@ class SettingsFragment : Fragment() {
         }
     }
 
+    @SuppressLint("UseSwitchCompatOrMaterialCode", "UseCompatLoadingForDrawables")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
         val rootView = inflater.inflate(R.layout.fragment_settings, container, false)
-        ////////////////////////////
-        //Well this is kind of a problem ????????
-        ////////////////////////////
         val pawnToSquare = rootView.findViewById<Switch>(R.id.sayPawn)
         val pawnTakes = rootView.findViewById<Switch>(R.id.sayTakes)
         val pawnPromotion = rootView.findViewById<Switch>(R.id.sayPromotion)
@@ -54,6 +54,52 @@ class SettingsFragment : Fragment() {
         val animationFadeIn = AnimationUtils.loadAnimation(context, R.anim.fade_in_very_quick)
         val animationFadeOut = AnimationUtils.loadAnimation(context, R.anim.fade_out_very_quick)
         val fragmentManager = activity?.supportFragmentManager
+        if(pawnPromotion.isChecked){
+            pawnPromotion.text = getString(R.string.pawn_to_e8_promote_to_a_queen_or_other_piece)
+            pawnPromotion.thumbDrawable = resources.getDrawable(R.drawable.switchon, null)
+        }
+        else{
+            pawnPromotion.text = getString(R.string.e8_promote_to_a_queen_or_other_piece)
+            pawnPromotion.thumbDrawable = resources.getDrawable(R.drawable.switchoff, null)
+        }
+        if(pawnTakes.isChecked){
+            pawnTakes.thumbDrawable = resources.getDrawable(R.drawable.switchon, null)
+        }
+        else{
+            pawnTakes.thumbDrawable = resources.getDrawable(R.drawable.switchoff, null)
+        }
+        if(pawnToSquare.isChecked){
+            pawnToSquare.thumbDrawable = resources.getDrawable(R.drawable.switchon, null)
+        }
+        else{
+            pawnToSquare.thumbDrawable = resources.getDrawable(R.drawable.switchoff, null)
+        }
+        pawnToSquare.setOnClickListener{
+            if(pawnToSquare.isChecked){
+                pawnPromotion.text = getString(R.string.pawn_to_e8_promote_to_a_queen_or_other_piece)
+                pawnToSquare.thumbDrawable = resources.getDrawable(R.drawable.switchon, null)
+            }
+            else{
+                pawnPromotion.text = getString(R.string.e8_promote_to_a_queen_or_other_piece)
+                pawnToSquare.thumbDrawable = resources.getDrawable(R.drawable.switchoff, null)
+            }
+        }
+        pawnTakes.setOnClickListener{
+            if(pawnTakes.isChecked){
+                pawnTakes.thumbDrawable = resources.getDrawable(R.drawable.switchon, null)
+            }
+            else{
+                pawnTakes.thumbDrawable = resources.getDrawable(R.drawable.switchoff, null)
+            }
+        }
+        pawnPromotion.setOnClickListener{
+            if(pawnPromotion.isChecked){
+                pawnPromotion.thumbDrawable = resources.getDrawable(R.drawable.switchon, null)
+            }
+            else{
+                pawnPromotion.thumbDrawable = resources.getDrawable(R.drawable.switchoff, null)
+            }
+        }
         pawnToSquare.startAnimation(animationFadeIn)
         pawnTakes.startAnimation(animationFadeIn)
         pawnPromotion.startAnimation(animationFadeIn)
@@ -64,6 +110,7 @@ class SettingsFragment : Fragment() {
             pawnPromotion.startAnimation(animationFadeOut)
             fragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView, HomeScreenFragment())?.addToBackStack(null)?.commit()
         }
+
 
 
 
