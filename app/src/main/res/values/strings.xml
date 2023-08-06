@@ -33,4 +33,5 @@
     <string name="yes">Yes</string>
     <string name="e8_promote_to_a_queen_or_other_piece">E8 Promote to a Queen (or other piece)</string>
     <string name="pawn_to_e8_promote_to_a_queen_or_other_piece">Pawn to E8 Promote to a Queen (or other piece)</string>
+    <string name="say_check_when_king_is_in_check">Say \"check\" when king is in check</string>
 </resources>

@@ -11,7 +11,8 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.Switch
-
+import com.google.gson.GsonBuilder
+import java.io.File
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -46,6 +47,7 @@ class SettingsFragment : Fragment() {
         val pawnToSquare = rootView.findViewById<Switch>(R.id.sayPawn)
         val pawnTakes = rootView.findViewById<Switch>(R.id.sayTakes)
         val pawnPromotion = rootView.findViewById<Switch>(R.id.sayPromotion)
+        val sayCheck = rootView.findViewById<Switch>(R.id.sayCheck)
         val handler = Handler(Looper.getMainLooper())
         handler.postDelayed({
             inflater.inflate(R.layout.fragment_settings, container, false)
@@ -73,6 +75,12 @@ class SettingsFragment : Fragment() {
         }
         else{
             pawnToSquare.thumbDrawable = resources.getDrawable(R.drawable.switchoff, null)
+        }
+        if(sayCheck.isChecked){
+            sayCheck.thumbDrawable = resources.getDrawable(R.drawable.switchon, null)
+        }
+        else{
+            sayCheck.thumbDrawable = resources.getDrawable(R.drawable.switchoff, null)
         }
         pawnToSquare.setOnClickListener{
             if(pawnToSquare.isChecked){
@@ -103,11 +111,21 @@ class SettingsFragment : Fragment() {
         pawnToSquare.startAnimation(animationFadeIn)
         pawnTakes.startAnimation(animationFadeIn)
         pawnPromotion.startAnimation(animationFadeIn)
+        sayCheck.startAnimation(animationFadeIn)
+
+
+
+        //val gsonBuilder = GsonBuilder().setPrettyPrinting().create()
+        //val gsonString = gsonBuilder.toJson(TODO("Settings"))
+        //val fileName = File("settings.json")
+        //fileName.writeText(gsonString)
+
         goBackButton.setOnClickListener{
             goBackButton.startAnimation(animationFadeOut)
             pawnToSquare.startAnimation(animationFadeOut)
             pawnTakes.startAnimation(animationFadeOut)
             pawnPromotion.startAnimation(animationFadeOut)
+            sayCheck.startAnimation(animationFadeOut)
             fragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView, HomeScreenFragment())?.addToBackStack(null)?.commit()
         }
 

@@ -11,6 +11,10 @@ import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import java.io.File
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -37,7 +41,6 @@ class HomeScreenFragment : Fragment() {
         // This is the code the stuff fade in
         ////////////////////////////////////////////////////////////////////////////////////////////////
         val rootView = inflater.inflate(R.layout.fragment_home_screen, container, false)
-
         val menucirclewithbuttons = rootView.findViewById<ImageView>(R.id.menucirclewithbuttons)
         val playTextView = rootView.findViewById<TextView>(R.id.play_textview)
         val trainingTextView = rootView.findViewById<TextView>(R.id.training_textview)
@@ -81,6 +84,28 @@ class HomeScreenFragment : Fragment() {
         val fragmentManager = activity?.supportFragmentManager
         val handler = Handler(Looper.getMainLooper())
         val animationFadeOut = AnimationUtils.loadAnimation(context, R.anim.fade_out_very_quick)
+
+        //val gsonBuilder = GsonBuilder().setPrettyPrinting().create()
+        //val gsonStringToWrite = gsonBuilder.toJson(TODO("Settings"))
+        val fileName = "settings.json"
+        val settings = readSettingsFromFile(fileName)
+        if (settings == null) {
+            val defaultSettings = Settings(
+                firstLaunch = true,
+                sayPawn = true,
+                sayTakes = true,
+                sayPromotion = true,
+                sayCheck = true,
+            )
+            val defaultSettingsJson = Gson().toJson(defaultSettings)
+          //  File(fileName).writeText(defaultSettingsJson)
+        }
+
+
+//            Toast.makeText(context, "Settings file created", Toast.LENGTH_LONG).show()
+
+        //fileName.writeText(gsonString)
+
         playButton.setOnClickListener{
             menucirclewithbuttons.startAnimation(animationFadeOut)
             playTextView.startAnimation(animationFadeOut)
@@ -183,6 +208,16 @@ class HomeScreenFragment : Fragment() {
         }
 
         return rootView
+    }
+
+    private fun readSettingsFromFile(fileName: String) : Settings? {
+        val gson= Gson()
+        val file = File(fileName)
+        if (!file.exists()) {
+            return null
+        }
+        val jsonString = file.readText()
+        return gson.fromJson(jsonString, Settings::class.java)
     }
 
 
