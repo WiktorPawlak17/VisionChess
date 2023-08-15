@@ -1,9 +1,9 @@
 package com.example.visionchess
 
+import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,9 +12,11 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
+import androidx.fragment.app.Fragment
+import org.json.JSONObject
 import java.io.File
+
+
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -85,27 +87,34 @@ class HomeScreenFragment : Fragment() {
         val handler = Handler(Looper.getMainLooper())
         val animationFadeOut = AnimationUtils.loadAnimation(context, R.anim.fade_out_very_quick)
 
-        //val gsonBuilder = GsonBuilder().setPrettyPrinting().create()
-        //val gsonStringToWrite = gsonBuilder.toJson(TODO("Settings"))
+        ////////////////////////////////////////////////////////////////////////////////////////////////
+        // This is the code that makes the settings file (read and write)
+        ////////////////////////////////////////////////////////////////////////////////////////////////
         val fileName = "settings.json"
-        val settings = readSettingsFromFile(fileName)
+        val settings = context?.let { readSettingsFromFile(it,fileName) }
         if (settings == null) {
-            val defaultSettings = Settings(
-                firstLaunch = true,
-                sayPawn = true,
-                sayTakes = true,
-                sayPromotion = true,
-                sayCheck = true,
-            )
-            val defaultSettingsJson = Gson().toJson(defaultSettings)
-          //  File(fileName).writeText(defaultSettingsJson)
+            val defaultSettings = JSONObject()
+            defaultSettings.put("firstLaunch", true)
+            defaultSettings.put("sayPawn", true)
+            defaultSettings.put("sayTakes", true)
+            defaultSettings.put("sayPromotion", true)
+            defaultSettings.put("sayCheck", true)
+            val jsonObject = JSONObject()
+            jsonObject.put("defaultSettings", defaultSettings)
+            val file = File(context?.filesDir, fileName)
+            if (file.exists()) {
+                Toast.makeText(context, "Settings already exist", Toast.LENGTH_LONG).show()
+            }
+            try {
+                file.bufferedWriter().use { writer ->
+                    writer.write(jsonObject.toString())
+                }
+                Toast.makeText(context, "Settings data has been written to $fileName", Toast.LENGTH_LONG).show()
+            } catch (e: Exception) {
+                e.printStackTrace()
+                Toast.makeText(context, "An error occurred: ${e.message}", Toast.LENGTH_LONG).show()
+            }
         }
-
-
-//            Toast.makeText(context, "Settings file created", Toast.LENGTH_LONG).show()
-
-        //fileName.writeText(gsonString)
-
         playButton.setOnClickListener{
             menucirclewithbuttons.startAnimation(animationFadeOut)
             playTextView.startAnimation(animationFadeOut)
@@ -210,16 +219,29 @@ class HomeScreenFragment : Fragment() {
         return rootView
     }
 
-    private fun readSettingsFromFile(fileName: String) : Settings? {
-        val gson= Gson()
-        val file = File(fileName)
-        if (!file.exists()) {
+    private fun readSettingsFromFile(context: Context, fileName: String): Settings? {
+        try {
+            val file = File(context.filesDir, fileName)
+            if (!file.exists()) {
+                return null
+            }
+
+            val jsonString = file.readText()
+            val jsonObject = JSONObject(jsonString)
+            val settingsJson = jsonObject.getJSONObject("defaultSettings")
+
+            return Settings(
+                firstLaunch = settingsJson.getBoolean("firstLaunch"),
+                sayPawn = settingsJson.getBoolean("sayPawn"),
+                sayTakes = settingsJson.getBoolean("sayTakes"),
+                sayPromotion = settingsJson.getBoolean("sayPromotion"),
+                sayCheck = settingsJson.getBoolean("sayCheck")
+            )
+        } catch (e: Exception) {
+            e.printStackTrace() // Print the error stack trace for debugging
             return null
         }
-        val jsonString = file.readText()
-        return gson.fromJson(jsonString, Settings::class.java)
     }
-
 
     override fun onDestroy() {
         super.onDestroy()

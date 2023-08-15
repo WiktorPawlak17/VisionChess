@@ -11,8 +11,7 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.Switch
-import com.google.gson.GsonBuilder
-import java.io.File
+
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -106,6 +105,14 @@ class SettingsFragment : Fragment() {
             }
             else{
                 pawnPromotion.thumbDrawable = resources.getDrawable(R.drawable.switchoff, null)
+            }
+        }
+        sayCheck.setOnClickListener{
+            if(sayCheck.isChecked){
+                sayCheck.thumbDrawable = resources.getDrawable(R.drawable.switchon, null)
+            }
+            else{
+                sayCheck.thumbDrawable = resources.getDrawable(R.drawable.switchoff, null)
             }
         }
         pawnToSquare.startAnimation(animationFadeIn)
