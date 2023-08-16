@@ -29,6 +29,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [HomeScreenFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
+@Suppress("SameParameterValue")
 class HomeScreenFragment : Fragment() {
 
 //    override fun onCreate(savedInstanceState: Bundle?) {
@@ -99,22 +100,23 @@ class HomeScreenFragment : Fragment() {
             defaultSettings.put("sayTakes", true)
             defaultSettings.put("sayPromotion", true)
             defaultSettings.put("sayCheck", true)
+            defaultSettings.put("sayOpponentPlayed", true)
             val jsonObject = JSONObject()
-            jsonObject.put("defaultSettings", defaultSettings)
+            jsonObject.put("Settings", defaultSettings)
             val file = File(context?.filesDir, fileName)
-            if (file.exists()) {
-                Toast.makeText(context, "Settings already exist", Toast.LENGTH_LONG).show()
-            }
             try {
                 file.bufferedWriter().use { writer ->
                     writer.write(jsonObject.toString())
                 }
-                Toast.makeText(context, "Settings data has been written to $fileName", Toast.LENGTH_LONG).show()
             } catch (e: Exception) {
                 e.printStackTrace()
                 Toast.makeText(context, "An error occurred: ${e.message}", Toast.LENGTH_LONG).show()
             }
+            settingsTextView.setBackgroundColor(resources.getColor(R.color.red, null))
+        } else {
+            settingsTextView.setBackgroundColor(resources.getColor(R.color.transparent, null))
         }
+
         playButton.setOnClickListener{
             menucirclewithbuttons.startAnimation(animationFadeOut)
             playTextView.startAnimation(animationFadeOut)
@@ -228,14 +230,15 @@ class HomeScreenFragment : Fragment() {
 
             val jsonString = file.readText()
             val jsonObject = JSONObject(jsonString)
-            val settingsJson = jsonObject.getJSONObject("defaultSettings")
+            val settingsJson = jsonObject.getJSONObject("Settings")
 
             return Settings(
                 firstLaunch = settingsJson.getBoolean("firstLaunch"),
                 sayPawn = settingsJson.getBoolean("sayPawn"),
                 sayTakes = settingsJson.getBoolean("sayTakes"),
                 sayPromotion = settingsJson.getBoolean("sayPromotion"),
-                sayCheck = settingsJson.getBoolean("sayCheck")
+                sayCheck = settingsJson.getBoolean("sayCheck"),
+                sayOpponentPlayed = settingsJson.getBoolean("sayOpponentPlayed")
             )
         } catch (e: Exception) {
             e.printStackTrace() // Print the error stack trace for debugging

@@ -9,6 +9,25 @@
     tools:context=".SettingsFragment">
 
     <Switch
+        android:id="@+id/sayOpponentPlayed"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
+        android:showText="true"
+        android:text="@string/say_opponent_played"
+        android:textColor="@color/black"
+        android:textOff="@string/no"
+        android:textOn="@string/yes"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sayCheck"
+        tools:ignore="UseSwitchCompatOrMaterialXml,VisualLintButtonSize" />
+
+    <Switch
         android:id="@+id/sayPawn"
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -33,16 +52,16 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
-        android:textSize="20sp"
         android:showText="true"
+        android:text="@string/saying_takes_when_taking_a_piece"
         android:textColor="@color/black"
         android:textOff="@string/no"
         android:textOn="@string/yes"
-        android:text="@string/saying_takes_when_taking_a_piece"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sayPawn"
-        tools:ignore="UseSwitchCompatOrMaterialXml,VisualLintButtonSize" />
+        tools:ignore="UseSwitchCompatOrMaterialXml,VisualLintButtonSize,TextSizeCheck" />
 
     <Switch
         android:id="@+id/sayPromotion"
@@ -94,7 +113,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sayCheck"
+        app:layout_constraintTop_toBottomOf="@+id/sayOpponentPlayed"
         app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

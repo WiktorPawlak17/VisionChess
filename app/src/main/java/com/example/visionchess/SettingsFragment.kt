@@ -1,6 +1,7 @@
 package com.example.visionchess
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -11,7 +12,9 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.Switch
-
+import android.widget.Toast
+import org.json.JSONObject
+import java.io.File
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -24,6 +27,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [SettingsFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
+@Suppress("SameParameterValue")
 class SettingsFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -42,45 +46,66 @@ class SettingsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
+
         val rootView = inflater.inflate(R.layout.fragment_settings, container, false)
         val pawnToSquare = rootView.findViewById<Switch>(R.id.sayPawn)
         val pawnTakes = rootView.findViewById<Switch>(R.id.sayTakes)
         val pawnPromotion = rootView.findViewById<Switch>(R.id.sayPromotion)
         val sayCheck = rootView.findViewById<Switch>(R.id.sayCheck)
+        val sayOpponentPlayed = rootView.findViewById<Switch>(R.id.sayOpponentPlayed)
         val handler = Handler(Looper.getMainLooper())
+        var firstRunOfRunnable = true
         handler.postDelayed({
             inflater.inflate(R.layout.fragment_settings, container, false)
         }, 250)
+        val runnable = object : Runnable {
+            override fun run() {
+                if(pawnPromotion.isChecked){
+                    pawnPromotion.text = getString(R.string.pawn_to_e8_promote_to_a_queen_or_other_piece)
+                    pawnPromotion.thumbDrawable = resources.getDrawable(R.drawable.switchon, null)
+                }
+                else{
+                    pawnPromotion.text = getString(R.string.e8_promote_to_a_queen_or_other_piece)
+                    pawnPromotion.thumbDrawable = resources.getDrawable(R.drawable.switchoff, null)
+                }
+                if(pawnTakes.isChecked){
+                    pawnTakes.thumbDrawable = resources.getDrawable(R.drawable.switchon, null)
+                }
+                else{
+                    pawnTakes.thumbDrawable = resources.getDrawable(R.drawable.switchoff, null)
+                }
+                if(pawnToSquare.isChecked){
+                    pawnToSquare.thumbDrawable = resources.getDrawable(R.drawable.switchon, null)
+                }
+                else{
+                    pawnToSquare.thumbDrawable = resources.getDrawable(R.drawable.switchoff, null)
+                }
+                if(sayCheck.isChecked){
+                    sayCheck.thumbDrawable = resources.getDrawable(R.drawable.switchon, null)
+                }
+                else{
+                    sayCheck.thumbDrawable = resources.getDrawable(R.drawable.switchoff, null)
+                }
+                if(sayOpponentPlayed.isChecked){
+                    sayOpponentPlayed.thumbDrawable = resources.getDrawable(R.drawable.switchon, null)
+                }
+                else{
+                    sayOpponentPlayed.thumbDrawable = resources.getDrawable(R.drawable.switchoff, null)
+                }
+                if(firstRunOfRunnable){
+                    handler.postDelayed(this, 1)
+                    firstRunOfRunnable = false
+                }
+                handler.postDelayed(this, 100)
+            }
+        }
+        runnable.run()
         val goBackButton = rootView.findViewById<Button>(R.id.buttonGoBackFromSettings)
         val animationFadeIn = AnimationUtils.loadAnimation(context, R.anim.fade_in_very_quick)
         val animationFadeOut = AnimationUtils.loadAnimation(context, R.anim.fade_out_very_quick)
         val fragmentManager = activity?.supportFragmentManager
-        if(pawnPromotion.isChecked){
-            pawnPromotion.text = getString(R.string.pawn_to_e8_promote_to_a_queen_or_other_piece)
-            pawnPromotion.thumbDrawable = resources.getDrawable(R.drawable.switchon, null)
-        }
-        else{
-            pawnPromotion.text = getString(R.string.e8_promote_to_a_queen_or_other_piece)
-            pawnPromotion.thumbDrawable = resources.getDrawable(R.drawable.switchoff, null)
-        }
-        if(pawnTakes.isChecked){
-            pawnTakes.thumbDrawable = resources.getDrawable(R.drawable.switchon, null)
-        }
-        else{
-            pawnTakes.thumbDrawable = resources.getDrawable(R.drawable.switchoff, null)
-        }
-        if(pawnToSquare.isChecked){
-            pawnToSquare.thumbDrawable = resources.getDrawable(R.drawable.switchon, null)
-        }
-        else{
-            pawnToSquare.thumbDrawable = resources.getDrawable(R.drawable.switchoff, null)
-        }
-        if(sayCheck.isChecked){
-            sayCheck.thumbDrawable = resources.getDrawable(R.drawable.switchon, null)
-        }
-        else{
-            sayCheck.thumbDrawable = resources.getDrawable(R.drawable.switchoff, null)
-        }
+
+
         pawnToSquare.setOnClickListener{
             if(pawnToSquare.isChecked){
                 pawnPromotion.text = getString(R.string.pawn_to_e8_promote_to_a_queen_or_other_piece)
@@ -91,6 +116,7 @@ class SettingsFragment : Fragment() {
                 pawnToSquare.thumbDrawable = resources.getDrawable(R.drawable.switchoff, null)
             }
         }
+
         pawnTakes.setOnClickListener{
             if(pawnTakes.isChecked){
                 pawnTakes.thumbDrawable = resources.getDrawable(R.drawable.switchon, null)
@@ -115,17 +141,27 @@ class SettingsFragment : Fragment() {
                 sayCheck.thumbDrawable = resources.getDrawable(R.drawable.switchoff, null)
             }
         }
+        sayOpponentPlayed.setOnClickListener{
+            if(sayOpponentPlayed.isChecked){
+                sayOpponentPlayed.thumbDrawable = resources.getDrawable(R.drawable.switchon, null)
+            }
+            else{
+                sayOpponentPlayed.thumbDrawable = resources.getDrawable(R.drawable.switchoff, null)
+            }
+        }
         pawnToSquare.startAnimation(animationFadeIn)
         pawnTakes.startAnimation(animationFadeIn)
         pawnPromotion.startAnimation(animationFadeIn)
         sayCheck.startAnimation(animationFadeIn)
+        val fileName = "settings.json"
+        val settings = context?.let { readSettingsFromFile(it,fileName) }
+        sayCheck.isChecked = settings?.sayCheck!!
+        sayOpponentPlayed.isChecked = settings.sayOpponentPlayed
+        pawnPromotion.isChecked = settings.sayPromotion
+        pawnTakes.isChecked = settings.sayTakes
+        pawnToSquare.isChecked = settings.sayPawn
 
 
-
-        //val gsonBuilder = GsonBuilder().setPrettyPrinting().create()
-        //val gsonString = gsonBuilder.toJson(TODO("Settings"))
-        //val fileName = File("settings.json")
-        //fileName.writeText(gsonString)
 
         goBackButton.setOnClickListener{
             goBackButton.startAnimation(animationFadeOut)
@@ -133,8 +169,34 @@ class SettingsFragment : Fragment() {
             pawnTakes.startAnimation(animationFadeOut)
             pawnPromotion.startAnimation(animationFadeOut)
             sayCheck.startAnimation(animationFadeOut)
+            sayOpponentPlayed.startAnimation(animationFadeOut)
+            val settingsToSave = JSONObject()
+            settingsToSave.put("firstLaunch", false)
+            settingsToSave.put("sayPawn", pawnToSquare.isChecked)
+            settingsToSave.put("sayTakes", pawnTakes.isChecked)
+            settingsToSave.put("sayPromotion", pawnPromotion.isChecked)
+            settingsToSave.put("sayCheck", sayCheck.isChecked)
+            settingsToSave.put("sayOpponentPlayed", sayOpponentPlayed.isChecked)
+            val jsonObject = JSONObject()
+            jsonObject.put("Settings", settingsToSave)
+            val file = File(context?.filesDir, fileName)
+            file.delete()
+            try {
+                file.bufferedWriter().use { writer ->
+                    writer.write(jsonObject.toString())
+
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                Toast.makeText(context, "An error occurred: ${e.message}", Toast.LENGTH_LONG).show()
+            }
             fragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView, HomeScreenFragment())?.addToBackStack(null)?.commit()
+
+
+
+
         }
+
 
 
 
@@ -143,6 +205,33 @@ class SettingsFragment : Fragment() {
         // Inflate the layout for this fragment
         return rootView
     }
+
+
+    private fun readSettingsFromFile(context: Context, fileName: String): Settings? {
+        try {
+            val file = File(context.filesDir, fileName)
+            if (!file.exists()) {
+                return null
+            }
+
+            val jsonString = file.readText()
+            val jsonObject = JSONObject(jsonString)
+            val settingsJson = jsonObject.getJSONObject("Settings")
+
+            return Settings(
+                firstLaunch = settingsJson.getBoolean("firstLaunch"),
+                sayPawn = settingsJson.getBoolean("sayPawn"),
+                sayTakes = settingsJson.getBoolean("sayTakes"),
+                sayPromotion = settingsJson.getBoolean("sayPromotion"),
+                sayCheck = settingsJson.getBoolean("sayCheck"),
+                sayOpponentPlayed = settingsJson.getBoolean("sayOpponentPlayed")
+            )
+        } catch (e: Exception) {
+            e.printStackTrace() // Print the error stack trace for debugging
+            return null
+        }
+    }
+
 
     companion object {
         /**

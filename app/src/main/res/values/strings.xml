@@ -28,10 +28,11 @@
     <string name="Casual_game">Casual Game</string>
     <string name="go_back">Go back</string>
     <string name="saying_pawn_when_moving_pawn">Saying pawn when moving pawn </string>
-    <string name="saying_takes_when_taking_a_piece">Saying \"takes\" when taking a piece </string>
+    <string name="saying_takes_when_taking_a_piece">Saying \"takes\" when taking </string>
     <string name="no">No</string>
     <string name="yes">Yes</string>
     <string name="e8_promote_to_a_queen_or_other_piece">E8 Promote to a Queen (or other piece)</string>
     <string name="pawn_to_e8_promote_to_a_queen_or_other_piece">Pawn to E8 Promote to a Queen (or other piece)</string>
     <string name="say_check_when_king_is_in_check">Say \"check\" when king is in check</string>
+    <string name="say_opponent_played">Say opponent played</string>
 </resources>
