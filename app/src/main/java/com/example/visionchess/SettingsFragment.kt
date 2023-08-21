@@ -2,6 +2,7 @@ package com.example.visionchess
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.res.Configuration
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -10,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import android.widget.AdapterView
 import android.widget.Button
 import android.widget.Spinner
 import android.widget.Switch
@@ -17,9 +19,9 @@ import android.widget.TextView
 import android.widget.Toast
 import org.json.JSONObject
 import java.io.File
+import java.util.Locale
 
 
-// TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -31,7 +33,7 @@ private const val ARG_PARAM2 = "param2"
  */
 @Suppress("SameParameterValue")
 class SettingsFragment : Fragment() {
-    // TODO: Rename and change types of parameters
+
     private var param1: String? = null
     private var param2: String? = null
 
@@ -168,9 +170,37 @@ class SettingsFragment : Fragment() {
         pawnPromotion.isChecked = settings.sayPromotion
         pawnTakes.isChecked = settings.sayTakes
         pawnToSquare.isChecked = settings.sayPawn
-        languageSpinner.selectedItem.toString()
+        val position = when(settings.language){
+            "English" -> 0
+            "Polish" -> 1
+            else -> 0
+        }
+        languageSpinner.setSelection(position)
+        languageSpinner.onItemSelectedListener = object :
+            AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View?,
+                pos: Int,
+                id: Long,
+            ) {
+                when (parent.getItemAtPosition(pos).toString()){
+                    "English" -> setLocale("en")
+                    "Polish" -> setLocale("pl")
+                }
+                pawnToSquare.text = getString(R.string.saying_pawn_when_moving_pawn)
+                pawnTakes.text = getString(R.string.saying_takes_when_taking_a_piece)
+                sayCheck.text = getString(R.string.say_check_when_king_is_in_check)
+                sayOpponentPlayed.text = getString(R.string.say_opponent_played)
+                languagesText.text = getString(R.string.language)
 
+            }
 
+            override fun onNothingSelected(parent: AdapterView<*>) {
+                // Another interface callback
+            }
+
+        }
 
         goBackButton.setOnClickListener{
             goBackButton.startAnimation(animationFadeOut)
@@ -216,7 +246,16 @@ class SettingsFragment : Fragment() {
         return rootView
     }
 
+    @Suppress("DEPRECATION")
+    private fun setLocale(language: String) {
+        val locale = Locale(language)
+        Locale.setDefault(locale)
 
+        val config = Configuration(resources.configuration)
+        config.setLocale(locale)
+
+        resources.updateConfiguration(config, resources.displayMetrics)
+    }
     private fun readSettingsFromFile(context: Context, fileName: String): Settings? {
         try {
             val file = File(context.filesDir, fileName)

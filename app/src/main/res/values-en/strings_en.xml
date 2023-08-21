@@ -1,0 +1,66 @@
+<resources>
+    <string-array name="languages">
+        <item>English</item>
+        <item>Polish</item>
+        <item>Spanish</item>
+        <item>French</item>
+        <item>German</item>
+        <item>Italian</item>
+        <item>Portuguese</item>
+        <item>Chinese</item>
+        <item>Japanese</item>
+        <item>Korean</item>
+        <item>Russian</item>
+        <item>Arabic</item>
+        <item>Hindi</item>
+        <item>Hebrew</item>
+        <item>Swedish</item>
+        <item>Thai</item>
+        <item>Indonesian</item>
+        <item>Malay</item>
+        <item>Tagalog</item>
+        <item>Vietnamese</item>
+        <item>Urdu</item>
+        <item>Ukrainian</item>
+        <item>Swahili</item>
+        <item>Latin</item>
+        <item>Esperanto</item>
+    </string-array>
+    <string name="app_name">VisionChess</string>
+    <string name="just_a_black_screen">Just a Black Screen</string>
+    <string name="Big_Logo" />
+    <string name="Welcome">Welcome</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="Main_Menu">Main_Menu</string>
+    <string name="Play_Button">Play</string>
+    <string name="Training_Button">Training</string>
+    <string name="Playing_Button">Play</string>
+    <string name="History_Button">History</string>
+    <string name="Settings_Button">Settings</string>
+    <string name="Tutorial_Button">Tutorial</string>
+    <string name="Friends_Button">Friends</string>
+    <string name="Profile_Button">Profile</string>
+    <string name="Play">Play</string>
+    <string name="Settings">Settings</string>
+    <string name="History">History</string>
+    <string name="Training">Training</string>
+    <string name="Tutorial">Tutorial</string>
+    <string name="Friends">Friends</string>
+    <string name="Profile">Profile</string>
+    <string name="ranked_game">Ranked Game</string>
+    <string name="last_played">Last Played</string>
+    <string name="hot_seat_game">Hot Seat</string>
+    <string name="blindfold_vs_non_blindfold">Blindfold vs Non Blindfold</string>
+    <string name="non_blindfold_vs_blindfold">Non Blindfold vs Blindfold</string>
+    <string name="Casual_game">Casual Game</string>
+    <string name="go_back">Go back</string>
+    <string name="saying_pawn_when_moving_pawn">Saying pawn when moving pawn </string>
+    <string name="saying_takes_when_taking_a_piece">Saying \"takes\" when taking </string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
+    <string name="e8_promote_to_a_queen_or_other_piece">E8 Promote to a Queen (or other piece)</string>
+    <string name="pawn_to_e8_promote_to_a_queen_or_other_piece">Pawn to E8 Promote to a Queen (or other piece)</string>
+    <string name="say_check_when_king_is_in_check">Say \"check\" when king is in check</string>
+    <string name="say_opponent_played">Say opponent played</string>
+    <string name="language">Language</string>
+</resources>

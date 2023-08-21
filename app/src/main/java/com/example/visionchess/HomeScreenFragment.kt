@@ -1,6 +1,7 @@
 package com.example.visionchess
 
 import android.content.Context
+import android.content.res.Configuration
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -15,8 +16,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import org.json.JSONObject
 import java.io.File
-
-
+import java.util.Locale
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -29,7 +29,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [HomeScreenFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-@Suppress("SameParameterValue")
+@Suppress("SameParameterValue", "DEPRECATION")
 class HomeScreenFragment : Fragment() {
 
 //    override fun onCreate(savedInstanceState: Bundle?) {
@@ -88,6 +88,7 @@ class HomeScreenFragment : Fragment() {
         val handler = Handler(Looper.getMainLooper())
         val animationFadeOut = AnimationUtils.loadAnimation(context, R.anim.fade_out_very_quick)
 
+
         ////////////////////////////////////////////////////////////////////////////////////////////////
         // This is the code that makes the settings file (read and write)
         ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -117,6 +118,18 @@ class HomeScreenFragment : Fragment() {
             settingsTextView.setBackgroundColor(resources.getColor(R.color.red, null))
         } else {
             settingsTextView.setBackgroundColor(resources.getColor(R.color.transparent, null))
+            when(settings.language) {
+                "English" -> setLocale("en")
+                "Polish" -> setLocale("pl")
+            }
+
+            playTextView.text = resources.getString(R.string.Play)
+            trainingTextView.text = resources.getString(R.string.Training)
+            historyTextView.text = resources.getString(R.string.History)
+            settingsTextView.text = resources.getString(R.string.Settings)
+            tutorialTextView.text = resources.getString(R.string.Tutorial)
+            friendsTextView.text = resources.getString(R.string.Friends)
+            profileTextView.text = resources.getString(R.string.Profile)
         }
 
         playButton.setOnClickListener{
@@ -222,7 +235,15 @@ class HomeScreenFragment : Fragment() {
 
         return rootView
     }
+    private fun setLocale(language: String) {
+        val locale = Locale(language)
+        Locale.setDefault(locale)
 
+        val config = Configuration(resources.configuration)
+        config.setLocale(locale)
+
+        resources.updateConfiguration(config, resources.displayMetrics)
+    }
     private fun readSettingsFromFile(context: Context, fileName: String): Settings? {
         try {
             val file = File(context.filesDir, fileName)

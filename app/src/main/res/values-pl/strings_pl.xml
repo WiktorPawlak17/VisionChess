@@ -1,0 +1,66 @@
+<resources>
+    <string-array name="languages">
+        <item>English</item>
+        <item>Polish</item>
+        <item>Spanish</item>
+        <item>French</item>
+        <item>German</item>
+        <item>Italian</item>
+        <item>Portuguese</item>
+        <item>Chinese</item>
+        <item>Japanese</item>
+        <item>Korean</item>
+        <item>Russian</item>
+        <item>Arabic</item>
+        <item>Hindi</item>
+        <item>Hebrew</item>
+        <item>Swedish</item>
+        <item>Thai</item>
+        <item>Indonesian</item>
+        <item>Malay</item>
+        <item>Tagalog</item>
+        <item>Vietnamese</item>
+        <item>Urdu</item>
+        <item>Ukrainian</item>
+        <item>Swahili</item>
+        <item>Latin</item>
+        <item>Esperanto</item>
+    </string-array>
+    <string name="app_name">VisionChess</string>
+    <string name="just_a_black_screen">Czarny Ekran</string>
+    <string name="Big_Logo" />
+    <string name="Welcome">Witaj</string>
+    <string name="hello_blank_fragment">Witaj pusty fragment</string>
+    <string name="Main_Menu">Główne menu</string>
+    <string name="Play_Button">Graj</string>
+    <string name="Training_Button">Trening</string>
+    <string name="Playing_Button">Graj</string>
+    <string name="History_Button">Historia</string>
+    <string name="Settings_Button">Ustawienia</string>
+    <string name="Tutorial_Button">Poradnik</string>
+    <string name="Friends_Button">Znajomi</string>
+    <string name="Profile_Button">Profil</string>
+    <string name="Play">Graj</string>
+    <string name="Settings">Ustawienia</string>
+    <string name="History">Historia</string>
+    <string name="Training">Trening</string>
+    <string name="Tutorial">Poradnik</string>
+    <string name="Friends">Znajomi</string>
+    <string name="Profile">Profil</string>
+    <string name="ranked_game">Gra rankingowa</string>
+    <string name="last_played">Ostatnio Rozegrane</string>
+    <string name="hot_seat_game">Gorące krzesło</string>
+    <string name="blindfold_vs_non_blindfold">Ślepo vs Widzący plansze</string>
+    <string name="non_blindfold_vs_blindfold">Widzący plansze vs Ślepo</string>
+    <string name="Casual_game">Gra dla rozrywki</string>
+    <string name="go_back">Cofnij</string>
+    <string name="saying_pawn_when_moving_pawn">Mów pion, gdy ruszasz pionem </string>
+    <string name="saying_takes_when_taking_a_piece">Mów \"bierze\" gdy zbijasz</string>
+    <string name="no">Nie</string>
+    <string name="yes">Tak</string>
+    <string name="e8_promote_to_a_queen_or_other_piece">E8 awansuje na królową (lub inną figurę)</string>
+    <string name="pawn_to_e8_promote_to_a_queen_or_other_piece">E8 awansuje na królową (lub inną figurę)</string>
+    <string name="say_check_when_king_is_in_check">Mów \"szach\" ,gdy król jest w szachu</string>
+    <string name="say_opponent_played">Mów przeciwnik zagrał</string>
+    <string name="language">Język</string>
+</resources>
