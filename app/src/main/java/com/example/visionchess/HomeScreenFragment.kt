@@ -101,6 +101,8 @@ class HomeScreenFragment : Fragment() {
             defaultSettings.put("sayPromotion", true)
             defaultSettings.put("sayCheck", true)
             defaultSettings.put("sayOpponentPlayed", true)
+            //AppCompatDelegate.setApplicationLocales(resources.configuration.locales)
+            defaultSettings.put("language", "English")
             val jsonObject = JSONObject()
             jsonObject.put("Settings", defaultSettings)
             val file = File(context?.filesDir, fileName)
@@ -238,7 +240,8 @@ class HomeScreenFragment : Fragment() {
                 sayTakes = settingsJson.getBoolean("sayTakes"),
                 sayPromotion = settingsJson.getBoolean("sayPromotion"),
                 sayCheck = settingsJson.getBoolean("sayCheck"),
-                sayOpponentPlayed = settingsJson.getBoolean("sayOpponentPlayed")
+                sayOpponentPlayed = settingsJson.getBoolean("sayOpponentPlayed"),
+                language = settingsJson.getString("language")
             )
         } catch (e: Exception) {
             e.printStackTrace() // Print the error stack trace for debugging

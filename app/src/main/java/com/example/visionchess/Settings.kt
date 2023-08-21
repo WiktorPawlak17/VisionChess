@@ -6,5 +6,6 @@ data class Settings(
     var sayPromotion: Boolean,
     var sayCheck: Boolean,
     var sayOpponentPlayed: Boolean,
+    var language: String
 )
 

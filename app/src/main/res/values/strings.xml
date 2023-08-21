@@ -1,4 +1,31 @@
 <resources>
+    <string-array name="languages">
+        <item>English</item>
+        <item>Polish</item>
+        <item>Spanish</item>
+        <item>French</item>
+        <item>German</item>
+        <item>Italian</item>
+        <item>Portuguese</item>
+        <item>Chinese</item>
+        <item>Japanese</item>
+        <item>Korean</item>
+        <item>Russian</item>
+        <item>Arabic</item>
+        <item>Hindi</item>
+        <item>Hebrew</item>
+        <item>Swedish</item>
+        <item>Thai</item>
+        <item>Indonesian</item>
+        <item>Malay</item>
+        <item>Tagalog</item>
+        <item>Vietnamese</item>
+        <item>Urdu</item>
+        <item>Ukrainian</item>
+        <item>Swahili</item>
+        <item>Latin</item>
+        <item>Esperanto</item>
+    </string-array>
     <string name="app_name">VisionChess</string>
     <string name="just_a_black_screen">Just a Black Screen</string>
     <string name="Big_Logo" />
@@ -35,4 +62,5 @@
     <string name="pawn_to_e8_promote_to_a_queen_or_other_piece">Pawn to E8 Promote to a Queen (or other piece)</string>
     <string name="say_check_when_king_is_in_check">Say \"check\" when king is in check</string>
     <string name="say_opponent_played">Say opponent played</string>
+    <string name="language">Language</string>
 </resources>

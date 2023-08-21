@@ -11,7 +11,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.Button
+import android.widget.Spinner
 import android.widget.Switch
+import android.widget.TextView
 import android.widget.Toast
 import org.json.JSONObject
 import java.io.File
@@ -53,6 +55,8 @@ class SettingsFragment : Fragment() {
         val pawnPromotion = rootView.findViewById<Switch>(R.id.sayPromotion)
         val sayCheck = rootView.findViewById<Switch>(R.id.sayCheck)
         val sayOpponentPlayed = rootView.findViewById<Switch>(R.id.sayOpponentPlayed)
+        val languagesText = rootView.findViewById<TextView>(R.id.languagesText)
+        val languageSpinner = rootView.findViewById<Spinner>(R.id.languagesSpinner)
         val handler = Handler(Looper.getMainLooper())
         var firstRunOfRunnable = true
         handler.postDelayed({
@@ -153,6 +157,10 @@ class SettingsFragment : Fragment() {
         pawnTakes.startAnimation(animationFadeIn)
         pawnPromotion.startAnimation(animationFadeIn)
         sayCheck.startAnimation(animationFadeIn)
+        sayOpponentPlayed.startAnimation(animationFadeIn)
+        goBackButton.startAnimation(animationFadeIn)
+        languagesText.startAnimation(animationFadeIn)
+        languageSpinner.startAnimation(animationFadeIn)
         val fileName = "settings.json"
         val settings = context?.let { readSettingsFromFile(it,fileName) }
         sayCheck.isChecked = settings?.sayCheck!!
@@ -160,6 +168,7 @@ class SettingsFragment : Fragment() {
         pawnPromotion.isChecked = settings.sayPromotion
         pawnTakes.isChecked = settings.sayTakes
         pawnToSquare.isChecked = settings.sayPawn
+        languageSpinner.selectedItem.toString()
 
 
 
@@ -177,6 +186,7 @@ class SettingsFragment : Fragment() {
             settingsToSave.put("sayPromotion", pawnPromotion.isChecked)
             settingsToSave.put("sayCheck", sayCheck.isChecked)
             settingsToSave.put("sayOpponentPlayed", sayOpponentPlayed.isChecked)
+            settingsToSave.put("language", languageSpinner.selectedItem.toString())
             val jsonObject = JSONObject()
             jsonObject.put("Settings", settingsToSave)
             val file = File(context?.filesDir, fileName)
@@ -224,7 +234,8 @@ class SettingsFragment : Fragment() {
                 sayTakes = settingsJson.getBoolean("sayTakes"),
                 sayPromotion = settingsJson.getBoolean("sayPromotion"),
                 sayCheck = settingsJson.getBoolean("sayCheck"),
-                sayOpponentPlayed = settingsJson.getBoolean("sayOpponentPlayed")
+                sayOpponentPlayed = settingsJson.getBoolean("sayOpponentPlayed"),
+                language = settingsJson.getString("language")
             )
         } catch (e: Exception) {
             e.printStackTrace() // Print the error stack trace for debugging
