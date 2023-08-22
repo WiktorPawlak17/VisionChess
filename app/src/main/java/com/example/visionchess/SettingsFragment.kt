@@ -209,6 +209,8 @@ class SettingsFragment : Fragment() {
             pawnPromotion.startAnimation(animationFadeOut)
             sayCheck.startAnimation(animationFadeOut)
             sayOpponentPlayed.startAnimation(animationFadeOut)
+            languagesText.startAnimation(animationFadeOut)
+            languageSpinner.startAnimation(animationFadeOut)
             val settingsToSave = JSONObject()
             settingsToSave.put("firstLaunch", false)
             settingsToSave.put("sayPawn", pawnToSquare.isChecked)
@@ -230,8 +232,10 @@ class SettingsFragment : Fragment() {
                 e.printStackTrace()
                 Toast.makeText(context, "An error occurred: ${e.message}", Toast.LENGTH_LONG).show()
             }
-            fragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView, HomeScreenFragment())?.addToBackStack(null)?.commit()
-
+            val nextFragment = HomeScreenFragment()
+            handler.postDelayed({
+                fragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView, nextFragment)?.commit()
+            }, 250)
 
 
 

@@ -61,7 +61,9 @@ class TutorialFragment : Fragment() {
         goBackButton.setOnClickListener{
             goBackButton.startAnimation(animationFadeOut)
             tutorialVideoView.startAnimation(animationFadeOut)
-            fragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView, HomeScreenFragment())?.addToBackStack(null)?.commit()
+            handler.postDelayed({
+                fragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView, HomeScreenFragment())?.addToBackStack(null)?.commit()
+            }, 250)
         }
         tutorialVideoView.setOnCompletionListener {
             tutorialVideoView.startAnimation(animationFadeOut)

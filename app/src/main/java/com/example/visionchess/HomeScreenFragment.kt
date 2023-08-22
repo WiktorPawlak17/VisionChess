@@ -102,7 +102,6 @@ class HomeScreenFragment : Fragment() {
             defaultSettings.put("sayPromotion", true)
             defaultSettings.put("sayCheck", true)
             defaultSettings.put("sayOpponentPlayed", true)
-            //AppCompatDelegate.setApplicationLocales(resources.configuration.locales)
             defaultSettings.put("language", "English")
             val jsonObject = JSONObject()
             jsonObject.put("Settings", defaultSettings)

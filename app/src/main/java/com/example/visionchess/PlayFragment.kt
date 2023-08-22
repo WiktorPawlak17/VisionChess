@@ -105,7 +105,7 @@ class PlayFragment : Fragment() {
             }, 250)
         }
         buttonHotSeat.setOnClickListener{
-            whichButtonClicked.putString("buttonClicked","buttonHotSeat")
+            whichButtonClicked.putString("buttonClicked","HotSeat")
             buttonLastPlayed.startAnimation(animationFadeOut)
             buttonRankedGame.startAnimation(animationFadeOut)
             buttonCasualGame.startAnimation(animationFadeOut)
