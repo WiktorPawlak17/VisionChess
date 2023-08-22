@@ -62,6 +62,9 @@ class PlayFragment : Fragment() {
         }, 250)
         val fragmentManager = activity?.supportFragmentManager
         val animationFadeOut = AnimationUtils.loadAnimation(context, R.anim.fade_out_very_quick)
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        //Arguments through the bundle to the next fragment
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         val whichButtonClicked = Bundle()
         val nextFragment = GamePrep()
         nextFragment.arguments = whichButtonClicked
