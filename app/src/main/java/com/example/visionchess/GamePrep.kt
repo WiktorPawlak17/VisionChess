@@ -56,7 +56,7 @@ class GamePrep : Fragment() {
         val animationFadeOut = AnimationUtils.loadAnimation(context, R.anim.fade_out_very_quick)
         val handler = Handler(Looper.getMainLooper())
         val currentGameMode = Bundle()
-        val nextFragment = Game()
+        val nextFragment = GameInvisible()
         nextFragment.arguments = currentGameMode
         letsPlayButton.setOnClickListener{
             val timeFormat = timeFormatSpinner.selectedItem.toString()
