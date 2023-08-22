@@ -26,6 +26,13 @@
         <item>Latin</item>
         <item>Esperanto</item>
     </string-array>
+    <string-array name="time">
+        <item>5 min</item>
+        <item>5 min + 5 sek</item>
+        <item>10 min</item>
+        <item>10 min + 5 sek</item>
+        <item>10 min + 30 sek</item>
+    </string-array>
     <string name="app_name">VisionChess</string>
     <string name="just_a_black_screen">Czarny Ekran</string>
     <string name="Big_Logo" />
@@ -63,4 +70,5 @@
     <string name="say_check_when_king_is_in_check">Mów \"szach\" ,gdy król jest w szachu</string>
     <string name="say_opponent_played">Mów przeciwnik zagrał</string>
     <string name="language">Język</string>
+    <string name="time_format">Tempo gry</string>
 </resources>

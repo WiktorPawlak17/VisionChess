@@ -66,37 +66,40 @@ class PlayFragment : Fragment() {
         val nextFragment = GamePrep()
         nextFragment.arguments = whichButtonClicked
         buttonLastPlayed.setOnClickListener{
-        whichButtonClicked.putString("buttonClicked","buttonLastPlayed")
+        whichButtonClicked.putString("buttonClicked","LastPlayed")
             buttonLastPlayed.startAnimation(animationFadeOut)
             buttonRankedGame.startAnimation(animationFadeOut)
             buttonCasualGame.startAnimation(animationFadeOut)
             buttonHotSeat.startAnimation(animationFadeOut)
             buttonNonBlindfoldVsBlindfold.startAnimation(animationFadeOut)
             buttonBlindfoldVsNonBlindfold.startAnimation(animationFadeOut)
+            goBackButton.startAnimation(animationFadeOut)
             handler.postDelayed({
                 fragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView, nextFragment)?.addToBackStack(null)?.commit()
             }, 250)
         }
         buttonRankedGame.setOnClickListener{
-            whichButtonClicked.putString("buttonClicked","buttonRankedGame")
+            whichButtonClicked.putString("buttonClicked","RankedGame")
             buttonLastPlayed.startAnimation(animationFadeOut)
             buttonRankedGame.startAnimation(animationFadeOut)
             buttonCasualGame.startAnimation(animationFadeOut)
             buttonHotSeat.startAnimation(animationFadeOut)
             buttonNonBlindfoldVsBlindfold.startAnimation(animationFadeOut)
             buttonBlindfoldVsNonBlindfold.startAnimation(animationFadeOut)
+            goBackButton.startAnimation(animationFadeOut)
             handler.postDelayed({
                 fragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView, nextFragment)?.addToBackStack(null)?.commit()
             }, 250)
         }
         buttonCasualGame.setOnClickListener{
-            whichButtonClicked.putString("buttonClicked","buttonCasualGame")
+            whichButtonClicked.putString("buttonClicked","CasualGame")
             buttonLastPlayed.startAnimation(animationFadeOut)
             buttonRankedGame.startAnimation(animationFadeOut)
             buttonCasualGame.startAnimation(animationFadeOut)
             buttonHotSeat.startAnimation(animationFadeOut)
             buttonNonBlindfoldVsBlindfold.startAnimation(animationFadeOut)
             buttonBlindfoldVsNonBlindfold.startAnimation(animationFadeOut)
+            goBackButton.startAnimation(animationFadeOut)
             handler.postDelayed({
                 fragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView, nextFragment)?.addToBackStack(null)?.commit()
             }, 250)
@@ -109,30 +112,33 @@ class PlayFragment : Fragment() {
             buttonHotSeat.startAnimation(animationFadeOut)
             buttonNonBlindfoldVsBlindfold.startAnimation(animationFadeOut)
             buttonBlindfoldVsNonBlindfold.startAnimation(animationFadeOut)
+            goBackButton.startAnimation(animationFadeOut)
             handler.postDelayed({
                 fragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView, nextFragment)?.addToBackStack(null)?.commit()
             }, 250)
         }
         buttonNonBlindfoldVsBlindfold.setOnClickListener{
-            whichButtonClicked.putString("buttonClicked","buttonNonBlindfoldVsBlindfold")
+            whichButtonClicked.putString("buttonClicked","NonBlindfoldVsBlindfold")
             buttonLastPlayed.startAnimation(animationFadeOut)
             buttonRankedGame.startAnimation(animationFadeOut)
             buttonCasualGame.startAnimation(animationFadeOut)
             buttonHotSeat.startAnimation(animationFadeOut)
             buttonNonBlindfoldVsBlindfold.startAnimation(animationFadeOut)
             buttonBlindfoldVsNonBlindfold.startAnimation(animationFadeOut)
+            goBackButton.startAnimation(animationFadeOut)
             handler.postDelayed({
                 fragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView, nextFragment)?.addToBackStack(null)?.commit()
             }, 250)
         }
         buttonBlindfoldVsNonBlindfold.setOnClickListener{
-            whichButtonClicked.putString("buttonClicked","buttonBlindfoldVsNonBlindfold")
+            whichButtonClicked.putString("buttonClicked","BlindfoldVsNonBlindfold")
             buttonLastPlayed.startAnimation(animationFadeOut)
             buttonRankedGame.startAnimation(animationFadeOut)
             buttonCasualGame.startAnimation(animationFadeOut)
             buttonHotSeat.startAnimation(animationFadeOut)
             buttonNonBlindfoldVsBlindfold.startAnimation(animationFadeOut)
             buttonBlindfoldVsNonBlindfold.startAnimation(animationFadeOut)
+            goBackButton.startAnimation(animationFadeOut)
             handler.postDelayed({
                 fragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView, nextFragment)?.addToBackStack(null)?.commit()
             }, 250)
@@ -147,6 +153,7 @@ class PlayFragment : Fragment() {
             buttonHotSeat.startAnimation(animationFadeOut)
             buttonNonBlindfoldVsBlindfold.startAnimation(animationFadeOut)
             buttonBlindfoldVsNonBlindfold.startAnimation(animationFadeOut)
+            goBackButton.startAnimation(animationFadeOut)
             handler.postDelayed({
                 fragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView, HomeScreenFragment())?.addToBackStack(null)?.commit()
             }, 250)

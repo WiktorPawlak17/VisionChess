@@ -37,6 +37,7 @@ class GamePrep : Fragment() {
         val whichButtonClicked = arguments
         if(whichButtonClicked != null) {
             val buttonClicked = whichButtonClicked.getString("buttonClicked")
+
         }
         // Inflate the layout for this fragment
         return rootView
