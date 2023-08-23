@@ -36,7 +36,7 @@ class SettingsFragment : Fragment() {
 
     private var param1: String? = null
     private var param2: String? = null
-
+    //public var handler = Handler(Looper.getMainLooper())
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -44,6 +44,7 @@ class SettingsFragment : Fragment() {
             param2 = it.getString(ARG_PARAM2)
         }
     }
+
 
     @SuppressLint("UseSwitchCompatOrMaterialCode", "UseCompatLoadingForDrawables")
     override fun onCreateView(
@@ -105,7 +106,16 @@ class SettingsFragment : Fragment() {
                 handler.postDelayed(this, 100)
             }
         }
-        runnable.run()
+        handler.postDelayed({
+            runnable.run()
+        }, 2000)
+
+
+        handler.postDelayed({
+            handler.removeCallbacks(runnable)
+        },10000)
+
+
         val goBackButton = rootView.findViewById<Button>(R.id.buttonGoBackFromSettings)
         val animationFadeIn = AnimationUtils.loadAnimation(context, R.anim.fade_in_very_quick)
         val animationFadeOut = AnimationUtils.loadAnimation(context, R.anim.fade_out_very_quick)
@@ -237,11 +247,7 @@ class SettingsFragment : Fragment() {
                 fragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView, nextFragment)?.commit()
             }, 250)
 
-
-
         }
-
-
 
 
 
@@ -250,6 +256,11 @@ class SettingsFragment : Fragment() {
         return rootView
     }
 
+    override fun onPause() {
+        super.onPause()
+        val handler = Handler(Looper.getMainLooper())
+        handler.removeCallbacksAndMessages(null)
+    }
     @Suppress("DEPRECATION")
     private fun setLocale(language: String) {
         val locale = Locale(language)
@@ -285,6 +296,12 @@ class SettingsFragment : Fragment() {
             return null
         }
     }
+    override fun onDestroy() {
+        super.onDestroy()
+        val handler = Handler(Looper.getMainLooper())
+        handler.removeCallbacksAndMessages(null)
+    }
+
 
 
     companion object {

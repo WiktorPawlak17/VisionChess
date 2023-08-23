@@ -66,7 +66,7 @@ class PlayFragment : Fragment() {
         //Arguments through the bundle to the next fragment
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         val whichButtonClicked = Bundle()
-        val nextFragment = GamePrep()
+        val nextFragment = GamePrepFragment()
         nextFragment.arguments = whichButtonClicked
         buttonLastPlayed.setOnClickListener{
         whichButtonClicked.putString("buttonClicked","LastPlayed")
