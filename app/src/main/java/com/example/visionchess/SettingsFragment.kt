@@ -106,14 +106,14 @@ class SettingsFragment : Fragment() {
                 handler.postDelayed(this, 100)
             }
         }
-        handler.postDelayed({
-            runnable.run()
-        }, 2000)
-
-
-        handler.postDelayed({
-            handler.removeCallbacks(runnable)
-        },10000)
+//        handler.postDelayed({
+//            runnable.run()
+//        }, 2000)
+//
+//
+//        handler.postDelayed({
+//            handler.removeCallbacks(runnable)
+//        },10000)
 
 
         val goBackButton = rootView.findViewById<Button>(R.id.buttonGoBackFromSettings)
@@ -121,17 +121,23 @@ class SettingsFragment : Fragment() {
         val animationFadeOut = AnimationUtils.loadAnimation(context, R.anim.fade_out_very_quick)
         val fragmentManager = activity?.supportFragmentManager
 
-
-        pawnToSquare.setOnClickListener{
-            if(pawnToSquare.isChecked){
-                pawnPromotion.text = getString(R.string.pawn_to_e8_promote_to_a_queen_or_other_piece)
+        pawnToSquare.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
                 pawnToSquare.thumbDrawable = resources.getDrawable(R.drawable.switchon, null)
-            }
-            else{
-                pawnPromotion.text = getString(R.string.e8_promote_to_a_queen_or_other_piece)
+            } else {
                 pawnToSquare.thumbDrawable = resources.getDrawable(R.drawable.switchoff, null)
             }
         }
+//        pawnToSquare.setOnClickListener{
+//            if(pawnToSquare.isChecked){
+//                pawnPromotion.text = getString(R.string.pawn_to_e8_promote_to_a_queen_or_other_piece)
+//                pawnToSquare.thumbDrawable = resources.getDrawable(R.drawable.switchon, null)
+//            }
+//            else{
+//                pawnPromotion.text = getString(R.string.e8_promote_to_a_queen_or_other_piece)
+//                pawnToSquare.thumbDrawable = resources.getDrawable(R.drawable.switchoff, null)
+//            }
+//        }
 
         pawnTakes.setOnClickListener{
             if(pawnTakes.isChecked){

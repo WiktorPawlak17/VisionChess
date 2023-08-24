@@ -31,11 +31,11 @@ private const val ARG_PARAM2 = "param2"
  */
 @Suppress("SameParameterValue", "DEPRECATION")
 class HomeScreenFragment : Fragment() {
-
+      //  var something = find
 //    override fun onCreate(savedInstanceState: Bundle?) {
 //      super.onCreate(savedInstanceState)
 //    }
-
+      lateinit var playTextView: TextView
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -45,7 +45,7 @@ class HomeScreenFragment : Fragment() {
         ////////////////////////////////////////////////////////////////////////////////////////////////
         val rootView = inflater.inflate(R.layout.fragment_home_screen, container, false)
         val menucirclewithbuttons = rootView.findViewById<ImageView>(R.id.menucirclewithbuttons)
-        val playTextView = rootView.findViewById<TextView>(R.id.play_textview)
+         playTextView = rootView.findViewById<TextView>(R.id.play_textview)
         val trainingTextView = rootView.findViewById<TextView>(R.id.training_textview)
         val historyTextView = rootView.findViewById<TextView>(R.id.history_textview)
         val settingsTextView = rootView.findViewById<TextView>(R.id.settings_textview)
