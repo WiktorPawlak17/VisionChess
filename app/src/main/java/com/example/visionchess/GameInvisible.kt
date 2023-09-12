@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import java.util.Timer
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -28,13 +30,35 @@ class GameInvisible : Fragment() {
             param2 = it.getString(ARG_PARAM2)
         }
     }
+    private var timerWhite = Timer()
+    val counterWhite = 0
+    private var timerBlack = Timer()
+    val counterBlack = 0
+    private val currentGameMode = Bundle()
+    private val timeFormat = currentGameMode.getString("TimeFormat")
+    private val howManyPeeks = currentGameMode.getString("HowManyPeeks")
+    private val handler = android.os.Handler(android.os.Looper.getMainLooper())
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
+        val rootView = inflater.inflate(R.layout.fragment_game_invisible, container, false)
+        timerWhite.run {  }
+
+        if(timeFormat!= null && howManyPeeks!=null) {
+            when(timeFormat){
+                "CasualGame" -> TODO()
+                "RankedGame" -> TODO()
+                "HotSeatGame" -> TODO()
+                "NonBlindfoldVsBlindfold" -> TODO()
+                "BlindfoldVsNonBlindfold" -> TODO()
+                "LastPlayed" -> TODO()
+            }
+        }
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_game_invisible, container, false)
+        return rootView
     }
 
     companion object {

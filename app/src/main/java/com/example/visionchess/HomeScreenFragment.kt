@@ -35,7 +35,7 @@ class HomeScreenFragment : Fragment() {
 //    override fun onCreate(savedInstanceState: Bundle?) {
 //      super.onCreate(savedInstanceState)
 //    }
-      lateinit var playTextView: TextView
+      private lateinit var playTextView: TextView
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,

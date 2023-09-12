@@ -61,12 +61,12 @@ class SettingsFragment : Fragment() {
         val languagesText = rootView.findViewById<TextView>(R.id.languagesText)
         val languageSpinner = rootView.findViewById<Spinner>(R.id.languagesSpinner)
         val handler = Handler(Looper.getMainLooper())
-        var firstRunOfRunnable = true
+        //var firstRunOfRunnable = true
         handler.postDelayed({
             inflater.inflate(R.layout.fragment_settings, container, false)
         }, 250)
-        val runnable = object : Runnable {
-            override fun run() {
+//        val runnable = object : Runnable {
+//            override fun run() {
                 if(pawnPromotion.isChecked){
                     pawnPromotion.text = getString(R.string.pawn_to_e8_promote_to_a_queen_or_other_piece)
                     pawnPromotion.thumbDrawable = resources.getDrawable(R.drawable.switchon, null)
@@ -99,13 +99,13 @@ class SettingsFragment : Fragment() {
                 else{
                     sayOpponentPlayed.thumbDrawable = resources.getDrawable(R.drawable.switchoff, null)
                 }
-                if(firstRunOfRunnable){
-                    handler.postDelayed(this, 1)
-                    firstRunOfRunnable = false
-                }
-                handler.postDelayed(this, 100)
-            }
-        }
+//                if(firstRunOfRunnable){
+//                    handler.postDelayed(this, 1)
+//                    firstRunOfRunnable = false
+//                }
+//                handler.postDelayed(this, 100)
+//            }
+//        }
 //        handler.postDelayed({
 //            runnable.run()
 //        }, 2000)
@@ -123,11 +123,46 @@ class SettingsFragment : Fragment() {
 
         pawnToSquare.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
+                pawnPromotion.text = getString(R.string.pawn_to_e8_promote_to_a_queen_or_other_piece)
                 pawnToSquare.thumbDrawable = resources.getDrawable(R.drawable.switchon, null)
             } else {
+                pawnPromotion.text = getString(R.string.e8_promote_to_a_queen_or_other_piece)
                 pawnToSquare.thumbDrawable = resources.getDrawable(R.drawable.switchoff, null)
             }
         }
+        pawnTakes.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                pawnTakes.thumbDrawable = resources.getDrawable(R.drawable.switchon, null)
+            } else {
+                pawnTakes.thumbDrawable = resources.getDrawable(R.drawable.switchoff, null)
+            }
+        }
+        pawnPromotion.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                pawnPromotion.thumbDrawable = resources.getDrawable(R.drawable.switchon, null)
+            } else {
+                pawnPromotion.thumbDrawable = resources.getDrawable(R.drawable.switchoff, null)
+            }
+        }
+
+        sayCheck.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                sayCheck.thumbDrawable = resources.getDrawable(R.drawable.switchon, null)
+            } else {
+                sayCheck.thumbDrawable = resources.getDrawable(R.drawable.switchoff, null)
+            }
+        }
+
+        sayOpponentPlayed.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                sayOpponentPlayed.thumbDrawable = resources.getDrawable(R.drawable.switchon, null)
+            } else {
+                sayOpponentPlayed.thumbDrawable = resources.getDrawable(R.drawable.switchoff, null)
+            }
+        }
+
+
+
 //        pawnToSquare.setOnClickListener{
 //            if(pawnToSquare.isChecked){
 //                pawnPromotion.text = getString(R.string.pawn_to_e8_promote_to_a_queen_or_other_piece)
@@ -139,38 +174,38 @@ class SettingsFragment : Fragment() {
 //            }
 //        }
 
-        pawnTakes.setOnClickListener{
-            if(pawnTakes.isChecked){
-                pawnTakes.thumbDrawable = resources.getDrawable(R.drawable.switchon, null)
-            }
-            else{
-                pawnTakes.thumbDrawable = resources.getDrawable(R.drawable.switchoff, null)
-            }
-        }
-        pawnPromotion.setOnClickListener{
-            if(pawnPromotion.isChecked){
-                pawnPromotion.thumbDrawable = resources.getDrawable(R.drawable.switchon, null)
-            }
-            else{
-                pawnPromotion.thumbDrawable = resources.getDrawable(R.drawable.switchoff, null)
-            }
-        }
-        sayCheck.setOnClickListener{
-            if(sayCheck.isChecked){
-                sayCheck.thumbDrawable = resources.getDrawable(R.drawable.switchon, null)
-            }
-            else{
-                sayCheck.thumbDrawable = resources.getDrawable(R.drawable.switchoff, null)
-            }
-        }
-        sayOpponentPlayed.setOnClickListener{
-            if(sayOpponentPlayed.isChecked){
-                sayOpponentPlayed.thumbDrawable = resources.getDrawable(R.drawable.switchon, null)
-            }
-            else{
-                sayOpponentPlayed.thumbDrawable = resources.getDrawable(R.drawable.switchoff, null)
-            }
-        }
+//        pawnTakes.setOnClickListener{
+//            if(pawnTakes.isChecked){
+//                pawnTakes.thumbDrawable = resources.getDrawable(R.drawable.switchon, null)
+//            }
+//            else{
+//                pawnTakes.thumbDrawable = resources.getDrawable(R.drawable.switchoff, null)
+//            }
+//        }
+//        pawnPromotion.setOnClickListener{
+//            if(pawnPromotion.isChecked){
+//                pawnPromotion.thumbDrawable = resources.getDrawable(R.drawable.switchon, null)
+//            }
+//            else{
+//                pawnPromotion.thumbDrawable = resources.getDrawable(R.drawable.switchoff, null)
+//            }
+//        }
+//        sayCheck.setOnClickListener{
+//            if(sayCheck.isChecked){
+//                sayCheck.thumbDrawable = resources.getDrawable(R.drawable.switchon, null)
+//            }
+//            else{
+//                sayCheck.thumbDrawable = resources.getDrawable(R.drawable.switchoff, null)
+//            }
+//        }
+//        sayOpponentPlayed.setOnClickListener{
+//            if(sayOpponentPlayed.isChecked){
+//                sayOpponentPlayed.thumbDrawable = resources.getDrawable(R.drawable.switchon, null)
+//            }
+//            else{
+//                sayOpponentPlayed.thumbDrawable = resources.getDrawable(R.drawable.switchoff, null)
+//            }
+//        }
         pawnToSquare.startAnimation(animationFadeIn)
         pawnTakes.startAnimation(animationFadeIn)
         pawnPromotion.startAnimation(animationFadeIn)
