@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "933901147155",
+    "project_id": "visionchess-928e0",
+    "storage_bucket": "visionchess-928e0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:933901147155:android:49d70e35268c5d8aa033e6",
+        "android_client_info": {
+          "package_name": "com.example.visionchess"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBV8WeztUuyFFzhKFnDQj5PtbaFrZinkto"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
