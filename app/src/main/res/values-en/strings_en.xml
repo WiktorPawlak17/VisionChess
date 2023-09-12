@@ -77,4 +77,5 @@
     <string name="language">Language</string>
     <string name="time_format">Time Format</string>
     <string name="how_many_peeks">How Many Peeks</string>
+    <string name="basicavatar">basicavatar</string>
 </resources>

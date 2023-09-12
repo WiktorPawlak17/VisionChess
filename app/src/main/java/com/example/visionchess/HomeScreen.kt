@@ -7,6 +7,7 @@ class HomeScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home_screen)
+
     }
 //    override fun onBackPressed() {
 //        val currentFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView)

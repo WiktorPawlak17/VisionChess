@@ -77,4 +77,5 @@
     <string name="language">Język</string>
     <string name="time_format">Tempo gry</string>
     <string name="how_many_peeks">Ile razy można podglądać</string>
+    <string name="basicavatar">podstawowyavatar</string>
 </resources>
