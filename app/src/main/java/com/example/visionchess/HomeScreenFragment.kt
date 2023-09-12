@@ -14,6 +14,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.google.firebase.database.FirebaseDatabase
 import org.json.JSONObject
 import java.io.File
 import java.util.Locale
@@ -40,7 +41,10 @@ class HomeScreenFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        
+        val database = FirebaseDatabase.getInstance()
+        val myReference = database.getReference("new/Users")
+        myReference.setValue("FirstUserOrSomething")
+
         ////////////////////////////////////////////////////////////////////////////////////////////////
         // This is the code the stuff fade in
         ////////////////////////////////////////////////////////////////////////////////////////////////
