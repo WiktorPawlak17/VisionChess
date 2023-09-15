@@ -78,4 +78,9 @@
     <string name="time_format">Time Format</string>
     <string name="how_many_peeks">How Many Peeks</string>
     <string name="basicavatar">basicavatar</string>
+    <string name="prompt_email">e-mail</string>
+    <string name="prompt_password">password</string>
+    <string name="action_sign_in_short">sign in</string>
+    <string name="action_sign_up">sign up</string>
+    <string name="create_account">Create Account</string>
 </resources>

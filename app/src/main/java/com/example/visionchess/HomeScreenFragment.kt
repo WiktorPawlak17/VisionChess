@@ -14,6 +14,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import org.json.JSONObject
 import java.io.File
@@ -41,9 +42,14 @@ class HomeScreenFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
+
         val database = FirebaseDatabase.getInstance()
         val myReference = database.getReference("new/Users")
         myReference.setValue("FirstUserOrSomething")
+        val auth = FirebaseAuth.getInstance()
+        val currentUser = auth.currentUser
+
+
 
         ////////////////////////////////////////////////////////////////////////////////////////////////
         // This is the code the stuff fade in
@@ -79,6 +85,7 @@ class HomeScreenFragment : Fragment() {
             friendsTextView.startAnimation(animationFadeIn)
             profileTextView.startAnimation(animationFadeIn)
         }
+
         ////////////////////////////////////////////////////////////////////////////////////////////////
         // This is the code that makes the buttons fade out and then go to the next fragment
         ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -135,7 +142,9 @@ class HomeScreenFragment : Fragment() {
             friendsTextView.text = resources.getString(R.string.Friends)
             profileTextView.text = resources.getString(R.string.Profile)
         }
-
+            if(currentUser == null) {
+                profileTextView.setBackgroundColor(resources.getColor(R.color.red, null))
+            }
         playButton.setOnClickListener{
             menucirclewithbuttons.startAnimation(animationFadeOut)
             playTextView.startAnimation(animationFadeOut)
@@ -231,10 +240,18 @@ class HomeScreenFragment : Fragment() {
             tutorialTextView.startAnimation(animationFadeOut)
             friendsTextView.startAnimation(animationFadeOut)
             profileTextView.startAnimation(animationFadeOut)
-            handler.postDelayed({
-                fragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView, ProfileFragment())?.addToBackStack(null)
-                    ?.commit()
-            }, 250)
+            if(currentUser != null) {
+                handler.postDelayed({
+                    fragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView, ProfileFragment())?.addToBackStack(null)
+                        ?.commit()
+                }, 250)
+            }else {
+                handler.postDelayed({
+                    fragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView, LoginFragment())?.addToBackStack(null)
+                        ?.commit()
+                }, 250)
+            }
+
         }
 
         return rootView
