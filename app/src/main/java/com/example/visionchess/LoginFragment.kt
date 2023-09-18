@@ -1,10 +1,13 @@
 package com.example.visionchess
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.Button
 
 // TODO: Rename parameter arguments, choose names that match
@@ -38,7 +41,29 @@ class LoginFragment : Fragment() {
         val buttonLogin = rootView.findViewById<Button>(R.id.login)
         val buttonRegister = rootView.findViewById<Button>(R.id.createAccount)
         val buttonGoBack = rootView.findViewById<Button>(R.id.buttonGoBackFromLogin)
+        val fragmentManager = activity?.supportFragmentManager
+        val handler = Handler(Looper.getMainLooper())
+        val animationFadeOut = AnimationUtils.loadAnimation(context, R.anim.fade_out_very_quick)
+        buttonRegister.setOnClickListener{
+            handler.postDelayed({
+                buttonLogin.startAnimation(animationFadeOut)
+                buttonRegister.startAnimation(animationFadeOut)
+                buttonGoBack.startAnimation(animationFadeOut)
+                fragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView, Register())?.addToBackStack(null)
+                    ?.commit()
 
+            }, 250)
+        }
+        buttonGoBack.setOnClickListener{
+            handler.postDelayed({
+                buttonLogin.startAnimation(animationFadeOut)
+                buttonRegister.startAnimation(animationFadeOut)
+                buttonGoBack.startAnimation(animationFadeOut)
+                fragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView, HomeScreenFragment())?.addToBackStack(null)
+                    ?.commit()
+
+            }, 250)
+        }
         // Inflate the layout for this fragment
         return rootView
     }
