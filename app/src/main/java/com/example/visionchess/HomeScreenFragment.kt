@@ -240,6 +240,7 @@ class HomeScreenFragment : Fragment() {
             tutorialTextView.startAnimation(animationFadeOut)
             friendsTextView.startAnimation(animationFadeOut)
             profileTextView.startAnimation(animationFadeOut)
+
             if(currentUser != null) {
                 handler.postDelayed({
                     fragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView, ProfileFragment())?.addToBackStack(null)
