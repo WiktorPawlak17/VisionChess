@@ -13,6 +13,7 @@ import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import java.security.MessageDigest
@@ -75,6 +76,7 @@ class RegisterFragment : Fragment() {
                 //             val lastGameTime:String, val lastGameType:String){
                 val newUser = Person(email, username, hashedPassword, "", mutableListOf(), mutableListOf(),
                     0, 0, 0, null, "0", "none")
+
                 val auth = FirebaseAuth.getInstance()
                 auth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener { task ->
@@ -90,6 +92,21 @@ class RegisterFragment : Fragment() {
                                 }
                             val database = FirebaseDatabase.getInstance()
                             val databaseReference = database.reference.child("users")
+                            databaseReference.child("users").setValue(newUser)
+                                .addOnSuccessListener {
+                                    // Data was successfully written
+                                    Toast.makeText(
+                                        context, "Data successfully added to the database.",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                                .addOnFailureListener { e ->
+                                    // There was an error writing to the database
+                                    Toast.makeText(
+                                        context, "Error adding data to the database: ${e.message}",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
                             databaseReference.child(username).setValue(newUser)
                             buttonGoBack.startAnimation(animationFadeOut)
                             buttonRegister.startAnimation(animationFadeOut)
@@ -108,7 +125,7 @@ class RegisterFragment : Fragment() {
                             Log.w(TAG, "createUserWithEmail:failure", task.exception)
                             Toast.makeText(context, "Authentication failed, Database crashed or something.",
                                 Toast.LENGTH_SHORT).show()
-                            //updateUI(null)
+
                         }
                     }
 
