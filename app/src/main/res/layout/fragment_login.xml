@@ -11,7 +11,7 @@
 
     <EditText
         android:id="@+id/email"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
@@ -30,7 +30,7 @@
 
     <EditText
         android:id="@+id/password"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
@@ -53,14 +53,14 @@
         android:layout_marginBottom="24dp"
         android:text="@string/action_sign_in_short"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/createAccount"
+        app:layout_constraintEnd_toStartOf="@+id/logOut"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/password"
         app:layout_constraintVertical_bias="0.060000002" />
 
     <Button
-        android:id="@+id/createAccount"
+        android:id="@+id/logOut"
         android:layout_width="120dp"
         android:layout_height="80dp"
         android:layout_marginStart="24dp"

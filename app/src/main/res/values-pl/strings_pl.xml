@@ -82,5 +82,8 @@
     <string name="prompt_password">hasło</string>
     <string name="action_sign_in_short">Zaloguj się</string>
     <string name="action_sign_up">Rejestracja</string>
-    <string name="create_account">Create Account</string>
+    <string name="create_account">Stwórz konto</string>
+    <string name="prompt_password_again">Hasło ponownie</string>
+    <string name="username">Nazwa użytkownika</string>
+    <string name="log_out">Log out</string>
 </resources>

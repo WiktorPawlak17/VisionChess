@@ -5,6 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.TextView
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -33,8 +37,68 @@ class ProfileFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
+        val handler = android.os.Handler(android.os.Looper.getMainLooper())
+        val rootView = inflater.inflate(R.layout.fragment_profile, container, false)
+        val buttonGoBack = rootView.findViewById<Button>(R.id.buttonGoBackFromProfile)
+        val gameName = rootView.findViewById<TextView>(R.id.gameName)
+        val blitzRating = rootView.findViewById<TextView>(R.id.blitzRating)
+        val rapidRating = rootView.findViewById<TextView>(R.id.rapidRating)
+        val logOut = rootView.findViewById<Button>(R.id.logOut)
+        val fragmentManager = activity?.supportFragmentManager
+        val animationFadeOut = android.view.animation.AnimationUtils.loadAnimation(context, R.anim.fade_out_very_quick)
+        val animationFadeIn = android.view.animation.AnimationUtils.loadAnimation(context, R.anim.fade_in_very_quick)
+        val auth = FirebaseAuth.getInstance()
+
+
+        /////////////////////////////////////////////
+        //Random stuff added itself???
+        /////////////////////////////////////////////
+//        val user = auth.currentUser
+//        val email = user?.email
+//        val uid = user?.uid
+//        val db = com.google.firebase.database.FirebaseDatabase.getInstance().reference
+//        val userRef = db.child("users").child(uid.toString())
+//        val gameNameRef = userRef.child("gameName")
+//        val blitzRatingRef = userRef.child("blitzRating")
+//        val rapidRatingRef = userRef.child("rapidRating")
+//        gameNameRef.get().addOnSuccessListener {
+//            gameName.text = it.value.toString()
+//        }
+        buttonGoBack.startAnimation(animationFadeIn)
+        gameName.startAnimation(animationFadeIn)
+        blitzRating.startAnimation(animationFadeIn)
+        rapidRating.startAnimation(animationFadeIn)
+        logOut.startAnimation(animationFadeIn)
+
+        buttonGoBack.setOnClickListener{
+            buttonGoBack.startAnimation(animationFadeOut)
+            gameName.startAnimation(animationFadeOut)
+            blitzRating.startAnimation(animationFadeOut)
+            rapidRating.startAnimation(animationFadeOut)
+            logOut.startAnimation(animationFadeOut)
+            handler.postDelayed({
+                fragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView, HomeScreenFragment())?.addToBackStack(null)
+                    ?.commit()
+
+            }, 250)
+        }
+
+
+        logOut.setOnClickListener {
+            auth.signOut()
+            buttonGoBack.startAnimation(animationFadeOut)
+            gameName.startAnimation(animationFadeOut)
+            blitzRating.startAnimation(animationFadeOut)
+            rapidRating.startAnimation(animationFadeOut)
+            logOut.startAnimation(animationFadeOut)
+            handler.postDelayed({
+                fragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView, LoginFragment())?.addToBackStack(null)
+                    ?.commit()
+
+            }, 250)
+        }
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false)
+        return rootView
     }
 
     companion object {

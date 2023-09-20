@@ -83,4 +83,7 @@
     <string name="action_sign_in_short">sign in</string>
     <string name="action_sign_up">sign up</string>
     <string name="create_account">Create Account</string>
+    <string name="prompt_password_again">password again</string>
+    <string name="username">username</string>
+    <string name="log_out">Log out</string>
 </resources>
