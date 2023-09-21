@@ -16,6 +16,8 @@ import android.widget.Toast
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import java.security.MessageDigest
 
 
@@ -29,7 +31,6 @@ private const val ARG_PARAM2 = "param2"
  * Use the [RegisterFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-@Suppress("NAME_SHADOWING")
 class RegisterFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -71,43 +72,46 @@ class RegisterFragment : Fragment() {
             val confirmPassword = confirmPasswordEditText.text.toString()
             if (password == confirmPassword) {
                 val hashedPassword = sha256(password)
-                //class Person(val email:String ,val nickname: String, val name:String,val surname:String,val ratings: MutableList<Int>,
+                //class Person(val email:String ,val nickname: String, val name:String,val ratings: MutableList<Int>,
                 //             val games: MutableList<ChessGame>,val wins: Int, val losses: Int, val draws: Int, val lastGame: ChessGame,
                 //             val lastGameTime:String, val lastGameType:String){
-                val newUser = Person(email, username, hashedPassword, "", mutableListOf(), mutableListOf(),
+                val newUser = Person(email, username, hashedPassword, mutableListOf(1000,1000), mutableListOf(),
                     0, 0, 0, null, "0", "none")
 
                 val auth = FirebaseAuth.getInstance()
                 auth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
-                            val currentUser = auth.currentUser
+                            //val currentUser = auth.currentUser
                             Toast.makeText(context, "User created successfully",
                                 Toast.LENGTH_SHORT).show()
-                            currentUser?.sendEmailVerification()
-                                ?.addOnCompleteListener { task ->
-                                    if (task.isSuccessful) {
-                                        Log.d(TAG, "Email sent.")
+                            //currentUser?.sendEmailVerification()
+                            //    ?.addOnCompleteListener { task ->
+                            //        if (task.isSuccessful) {
+                            //            Log.d(TAG, "Email sent.")
+                            //        }
+                            //    }
+                            val database = FirebaseDatabase.getInstance("https://visionchess-928e0-default-rtdb.europe-west1.firebasedatabase.app/")
+                            val databaseReference = database.reference
+                            val currentUser = auth.currentUser
+                            if (currentUser != null) {
+                                databaseReference.child("users").child(currentUser.uid).setValue(newUser)
+                                    .addOnSuccessListener {
+                                        // Data was successfully written
+                                        Toast.makeText(
+                                            context, "Data successfully added to the database.",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
                                     }
-                                }
-                            val database = FirebaseDatabase.getInstance()
-                            val databaseReference = database.reference.child("users")
-                            databaseReference.child("users").setValue(newUser)
-                                .addOnSuccessListener {
-                                    // Data was successfully written
-                                    Toast.makeText(
-                                        context, "Data successfully added to the database.",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                }
-                                .addOnFailureListener { e ->
-                                    // There was an error writing to the database
-                                    Toast.makeText(
-                                        context, "Error adding data to the database: ${e.message}",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                }
-                            databaseReference.child(username).setValue(newUser)
+                                    .addOnFailureListener { e ->
+                                        // There was an error writing to the database
+                                        Toast.makeText(
+                                            context, "Error adding data to the database: ${e.message}",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    }
+                            }
+
                             buttonGoBack.startAnimation(animationFadeOut)
                             buttonRegister.startAnimation(animationFadeOut)
                             emailEditText.startAnimation(animationFadeOut)

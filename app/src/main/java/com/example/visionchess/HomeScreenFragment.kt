@@ -15,7 +15,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.FirebaseDatabase
 import org.json.JSONObject
 import java.io.File
 import java.util.Locale
@@ -43,9 +42,7 @@ class HomeScreenFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View? {
 
-        val database = FirebaseDatabase.getInstance()
-        val myReference = database.getReference("new/Users")
-        myReference.setValue("FirstUserOrSomething")
+       // val database = FirebaseDatabase.getInstance("https://visionchess-928e0-default-rtdb.europe-west1.firebasedatabase.app/")
         val auth = FirebaseAuth.getInstance()
         val currentUser = auth.currentUser
 
@@ -56,7 +53,7 @@ class HomeScreenFragment : Fragment() {
         ////////////////////////////////////////////////////////////////////////////////////////////////
         val rootView = inflater.inflate(R.layout.fragment_home_screen, container, false)
         val menucirclewithbuttons = rootView.findViewById<ImageView>(R.id.menucirclewithbuttons)
-         playTextView = rootView.findViewById<TextView>(R.id.play_textview)
+         playTextView = rootView.findViewById(R.id.play_textview)
         val trainingTextView = rootView.findViewById<TextView>(R.id.training_textview)
         val historyTextView = rootView.findViewById<TextView>(R.id.history_textview)
         val settingsTextView = rootView.findViewById<TextView>(R.id.settings_textview)

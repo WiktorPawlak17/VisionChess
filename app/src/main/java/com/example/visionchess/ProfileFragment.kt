@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.values
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -48,22 +50,51 @@ class ProfileFragment : Fragment() {
         val animationFadeOut = android.view.animation.AnimationUtils.loadAnimation(context, R.anim.fade_out_very_quick)
         val animationFadeIn = android.view.animation.AnimationUtils.loadAnimation(context, R.anim.fade_in_very_quick)
         val auth = FirebaseAuth.getInstance()
-
-
+        val database = FirebaseDatabase.getInstance("https://visionchess-928e0-default-rtdb.europe-west1.firebasedatabase.app/")
         /////////////////////////////////////////////
         //Random stuff added itself???
         /////////////////////////////////////////////
-//        val user = auth.currentUser
-//        val email = user?.email
-//        val uid = user?.uid
-//        val db = com.google.firebase.database.FirebaseDatabase.getInstance().reference
-//        val userRef = db.child("users").child(uid.toString())
-//        val gameNameRef = userRef.child("gameName")
-//        val blitzRatingRef = userRef.child("blitzRating")
-//        val rapidRatingRef = userRef.child("rapidRating")
-//        gameNameRef.get().addOnSuccessListener {
-//            gameName.text = it.value.toString()
-//        }
+        val user = auth.currentUser
+        val uid = user?.uid
+        val userReference = database.getReference("users/$uid")
+        val usernamePath = userReference.child("nickname")
+        val blitzRatingReferencePath = userReference.child("ratings/0")
+        val rapidRatingReferencePath = userReference.child("ratings/1")
+
+
+        usernamePath.addValueEventListener(object:ValueEventListener{
+            override fun onDataChange(snapshot: com.google.firebase.database.DataSnapshot) {
+                gameName.text = getString(R.string.nickname)+ " : "+ snapshot.value.toString()
+            }
+
+            override fun onCancelled(error: com.google.firebase.database.DatabaseError) {
+                gameName.text = "Error"
+            }
+
+        })
+        blitzRatingReferencePath.addValueEventListener(object:ValueEventListener{
+            override fun onDataChange(snapshot: com.google.firebase.database.DataSnapshot) {
+                blitzRating.text = getString(R.string.blitz)+ " : "+ snapshot.value.toString()
+            }
+
+            override fun onCancelled(error: com.google.firebase.database.DatabaseError) {
+                blitzRating.text = "Error"
+            }
+
+        })
+        rapidRatingReferencePath.addValueEventListener(object:ValueEventListener{
+            override fun onDataChange(snapshot: com.google.firebase.database.DataSnapshot) {
+                rapidRating.text = getString(R.string.rapid)+ " : " + snapshot.value.toString()
+            }
+
+            override fun onCancelled(error: com.google.firebase.database.DatabaseError) {
+                rapidRating.text = "Error"
+            }
+
+        })
+
+
+
         buttonGoBack.startAnimation(animationFadeIn)
         gameName.startAnimation(animationFadeIn)
         blitzRating.startAnimation(animationFadeIn)

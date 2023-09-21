@@ -86,6 +86,9 @@
     <string name="prompt_password_again">password again</string>
     <string name="username">username</string>
     <string name="log_out">Log out</string>
+    <string name="nickname">nickname</string>
+    <string name="blitz">blitz</string>
+    <string name="rapid">rapid</string>
 
 
 </resources>
