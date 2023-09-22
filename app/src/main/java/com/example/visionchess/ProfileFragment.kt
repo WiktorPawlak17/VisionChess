@@ -3,7 +3,6 @@ package com.example.visionchess
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.provider.MediaStore
@@ -15,9 +14,6 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
-import androidx.core.net.toUri
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.FirebaseDatabase
@@ -25,7 +21,7 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import java.io.File
 
-//import com.squareup.picasso.Picasso
+
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -38,6 +34,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [ProfileFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
+@Suppress("DEPRECATION")
 class ProfileFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -81,7 +78,7 @@ class ProfileFragment : Fragment() {
 
         usernamePath.addValueEventListener(object:ValueEventListener{
             @SuppressLint("SetTextI18n")
-            override fun onDataChange(snapshot: com.google.firebase.database.DataSnapshot) {
+            override fun onDataChange(snapshot: DataSnapshot) {
                 gameName.text = getString(R.string.nickname)+ " : "+ snapshot.value.toString()
             }
 
@@ -93,20 +90,23 @@ class ProfileFragment : Fragment() {
         })
         blitzRatingReferencePath.addValueEventListener(object:ValueEventListener{
             @SuppressLint("SetTextI18n")
-            override fun onDataChange(snapshot: com.google.firebase.database.DataSnapshot) {
+            override fun onDataChange(snapshot: DataSnapshot) {
                 blitzRating.text = getString(R.string.blitz)+ " : "+ snapshot.value.toString()
             }
 
+            @SuppressLint("SetTextI18n")
             override fun onCancelled(error: com.google.firebase.database.DatabaseError) {
                 blitzRating.text = "Error"
             }
 
         })
         rapidRatingReferencePath.addValueEventListener(object:ValueEventListener{
-            override fun onDataChange(snapshot: com.google.firebase.database.DataSnapshot) {
+            @SuppressLint("SetTextI18n")
+            override fun onDataChange(snapshot: DataSnapshot) {
                 rapidRating.text = getString(R.string.rapid)+ " : " + snapshot.value.toString()
             }
 
+            @SuppressLint("SetTextI18n")
             override fun onCancelled(error: com.google.firebase.database.DatabaseError) {
                 rapidRating.text = "Error"
             }
@@ -116,7 +116,7 @@ class ProfileFragment : Fragment() {
         avatarReferencePath.addValueEventListener(object:ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 val picture = snapshot.value?.toString() ?: ""
-                val uri = picture.toUri()
+
                 if (picture != "none") {
                     //This works but depreciated
                   //  Picasso.get().load(picture).into(avatar)
@@ -203,6 +203,7 @@ class ProfileFragment : Fragment() {
         // Inflate the layout for this fragment
         return rootView
     }
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -221,7 +222,7 @@ class ProfileFragment : Fragment() {
                 Toast.makeText(context, "Image uploaded successfully", Toast.LENGTH_SHORT).show()
             }
             //avatarReference.setValue(selectedImageUri.toString())
-            val inputStream = context?.contentResolver?.openInputStream(selectedImageUri!!)
+            val inputStream = context?.contentResolver?.openInputStream(selectedImageUri)
             val bitmap = BitmapFactory.decodeStream(inputStream)
             avatar.setImageBitmap(bitmap)
 
