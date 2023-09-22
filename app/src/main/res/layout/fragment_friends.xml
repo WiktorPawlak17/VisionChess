@@ -74,7 +74,7 @@
         app:layout_constraintTop_toBottomOf="@+id/friends" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/friendRequestSent"
+        android:id="@+id/friendRequestsSent"
         android:layout_width="348dp"
         android:layout_height="174dp"
         android:layout_marginStart="24dp"

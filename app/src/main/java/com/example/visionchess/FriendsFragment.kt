@@ -9,6 +9,7 @@ import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 
@@ -54,6 +55,11 @@ class FriendsFragment : Fragment() {
         buttonGoBack.startAnimation(animationFadeIn)
         buttonAddFriend.startAnimation(animationFadeIn)
         addFriendEditText.startAnimation(animationFadeIn)
+        val friends = rootView.findViewById<RecyclerView>(R.id.friends)
+        val friendRequests = rootView.findViewById<RecyclerView>(R.id.friendRequestsReceived)
+        val friendRequestsSent = rootView.findViewById<RecyclerView>(R.id.friendRequestsSent)
+
+
 
         buttonAddFriend.setOnClickListener {
             val friendUsername = addFriendEditText.text.toString()
