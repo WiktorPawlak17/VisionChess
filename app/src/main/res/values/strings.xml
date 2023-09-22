@@ -89,6 +89,8 @@
     <string name="nickname">nickname</string>
     <string name="blitz">blitz</string>
     <string name="rapid">rapid</string>
+    <string name="add_friend_nickname">Add friend (nickname)</string>
+    <string name="send_request">Send Request</string>
 
 
 </resources>

@@ -157,20 +157,11 @@ class ProfileFragment : Fragment() {
         logOut.startAnimation(animationFadeIn)
         avatar.startAnimation(animationFadeIn)
 
-
-
-
-
         avatar.setOnClickListener{
             val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
             startActivityForResult(intent, 1)
 
         }
-
-
-
-
-
 
 
         buttonGoBack.setOnClickListener{

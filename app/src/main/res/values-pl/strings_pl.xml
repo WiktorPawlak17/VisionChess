@@ -89,4 +89,7 @@
     <string name="nickname">Nazwa Użytkownika</string>
     <string name="blitz">błyskawiczne</string>
     <string name="rapid">szybkie</string>
+    <string name="add_friend_nickname">Dodaj znajomego (nazwa użyt.)</string>
+    <string name="send_request">Wyślij</string>
+
 </resources>
