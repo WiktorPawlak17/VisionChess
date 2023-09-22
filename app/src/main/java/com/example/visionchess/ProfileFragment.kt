@@ -1,16 +1,32 @@
 package com.example.visionchess
 
+import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.provider.MediaStore
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.ktx.values
+import com.google.firebase.storage.FirebaseStorage
+import java.io.File
+
+//import com.squareup.picasso.Picasso
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -26,7 +42,7 @@ class ProfileFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-
+    private lateinit var avatar: ImageView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -42,6 +58,7 @@ class ProfileFragment : Fragment() {
         val handler = android.os.Handler(android.os.Looper.getMainLooper())
         val rootView = inflater.inflate(R.layout.fragment_profile, container, false)
         val buttonGoBack = rootView.findViewById<Button>(R.id.buttonGoBackFromProfile)
+        avatar = rootView.findViewById(R.id.avatar)
         val gameName = rootView.findViewById<TextView>(R.id.gameName)
         val blitzRating = rootView.findViewById<TextView>(R.id.blitzRating)
         val rapidRating = rootView.findViewById<TextView>(R.id.rapidRating)
@@ -63,16 +80,19 @@ class ProfileFragment : Fragment() {
 
 
         usernamePath.addValueEventListener(object:ValueEventListener{
+            @SuppressLint("SetTextI18n")
             override fun onDataChange(snapshot: com.google.firebase.database.DataSnapshot) {
                 gameName.text = getString(R.string.nickname)+ " : "+ snapshot.value.toString()
             }
 
+            @SuppressLint("SetTextI18n")
             override fun onCancelled(error: com.google.firebase.database.DatabaseError) {
                 gameName.text = "Error"
             }
 
         })
         blitzRatingReferencePath.addValueEventListener(object:ValueEventListener{
+            @SuppressLint("SetTextI18n")
             override fun onDataChange(snapshot: com.google.firebase.database.DataSnapshot) {
                 blitzRating.text = getString(R.string.blitz)+ " : "+ snapshot.value.toString()
             }
@@ -92,6 +112,41 @@ class ProfileFragment : Fragment() {
             }
 
         })
+        val avatarReferencePath = userReference.child("picture")
+        avatarReferencePath.addValueEventListener(object:ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val picture = snapshot.value?.toString() ?: ""
+                val uri = picture.toUri()
+                if (picture != "none") {
+                    //This works but depreciated
+                  //  Picasso.get().load(picture).into(avatar)
+                    try {
+                        val storage = FirebaseStorage.getInstance("gs://visionchess-928e0.appspot.com")
+                        val storageRef = storage.reference
+                        val avatarRef = storageRef.child("images/$uid")
+                        val localFile = File.createTempFile("images", "jpg")
+                        avatarRef.getFile(localFile).addOnSuccessListener {
+                            val bitmap = BitmapFactory.decodeFile(localFile.absolutePath)
+                            avatar.setImageBitmap(bitmap)
+                        }
+
+                        //val inputStream = context?.contentResolver?.openInputStream(uri)
+                        //val bitmap = BitmapFactory.decodeStream(inputStream)
+                        //avatar.setImageBitmap(bitmap)
+                    } catch (e: Exception) {
+                        Toast.makeText(context, "$e", Toast.LENGTH_SHORT).show()
+
+
+                    }
+
+                }
+            }
+
+            override fun onCancelled(error: com.google.firebase.database.DatabaseError) {
+                //Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show()
+            }
+
+        })
 
 
 
@@ -100,6 +155,23 @@ class ProfileFragment : Fragment() {
         blitzRating.startAnimation(animationFadeIn)
         rapidRating.startAnimation(animationFadeIn)
         logOut.startAnimation(animationFadeIn)
+        avatar.startAnimation(animationFadeIn)
+
+
+
+
+
+        avatar.setOnClickListener{
+            val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+            startActivityForResult(intent, 1)
+
+        }
+
+
+
+
+
+
 
         buttonGoBack.setOnClickListener{
             buttonGoBack.startAnimation(animationFadeOut)
@@ -131,6 +203,31 @@ class ProfileFragment : Fragment() {
         // Inflate the layout for this fragment
         return rootView
     }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == 1 && resultCode == Activity.RESULT_OK && data != null) {
+            // Handle the selected image URI here
+            val selectedImageUri = data.data
+            val user = FirebaseAuth.getInstance().currentUser
+            val uid = user?.uid
+            val storage = FirebaseStorage.getInstance("gs://visionchess-928e0.appspot.com")
+            val storageRef = storage.reference
+            val avatarRef = storageRef.child("images/$uid")
+            val uploadTask = avatarRef.putFile(selectedImageUri!!)
+            uploadTask.addOnFailureListener {
+                Toast.makeText(context, "Failed to upload image", Toast.LENGTH_SHORT).show()
+            }.addOnSuccessListener {
+                Toast.makeText(context, "Image uploaded successfully", Toast.LENGTH_SHORT).show()
+            }
+            //avatarReference.setValue(selectedImageUri.toString())
+            val inputStream = context?.contentResolver?.openInputStream(selectedImageUri!!)
+            val bitmap = BitmapFactory.decodeStream(inputStream)
+            avatar.setImageBitmap(bitmap)
+
+        }
+    }
+
 
     companion object {
         /**

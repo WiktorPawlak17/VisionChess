@@ -72,10 +72,8 @@ class RegisterFragment : Fragment() {
             val confirmPassword = confirmPasswordEditText.text.toString()
             if (password == confirmPassword) {
                 val hashedPassword = sha256(password)
-                //class Person(val email:String ,val nickname: String, val name:String,val ratings: MutableList<Int>,
-                //             val games: MutableList<ChessGame>,val wins: Int, val losses: Int, val draws: Int, val lastGame: ChessGame,
-                //             val lastGameTime:String, val lastGameType:String){
                 val newUser = Person(email, username, hashedPassword, mutableListOf(1000,1000), mutableListOf(),
+                    mutableListOf(), mutableListOf(), mutableListOf(), "none",
                     0, 0, 0, null, "0", "none")
 
                 val auth = FirebaseAuth.getInstance()
