@@ -10,4 +10,7 @@
     <color name="background">#E63F3F3F</color>
     <color name="red">#80FF0000</color>
     <color name="transparent">#00FFFFFF</color>
+    <color name="blue">#921316D6</color>
+    <color name="green">#37FF00</color>
+    <color name="very_red">#FF0000</color>
 </resources>

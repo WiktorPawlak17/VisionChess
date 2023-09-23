@@ -8,7 +8,8 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.EditText
-import android.widget.Toast
+import android.widget.TextView
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -47,6 +48,9 @@ class FriendsFragment : Fragment() {
         val animationFadeIn = AnimationUtils.loadAnimation(context, R.anim.fade_in_very_quick)
         val buttonAddFriend = rootView.findViewById<Button>(R.id.buttonAddFriend)
         val addFriendEditText = rootView.findViewById<EditText>(R.id.addFriend)
+        val friendsTextView = rootView.findViewById<TextView>(R.id.textViewFriends)
+        val friendRequestsTextView = rootView.findViewById<TextView>(R.id.textViewFriendsReceived)
+        val friendRequestsSentTextView = rootView.findViewById<TextView>(R.id.textViewFriendsSent)
         val handler = android.os.Handler(android.os.Looper.getMainLooper())
         val database = FirebaseDatabase.getInstance("https://visionchess-928e0-default-rtdb.europe-west1.firebasedatabase.app/")
         val databaseReference = database.reference
@@ -55,14 +59,76 @@ class FriendsFragment : Fragment() {
         buttonGoBack.startAnimation(animationFadeIn)
         buttonAddFriend.startAnimation(animationFadeIn)
         addFriendEditText.startAnimation(animationFadeIn)
+        friendsTextView.startAnimation(animationFadeIn)
+        friendRequestsTextView.startAnimation(animationFadeIn)
+        friendRequestsSentTextView.startAnimation(animationFadeIn)
         val friends = rootView.findViewById<RecyclerView>(R.id.friends)
         val friendRequests = rootView.findViewById<RecyclerView>(R.id.friendRequestsReceived)
         val friendRequestsSent = rootView.findViewById<RecyclerView>(R.id.friendRequestsSent)
+        val friendsList = mutableListOf<String>()
+        val friendRequestsSentList = mutableListOf<String>()
+        val friendRequestsReceivedList = mutableListOf<String>()
+        val friendsReference = databaseReference.child("users/${currentUser?.uid}/friends")
+        val friendsReceivedReference = databaseReference.child("users/${currentUser?.uid}/friendRequestsReceived")
+        val friendsSentReference = databaseReference.child("users/${currentUser?.uid}/friendRequestsSent")
+        val valueEventListenerFriends = object : com.google.firebase.database.ValueEventListener {
+            override fun onDataChange(snapshot: com.google.firebase.database.DataSnapshot) {
+                for (friend in snapshot.children) {
+                    val friendNickname = friend.value.toString()
+                    friendsList.add(friendNickname)
+
+                }
+            }
+            override fun onCancelled(error: com.google.firebase.database.DatabaseError) {
+            // Failed to read value
+            }
+        }
+        val valueEventListenerSent = object : com.google.firebase.database.ValueEventListener {
+            override fun onDataChange(snapshot: com.google.firebase.database.DataSnapshot) {
+                for (friend in snapshot.children) {
+                    val friendNickname = friend.value.toString()
+                    friendRequestsReceivedList.add(friendNickname)
+
+                }
+            }
+            override fun onCancelled(error: com.google.firebase.database.DatabaseError) {
+                // Failed to read value
+            }
+        }
+        val valueEventListenerReceived = object : com.google.firebase.database.ValueEventListener {
+            override fun onDataChange(snapshot: com.google.firebase.database.DataSnapshot) {
+                for (friend in snapshot.children) {
+                    val friendNickname = friend.value.toString()
+                    friendRequestsReceivedList.add(friendNickname)
+
+                }
+            }
+            override fun onCancelled(error: com.google.firebase.database.DatabaseError) {
+                // Failed to read value
+            }
+        }
+
+        friendsReference.addValueEventListener(valueEventListenerFriends)
+        friendsSentReference.addValueEventListener(valueEventListenerSent)
+        friendsReceivedReference.addValueEventListener(valueEventListenerReceived)
+        handler.postDelayed({
+            friends.startAnimation(animationFadeIn)
+            friendRequests.startAnimation(animationFadeIn)
+            friendRequestsSent.startAnimation(animationFadeIn)
+            friends.adapter = CustomAdapterReceived(friendsList)
+            friends.layoutManager = LinearLayoutManager(context)
+            friendRequestsSent.adapter = CustomAdapter(friendRequestsSentList)
+            friendRequestsSent.layoutManager = LinearLayoutManager(context)
+        }, 1000)
+
 
 
 
         buttonAddFriend.setOnClickListener {
             val friendUsername = addFriendEditText.text.toString()
+            friendRequestsSentList.add(friendUsername)
+            friendRequestsSent.adapter = CustomAdapter(friendRequestsSentList)
+            friendRequestsSent.layoutManager = LinearLayoutManager(context)
             databaseReference.child("users/${currentUser?.uid}/friendRequestsSent").push().setValue(friendUsername)
             val query = databaseReference.child("users").orderByChild("nickname").equalTo(friendUsername)
             query.addListenerForSingleValueEvent(object : com.google.firebase.database.ValueEventListener {
@@ -99,6 +165,12 @@ class FriendsFragment : Fragment() {
             buttonGoBack.startAnimation(animationFadeOut)
             buttonAddFriend.startAnimation(animationFadeOut)
             addFriendEditText.startAnimation(animationFadeOut)
+            friends.startAnimation(animationFadeOut)
+            friendRequests.startAnimation(animationFadeOut)
+            friendRequestsSent.startAnimation(animationFadeOut)
+            friendsTextView.startAnimation(animationFadeOut)
+            friendRequestsTextView.startAnimation(animationFadeOut)
+            friendRequestsSentTextView.startAnimation(animationFadeOut)
             handler.postDelayed({
                 fragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView, HomeScreenFragment())?.addToBackStack(null)
                     ?.commit()

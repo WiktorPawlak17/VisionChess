@@ -13,7 +13,6 @@
         android:layout_width="140dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="24dp"
         android:background="@drawable/button_with_shadows"
@@ -23,6 +22,7 @@
         app:layout_constraintHorizontal_bias="0.542"
         app:layout_constraintStart_toStartOf="parent"
 
+        app:layout_constraintTop_toBottomOf="@+id/friendRequestsSent"
         app:layout_constraintVertical_bias="1.0" />
 
     <Button
@@ -52,35 +52,78 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/friends"
-        android:layout_width="359dp"
-        android:layout_height="94dp"
+        android:layout_width="360dp"
+        android:layout_height="100dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.07"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addFriend" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewFriends" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/friendRequestsReceived"
-        android:layout_width="356dp"
-        android:layout_height="121dp"
+        android:layout_width="360dp"
+        android:layout_height="100dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewFriendsReceived" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/friendRequestsSent"
+        android:layout_width="360dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewFriendsSent" />
+
+    <TextView
+        android:id="@+id/textViewFriends"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
+        android:text="@string/friends"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addFriend" />
+
+    <TextView
+        android:id="@+id/textViewFriendsReceived"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
+        android:text="@string/friend_requests_received"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/friends" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/friendRequestsSent"
-        android:layout_width="348dp"
-        android:layout_height="174dp"
+    <TextView
+        android:id="@+id/textViewFriendsSent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
+        android:text="@string/fiendrequestssent"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/friendRequestsReceived" />
 

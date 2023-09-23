@@ -91,5 +91,8 @@
     <string name="rapid">szybkie</string>
     <string name="add_friend_nickname">Dodaj znajomego (nazwa użyt.)</string>
     <string name="send_request">Wyślij</string>
+    <string name="friends">Znajomi</string>
+    <string name="friend_requests_received">Zaproszenia otrzymane</string>
+    <string name="fiendrequestssent">Zaproszenia wysłane</string>
 
 </resources>
