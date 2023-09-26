@@ -118,9 +118,11 @@ class ProfileFragment : Fragment() {
                 val picture = snapshot.value?.toString() ?: ""
 
                 if (picture != "none") {
+
                     //This works but depreciated
                   //  Picasso.get().load(picture).into(avatar)
                     try {
+
                         val storage = FirebaseStorage.getInstance("gs://visionchess-928e0.appspot.com")
                         val storageRef = storage.reference
                         val avatarRef = storageRef.child("images/$uid")

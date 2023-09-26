@@ -94,5 +94,7 @@
     <string name="friends">Znajomi</string>
     <string name="friend_requests_received">Zaproszenia otrzymane</string>
     <string name="fiendrequestssent">Zaproszenia wysłane</string>
+    <string name="accept">Zaakceptuj</string>
+    <string name="decline">Odrzuć</string>
 
 </resources>

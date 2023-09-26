@@ -94,6 +94,8 @@
     <string name="friends">Friends</string>
     <string name="friend_requests_received">Friend Requests Received</string>
     <string name="fiendrequestssent">Fiend Requests Sent</string>
+    <string name="accept">Accept</string>
+    <string name="decline">Decline</string>
 
 
 </resources>

@@ -63,14 +63,15 @@ class FriendsFragment : Fragment() {
         friendRequestsTextView.startAnimation(animationFadeIn)
         friendRequestsSentTextView.startAnimation(animationFadeIn)
         val friends = rootView.findViewById<RecyclerView>(R.id.friends)
-        val friendRequests = rootView.findViewById<RecyclerView>(R.id.friendRequestsReceived)
         val friendRequestsSent = rootView.findViewById<RecyclerView>(R.id.friendRequestsSent)
+        val friendRequestsReceived = rootView.findViewById<RecyclerView>(R.id.friendRequestsReceived)
         val friendsList = mutableListOf<String>()
         val friendRequestsSentList = mutableListOf<String>()
         val friendRequestsReceivedList = mutableListOf<String>()
         val friendsReference = databaseReference.child("users/${currentUser?.uid}/friends")
         val friendsReceivedReference = databaseReference.child("users/${currentUser?.uid}/friendRequestsReceived")
         val friendsSentReference = databaseReference.child("users/${currentUser?.uid}/friendRequestsSent")
+
         val valueEventListenerFriends = object : com.google.firebase.database.ValueEventListener {
             override fun onDataChange(snapshot: com.google.firebase.database.DataSnapshot) {
                 for (friend in snapshot.children) {
@@ -87,7 +88,7 @@ class FriendsFragment : Fragment() {
             override fun onDataChange(snapshot: com.google.firebase.database.DataSnapshot) {
                 for (friend in snapshot.children) {
                     val friendNickname = friend.value.toString()
-                    friendRequestsReceivedList.add(friendNickname)
+                    friendRequestsSentList.add(friendNickname)
 
                 }
             }
@@ -113,14 +114,16 @@ class FriendsFragment : Fragment() {
         friendsReceivedReference.addValueEventListener(valueEventListenerReceived)
         handler.postDelayed({
             friends.startAnimation(animationFadeIn)
-            friendRequests.startAnimation(animationFadeIn)
+            friendRequestsReceived.startAnimation(animationFadeIn)
             friendRequestsSent.startAnimation(animationFadeIn)
-            friends.adapter = CustomAdapterReceived(friendsList)
+            friendRequestsReceived.startAnimation(animationFadeIn)
+            friends.adapter = CustomAdapter(friendsList)
             friends.layoutManager = LinearLayoutManager(context)
             friendRequestsSent.adapter = CustomAdapter(friendRequestsSentList)
             friendRequestsSent.layoutManager = LinearLayoutManager(context)
-        }, 1000)
-
+            friendRequestsReceived.adapter = CustomAdapterReceived(friendRequestsReceivedList)
+            friendRequestsReceived.layoutManager = LinearLayoutManager(context)
+        },1000)
 
 
 
@@ -161,12 +164,15 @@ class FriendsFragment : Fragment() {
                 }
             })
         }
+
+
+
         buttonGoBack.setOnClickListener {
             buttonGoBack.startAnimation(animationFadeOut)
             buttonAddFriend.startAnimation(animationFadeOut)
             addFriendEditText.startAnimation(animationFadeOut)
             friends.startAnimation(animationFadeOut)
-            friendRequests.startAnimation(animationFadeOut)
+            friendRequestsReceived.startAnimation(animationFadeOut)
             friendRequestsSent.startAnimation(animationFadeOut)
             friendsTextView.startAnimation(animationFadeOut)
             friendRequestsTextView.startAnimation(animationFadeOut)
