@@ -47,15 +47,19 @@ class GameInvisible : Fragment() {
         timerWhite.run {  }
 
         if(timeFormat!= null && howManyPeeks!=null) {
-            when(timeFormat){
-                "CasualGame" -> TODO()
-                "RankedGame" -> TODO()
-                "HotSeatGame" -> TODO()
-                "NonBlindfoldVsBlindfold" -> TODO()
-                "BlindfoldVsNonBlindfold" -> TODO()
-                "LastPlayed" -> TODO()
+         ChessGame(timeFormat, howManyPeeks)
+        }
+
+        while(ChessGame.isGameFinished() == false) {
+            if (ChessGame.isWhiteTurn()) {
+                timerWhite.run {  }
+                timerBlack.cancel()
+            } else {
+                timerBlack.run {  }
+                timerWhite.cancel()
             }
         }
+
 
         // Inflate the layout for this fragment
         return rootView

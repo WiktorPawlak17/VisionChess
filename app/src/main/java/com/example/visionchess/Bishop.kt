@@ -1,11 +1,16 @@
 package com.example.visionchess
 
+import kotlin.math.abs
+
 class Bishop(name: String, color: String, position: String, isAlive: Boolean, isMoved: Boolean) :
     Piece(name, color, position, isAlive, isMoved) {
-    override val symbol = "B"
 
-
-    override fun move() {
-        super.move()
+    override fun moveIsValid(fromRow:Int,fromCol:Int, toRow:Int, toCol:Int): Boolean {
+        val rowDiff = abs(toRow - fromRow)
+        val colDiff = abs(toCol - fromCol)
+        if (rowDiff == colDiff) {
+            return true
+        }
+        return false
     }
 }
