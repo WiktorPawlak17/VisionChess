@@ -4,14 +4,12 @@ abstract class Piece(val name:String, val color:String, var position: String, va
     open fun moveIsValid(fromRow:Int, fromCol:Int, toRow:Int, toCol:Int):Boolean{
         return false
     }
-    fun setMoved(){
+    open fun setMoved(){
         isMoved=true
     }
     fun setDead(){
         isAlive=false
     }
-    fun setPosition(pos:String){
-        position=pos
-    }
+
 
 }

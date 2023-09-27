@@ -13,4 +13,7 @@ class Bishop(name: String, color: String, position: String, isAlive: Boolean, is
         }
         return false
     }
+    override fun setMoved(){
+        super.setMoved()
+    }
 }

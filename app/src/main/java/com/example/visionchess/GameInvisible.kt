@@ -5,6 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import java.util.Timer
 
@@ -30,35 +33,41 @@ class GameInvisible : Fragment() {
             param2 = it.getString(ARG_PARAM2)
         }
     }
-    private var timerWhite = Timer()
-    val counterWhite = 0
-    private var timerBlack = Timer()
-    val counterBlack = 0
-    private val currentGameMode = Bundle()
-    private val timeFormat = currentGameMode.getString("TimeFormat")
-    private val howManyPeeks = currentGameMode.getString("HowManyPeeks")
-    private val handler = android.os.Handler(android.os.Looper.getMainLooper())
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
         val rootView = inflater.inflate(R.layout.fragment_game_invisible, container, false)
-        timerWhite.run {  }
+        val player2pic = rootView.findViewById<ImageView>(R.id.player2pic2)
+        val player1pic = rootView.findViewById<ImageView>(R.id.player1pic3)
+        val buttonShowBoard = rootView.findViewById<Button>(R.id.buttonShowBoard)
+        val player2name = rootView.findViewById<TextView>(R.id.player2name2)
+        val player1name = rootView.findViewById<TextView>(R.id.player1name2)
+        val player2timer = rootView.findViewById<TextView>(R.id.player2Timer)
+        val player1timer = rootView.findViewById<TextView>(R.id.player1Timer)
 
-        if(timeFormat!= null && howManyPeeks!=null) {
-         ChessGame(timeFormat, howManyPeeks)
-        }
+        val currentGameMode = Bundle()
+        val timeFormat = currentGameMode.getString("TimeFormat")
+        val howManyPeeks = currentGameMode.getString("HowManyPeeks")
+        val handler = android.os.Handler(android.os.Looper.getMainLooper())
+        //TIME FORMAT CRASHES THE CODe
+        var timerWhite = Timer()
+        //Toast.makeText(context, timeFormat, Toast.LENGTH_SHORT).show()
+        //val counterWhite = timeFormat!!.toInt()*60
+        var timerBlack = Timer()
+        //val counterBlack = timeFormat!!.toInt()*60
 
-        while(ChessGame.isGameFinished() == false) {
-            if (ChessGame.isWhiteTurn()) {
-                timerWhite.run {  }
-                timerBlack.cancel()
-            } else {
-                timerBlack.run {  }
-                timerWhite.cancel()
-            }
-        }
+
+//        if(timeFormat!= null && howManyPeeks!=null) {
+//            val game = ChessGame()
+//            timerWhite.run{}
+//            while(game.isGameFinished()){
+//            player1timer.text = counterWhite.toString()
+//            }
+//        }
 
 
         // Inflate the layout for this fragment

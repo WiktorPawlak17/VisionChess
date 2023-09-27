@@ -1,10 +1,9 @@
 package com.example.visionchess
 
-import android.widget.Toast
-
 @Suppress("USELESS_CAST")
-class ChessGame(time: String, type: String) {
-    private val chessBoard = Array(8) { Array(8) { null as Piece? } }
+class ChessGame {
+
+    private var chessBoard = Array(8) { Array(8) { null as Piece? } }
     private val letterToNumberMapDeveloperVersion = mapOf(
         "A" to 0,
         "B" to 1,
@@ -83,23 +82,41 @@ class ChessGame(time: String, type: String) {
     private fun start(){
         val playerWithWhitePieces: Player
         val playerWithBlackPieces: Player
-        val moves: MutableList<String>
-        val result: String
-        val time: String
-        val type: String
 
-        //createChessGame(chessBoard, playerWithWhitePieces, playerWithBlackPieces, moves, result, time, type)
+        //createChessGame(chessBoard, playerWithWhitePieces, playerWithBlackPieces)
+    }
+    fun movePiece(fromRow:Int,fromCol:Int, toRow:Int, toCol:Int): Boolean {
+        val piece = chessBoard[fromRow][fromCol]
+        if (piece != null) {
+            if (piece.moveIsValid(fromRow, fromCol, toRow, toCol)) {
+                if(chessBoard[fromRow][fromCol]!!.color != chessBoard[toRow][toCol]!!.color){
+                    chessBoard[toRow][toCol]!!.isAlive = false
+                }
+                if(chessBoard[fromRow][fromCol]!!.color == chessBoard[toRow][toCol]!!.color){
+                    return false
+                }
+                chessBoard[toRow][toCol] = piece
+                chessBoard[fromRow][fromCol] = null
+                return true
+            }
+        }
+        return false
+    }
+    fun getChessBoard(): Array<Array<Piece?>> {
+        return chessBoard
+    }
+    fun setChessBoard(cb : Array<Array<Piece?>>) {
+        chessBoard = cb
+    }
+    fun endGameBecauseTimeout(whoWon: String): String {
+        return "white"
+    }
+    fun isGameFinished(): Boolean {
+        return false
+    }
+    fun isWhiteTurn(): Boolean {
+        return false
     }
 
-    companion object {
 
-
-        fun isGameFinished(): Any {
-            return false
-        }
-
-        fun isWhiteTurn(): Boolean {
-            return false
-        }
-    }
 }
