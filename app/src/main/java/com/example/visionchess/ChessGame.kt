@@ -48,34 +48,34 @@ class ChessGame {
         start()
     }
 
-    private fun createChessGame(chessBoard: Array<Array<String>>, playerWithWhitePieces: Player, playerWithBlackPieces: Player,
+    private fun createChessGame(playerWithWhitePieces: Player, playerWithBlackPieces: Player,
                                 time: String, type: String) {
 
         for (col in 0..7){
             var columnLetter = numberToLetterMapDeveloperVersion[col]
-            chessBoard[1][col] = Pawn("P", "white", columnLetter + "2", true, isMoved = false).toString()
-            chessBoard[6][col] = Pawn("P", "black", columnLetter + "7", true, isMoved = false).toString()
+            chessBoard[1][col] = Pawn("P", "white", columnLetter + "2", true, isMoved = false)
+            chessBoard[6][col] = Pawn("P", "black", columnLetter + "7", true, isMoved = false)
         }
-        chessBoard[0][0] = Rook("R", "white", "A1", true, isMoved = false).toString()
-        chessBoard[0][7] = Rook("R", "white", "H1", true, isMoved = false).toString()
-        chessBoard[7][0] = Rook("R", "black", "A8", true, isMoved = false).toString()
-        chessBoard[7][7] = Rook("R", "black", "H8", true, isMoved = false).toString()
+        chessBoard[0][0] = Rook("R", "white", "A1", true, isMoved = false)
+        chessBoard[0][7] = Rook("R", "white", "H1", true, isMoved = false)
+        chessBoard[7][0] = Rook("R", "black", "A8", true, isMoved = false)
+        chessBoard[7][7] = Rook("R", "black", "H8", true, isMoved = false)
 
-        chessBoard[0][1] = Knight("N", "white", "B1", true, isMoved = false).toString()
-        chessBoard[0][6] = Knight("N", "white", "G1", true, isMoved = false).toString()
-        chessBoard[7][1] = Knight("N", "black", "B8", true, isMoved = false).toString()
-        chessBoard[7][6] = Knight("N", "black", "G8", true, isMoved = false).toString()
+        chessBoard[0][1] = Knight("N", "white", "B1", true, isMoved = false)
+        chessBoard[0][6] = Knight("N", "white", "G1", true, isMoved = false)
+        chessBoard[7][1] = Knight("N", "black", "B8", true, isMoved = false)
+        chessBoard[7][6] = Knight("N", "black", "G8", true, isMoved = false)
 
-        chessBoard[0][2] = Bishop("B", "white", "C1", true, isMoved = false).toString()
-        chessBoard[0][5] = Bishop("B", "white", "F1", true, isMoved = false).toString()
-        chessBoard[7][2] = Bishop("B", "black", "C8", true, isMoved = false).toString()
-        chessBoard[7][5] = Bishop("B", "black", "F8", true, isMoved = false).toString()
+        chessBoard[0][2] = Bishop("B", "white", "C1", true, isMoved = false)
+        chessBoard[0][5] = Bishop("B", "white", "F1", true, isMoved = false)
+        chessBoard[7][2] = Bishop("B", "black", "C8", true, isMoved = false)
+        chessBoard[7][5] = Bishop("B", "black", "F8", true, isMoved = false)
 
-        chessBoard[0][3] = Queen("Q", "white", "D1", true, isMoved = false).toString()
-        chessBoard[7][3] = Queen("Q", "black", "D8", true, isMoved = false).toString()
+        chessBoard[0][3] = Queen("Q", "white", "D1", true, isMoved = false)
+        chessBoard[7][3] = Queen("Q", "black", "D8", true, isMoved = false)
 
-        chessBoard[0][4] = King("K", "white", "E1", true, isMoved = false).toString()
-        chessBoard[7][4] = King("K", "black", "E8", true, isMoved = false).toString()
+        chessBoard[0][4] = King("K", "white", "E1", true, isMoved = false)
+        chessBoard[7][4] = King("K", "black", "E8", true, isMoved = false)
     }
 
 

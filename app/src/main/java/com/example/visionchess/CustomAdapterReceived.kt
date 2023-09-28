@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
@@ -39,7 +40,10 @@ class CustomAdapterReceived(private val receivedList: List<String>) : RecyclerVi
 
             val currentDatabaseReference = databaseReference.child("users/$currentUserId/friends")
             currentDatabaseReference.push().setValue(receivedItemName)
-            val receivedDatabaseReference = databaseReference.child("users/$currentUserId/friendsRequestsReceived")
+            val receivedDatabaseReference = databaseReference.child("users/$currentUserId/friendRequestsReceived")
+            receivedDatabaseReference.child("-NfBGyF1aZ3I4oyzwiX3").removeValue()
+            val newRef = "https://visionchess-928e0-default-rtdb.europe-west1.firebasedatabase.app/users/QxNvtvdbmZOPCx7oEhWrBhwWfRE3/friendRequestsReceived/-NfBGyF1aZ3I4oyzwiX3"
+//
             val query = databaseReference.child("users").orderByChild("nickname").equalTo(receivedItemName)
             query.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
@@ -87,7 +91,7 @@ class CustomAdapterReceived(private val receivedList: List<String>) : RecyclerVi
                     for (ds in snapshot.children) {
                         val key = ds.key
                         val sentDatabaseReference = databaseReference.child("$key/friendsRequestsSent")
-                        //sentDatabaseReference.child(receivedItemName).removeValue()
+                        sentDatabaseReference.child(receivedItemName).removeValue()
                     }
                 }
                 override fun onCancelled(error: DatabaseError) {

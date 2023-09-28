@@ -48,6 +48,7 @@ class GameInvisible : Fragment() {
         val player1name = rootView.findViewById<TextView>(R.id.player1name2)
         val player2timer = rootView.findViewById<TextView>(R.id.player2Timer)
         val player1timer = rootView.findViewById<TextView>(R.id.player1Timer)
+        val fragmentManager = activity?.supportFragmentManager
 
         val currentGameMode = Bundle()
         val timeFormat = currentGameMode.getString("TimeFormat")
@@ -69,7 +70,12 @@ class GameInvisible : Fragment() {
 //            }
 //        }
 
-
+        buttonShowBoard.setOnClickListener {
+            handler.postDelayed({
+                fragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView, GameVisible())?.addToBackStack(null)
+                    ?.commit()
+            }, 250)
+        }
         // Inflate the layout for this fragment
         return rootView
     }
