@@ -41,16 +41,13 @@ class CustomAdapterReceived(private val receivedList: List<String>) : RecyclerVi
             val currentDatabaseReference = databaseReference.child("users/$currentUserId/friends")
             currentDatabaseReference.push().setValue(receivedItemName)
             val receivedDatabaseReference = databaseReference.child("users/$currentUserId/friendRequestsReceived")
-            receivedDatabaseReference.child("-NfBGyF1aZ3I4oyzwiX3").removeValue()
-            val newRef = "https://visionchess-928e0-default-rtdb.europe-west1.firebasedatabase.app/users/QxNvtvdbmZOPCx7oEhWrBhwWfRE3/friendRequestsReceived/-NfBGyF1aZ3I4oyzwiX3"
-//
             val query = databaseReference.child("users").orderByChild("nickname").equalTo(receivedItemName)
             query.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
 
                     for (user in snapshot.children) {
                         val userId = user.key
-                        Toast.makeText(holder.itemView.context, userId, Toast.LENGTH_SHORT).show()
+
                         val currentUserNicknamePath = databaseReference.child("users/${currentUser?.uid}/nickname")
                         currentUserNicknamePath.addValueEventListener(object : ValueEventListener {
                             override fun onDataChange(snapshot: DataSnapshot) {
@@ -58,10 +55,39 @@ class CustomAdapterReceived(private val receivedList: List<String>) : RecyclerVi
                                     val currentUserNickname = snapshot.value.toString()
                                     databaseReference.child("users/$userId/friends")
                                         .push().setValue(currentUserNickname)
-                                    //I WANT TO REMOVE THE FRIEND REQUEST FROM THE OTHER USER
-                                    databaseReference.child("users/$userId/friendsRequestsSent")
-                                        .child(currentUserNickname).removeValue()
-                                    receivedDatabaseReference.child(receivedItemName).removeValue()
+                                    val query2 =
+                                        databaseReference.child("users/$userId/friendRequestsSent")
+                                            .orderByValue().equalTo(currentUserNickname)
+
+                                    query2.addListenerForSingleValueEvent(object : ValueEventListener {
+                                        override fun onDataChange(snapshot: DataSnapshot) {
+                                            for (ds in snapshot.children) {
+                                                val key = ds.key
+                                                val sentDatabaseReference =
+                                                    databaseReference.child("users/$userId/friendRequestsSent")
+                                                sentDatabaseReference.child(key!!).removeValue()
+                                            }
+                                        }
+
+                                        override fun onCancelled(error: DatabaseError) {
+                                            //Log.w("TAG", "loadPost:onCancelled", error.toException())
+                                        }
+                                    })
+                                    val query3 = databaseReference.child("users/$currentUserId/friendRequestsReceived")
+                                        .orderByValue().equalTo(receivedItemName)
+                                    query3.addListenerForSingleValueEvent(object : ValueEventListener {
+                                        override fun onDataChange(snapshot: DataSnapshot) {
+                                            for (ds in snapshot.children) {
+                                                val key = ds.key
+                                                receivedDatabaseReference.child(key!!).removeValue()
+                                            }
+                                        }
+
+                                        override fun onCancelled(error: DatabaseError) {
+                                            //Log.w("TAG", "loadPost:onCancelled", error.toException())
+                                        }
+                                    })
+
 
                                 }
                             }
@@ -83,14 +109,14 @@ class CustomAdapterReceived(private val receivedList: List<String>) : RecyclerVi
 
         }
         holder.buttonNo.setOnClickListener{
-            val receivedDatabaseReference = databaseReference.child("$currentUserId/friendsRequestsReceived")
+            val receivedDatabaseReference = databaseReference.child("$currentUserId/friendRequestsReceived")
             receivedDatabaseReference.child(receivedItemName).removeValue()
             val query = databaseReference.orderByChild("nickname").equalTo(receivedItemName)
             query.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     for (ds in snapshot.children) {
                         val key = ds.key
-                        val sentDatabaseReference = databaseReference.child("$key/friendsRequestsSent")
+                        val sentDatabaseReference = databaseReference.child("$key/friendRequestsSent")
                         sentDatabaseReference.child(receivedItemName).removeValue()
                     }
                 }
