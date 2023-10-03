@@ -51,8 +51,8 @@ class GameInvisible : Fragment() {
         val fragmentManager = activity?.supportFragmentManager
 
         val currentGameMode = Bundle()
-        val timeFormat = currentGameMode.getString("TimeFormat")
-        val howManyPeeks = currentGameMode.getString("HowManyPeeks")
+        //val timeFormat = currentGameMode.getString("TimeFormat")
+        // howManyPeeks = currentGameMode.getString("HowManyPeeks")
         val handler = android.os.Handler(android.os.Looper.getMainLooper())
         //TIME FORMAT CRASHES THE CODe
         var timerWhite = Timer()

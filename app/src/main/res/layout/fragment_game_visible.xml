@@ -914,8 +914,25 @@
         app:layout_constraintStart_toStartOf="@+id/a2"
         app:layout_constraintTop_toBottomOf="@+id/a3" />
 
+    <TextView
+        android:id="@+id/blackTimer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:text="TextView"
+        app:layout_constraintStart_toEndOf="@+id/player1name"
+        app:layout_constraintTop_toTopOf="parent" />
 
-
+    <TextView
+        android:id="@+id/whiteTimer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginBottom="24dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/player2name" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -100,6 +101,43 @@ class GameVisible : Fragment() {
         val h6 = rootView.findViewById<ImageView>(R.id.h6)
         val h7 = rootView.findViewById<ImageView>(R.id.h7)
         val h8 = rootView.findViewById<ImageView>(R.id.h8)
+        val player2pic = rootView.findViewById<ImageView>(R.id.player2pic)
+        val player1pic = rootView.findViewById<ImageView>(R.id.player1pic)
+        val player2name = rootView.findViewById<TextView>(R.id.player2name)
+        val player1name = rootView.findViewById<TextView>(R.id.player1name)
+        val blackRook1 = rootView.findViewById<ImageView>(R.id.blackRook1)
+        val blackKnight1 = rootView.findViewById<ImageView>(R.id.blackKnight1)
+        val blackBishop1 = rootView.findViewById<ImageView>(R.id.blackBishop1)
+        val blackQueen = rootView.findViewById<ImageView>(R.id.blackQueen)
+        val blackKing = rootView.findViewById<ImageView>(R.id.blackKing)
+        val blackBishop2 = rootView.findViewById<ImageView>(R.id.blackBishop2)
+        val blackKnight2 = rootView.findViewById<ImageView>(R.id.blackKnight2)
+        val blackRook2 = rootView.findViewById<ImageView>(R.id.blackRook2)
+        val blackAPawn = rootView.findViewById<ImageView>(R.id.blackAPawn)
+        val blackBPawn = rootView.findViewById<ImageView>(R.id.blackBPawn)
+        val blackCPawn = rootView.findViewById<ImageView>(R.id.blackCPawn)
+        val blackDPawn = rootView.findViewById<ImageView>(R.id.blackDPawn)
+        val blackEPawn = rootView.findViewById<ImageView>(R.id.blackEPawn)
+        val blackFPawn = rootView.findViewById<ImageView>(R.id.blackFPawn)
+        val blackGPawn = rootView.findViewById<ImageView>(R.id.blackGPawn)
+        val blackHPawn = rootView.findViewById<ImageView>(R.id.blackHPawn)
+        val whiteRook1 = rootView.findViewById<ImageView>(R.id.whiteRook1)
+        val whiteKnight1 = rootView.findViewById<ImageView>(R.id.whiteKnight1)
+        val whiteBishop1 = rootView.findViewById<ImageView>(R.id.whiteBishop1)
+        val whiteQueen = rootView.findViewById<ImageView>(R.id.whiteQueen)
+        val whiteKing = rootView.findViewById<ImageView>(R.id.whiteKing)
+        val whiteBishop2 = rootView.findViewById<ImageView>(R.id.whiteBishop2)
+        val whiteKnight2 = rootView.findViewById<ImageView>(R.id.whiteKnight2)
+        val whiteRook2 = rootView.findViewById<ImageView>(R.id.whiteRook2)
+        val whiteAPawn = rootView.findViewById<ImageView>(R.id.whiteAPawn)
+        val whiteBPawn = rootView.findViewById<ImageView>(R.id.whiteBPawn)
+        val whiteCPawn = rootView.findViewById<ImageView>(R.id.whiteCPawn)
+        val whiteDPawn = rootView.findViewById<ImageView>(R.id.whiteDPawn)
+        val whiteEPawn = rootView.findViewById<ImageView>(R.id.whiteEPawn)
+        val whiteFPawn = rootView.findViewById<ImageView>(R.id.whiteFPawn)
+        val whiteGPawn = rootView.findViewById<ImageView>(R.id.whiteGPawn)
+        val whiteHPawn = rootView.findViewById<ImageView>(R.id.whiteHPawn)
+
 
 
 

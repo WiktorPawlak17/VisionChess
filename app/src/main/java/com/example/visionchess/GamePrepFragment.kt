@@ -11,6 +11,12 @@ import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.Spinner
 import android.widget.TextView
+import android.widget.Toast
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -40,6 +46,10 @@ class GamePrepFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View? {
         val rootView = inflater.inflate(R.layout.fragment_game_prep, container, false)
+        val database = FirebaseDatabase.getInstance("https://visionchess-928e0-default-rtdb.europe-west1.firebasedatabase.app/")
+        val databaseReference = database.reference
+        val auth = FirebaseAuth.getInstance()
+        val currentUser = auth.currentUser
         val whichButtonClicked = arguments
         val animationFadeIn = AnimationUtils.loadAnimation(context, R.anim.fade_in_very_quick)
         val timeFormatTextView = rootView.findViewById<TextView>(R.id.timeFormatTextView)
@@ -57,14 +67,76 @@ class GamePrepFragment : Fragment() {
         val handler = Handler(Looper.getMainLooper())
         val currentGameMode = Bundle()
         val nextFragment = GameInvisible()
+
         nextFragment.arguments = currentGameMode
         letsPlayButton.setOnClickListener{
             val timeFormat = timeFormatSpinner.selectedItem.toString()
             val howManyPeeks = howManyPeeksSpinner.selectedItem.toString()
-            currentGameMode.putString("timeFormat", timeFormat)
-            currentGameMode.putString("howManyPeeks", howManyPeeks)
-            fragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView, nextFragment)?.addToBackStack(null)
-                ?.commit()
+            //currentGameMode.putString("timeFormat", timeFormat)
+            //currentGameMode.putString("howManyPeeks", howManyPeeks)
+            if(whichButtonClicked != null) {
+                var foundAnOpponent = false
+                var opponent = ""
+                val buttonClicked = whichButtonClicked.getString("buttonClicked")
+                val waitingForGameReference = databaseReference.child("waitingForGame")
+                val query = waitingForGameReference
+                    .orderByChild("gameMode").equalTo(buttonClicked)
+                    .orderByChild("timeFormat").equalTo(timeFormat)
+                    .orderByChild("howManyPeeks").equalTo(howManyPeeks)
+                query.addListenerForSingleValueEvent(object: ValueEventListener{
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        for(snap in snapshot.children){
+                            foundAnOpponent = true
+                            opponent = snap.key.toString()
+                        }
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        //Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show()
+                    }
+                })
+
+
+
+                if(foundAnOpponent){
+                    databaseReference.child("waitingForGame").child(opponent).removeValue()
+                    databaseReference.child("waitingForGame").child(currentUser!!.uid).removeValue()
+                    databaseReference.child("games").child(currentUser.uid).child("opponent").setValue(opponent)
+                    databaseReference.child("games").child(opponent).child("opponent").setValue(currentUser.uid)
+                    databaseReference.child("games").child(currentUser.uid).child("timeFormat").setValue(timeFormat)
+                    databaseReference.child("games").child(opponent).child("timeFormat").setValue(timeFormat)
+                    databaseReference.child("games").child(currentUser.uid).child("howManyPeeks").setValue(howManyPeeks)
+                    databaseReference.child("games").child(opponent).child("howManyPeeks").setValue(howManyPeeks)
+                    databaseReference.child("games").child(currentUser.uid).child("gameMode").setValue(buttonClicked)
+                    databaseReference.child("games").child(opponent).child("gameMode").setValue(buttonClicked)
+                    fragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView, nextFragment)?.addToBackStack(null)
+                        ?.commit()
+                }else{
+                    databaseReference.child("waitingForGame").child(currentUser!!.uid).child("timeFormat").setValue(timeFormat)
+                    databaseReference.child("waitingForGame").child(currentUser.uid).child("howManyPeeks").setValue(howManyPeeks)
+                    databaseReference.child("waitingForGame").child(currentUser.uid).child("gameMode").setValue(buttonClicked)
+                    //TODO : Waiting for an opponent
+                    Toast.makeText(context, "Waiting for an opponent", Toast.LENGTH_SHORT).show()
+
+                    while(!foundAnOpponent){
+                        query.addListenerForSingleValueEvent(object: ValueEventListener{
+                            override fun onDataChange(snapshot: DataSnapshot) {
+                                for(snap in snapshot.children){
+                                    if(snap.key.toString() != currentUser.uid){
+                                        foundAnOpponent = true
+                                        opponent = snap.key.toString()
+                                    }
+                                }
+                            }
+
+                            override fun onCancelled(error: DatabaseError) {
+                                //Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show()
+                            }
+                        })
+                    }
+                }
+            }
+
         }
         if(whichButtonClicked != null) {
             val buttonClicked = whichButtonClicked.getString("buttonClicked")
