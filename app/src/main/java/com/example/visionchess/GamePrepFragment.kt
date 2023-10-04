@@ -115,7 +115,7 @@ class GamePrepFragment : Fragment() {
                     databaseReference.child("waitingForGame").child(currentUser!!.uid).child("timeFormat").setValue(timeFormat)
                     databaseReference.child("waitingForGame").child(currentUser.uid).child("howManyPeeks").setValue(howManyPeeks)
                     databaseReference.child("waitingForGame").child(currentUser.uid).child("gameMode").setValue(buttonClicked)
-                    //TODO : Waiting for an opponent
+                    // Waiting for an opponent
                     Toast.makeText(context, "Waiting for an opponent", Toast.LENGTH_SHORT).show()
 
                     while(!foundAnOpponent){
@@ -125,8 +125,11 @@ class GamePrepFragment : Fragment() {
                                     if(snap.key.toString() != currentUser.uid){
                                         foundAnOpponent = true
                                         opponent = snap.key.toString()
+                                        fragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView, nextFragment)?.addToBackStack(null)
+                                            ?.commit()
                                     }
                                 }
+
                             }
 
                             override fun onCancelled(error: DatabaseError) {
