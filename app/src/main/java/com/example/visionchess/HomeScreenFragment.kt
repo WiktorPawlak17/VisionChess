@@ -1,6 +1,8 @@
 package com.example.visionchess
 
+import android.Manifest
 import android.content.Context
+import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.os.Bundle
 import android.os.Handler
@@ -13,6 +15,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
 import org.json.JSONObject
@@ -37,6 +40,8 @@ class HomeScreenFragment : Fragment() {
 //      super.onCreate(savedInstanceState)
 //    }
       private lateinit var playTextView: TextView
+    private val recordAudioPermission = Manifest.permission.RECORD_AUDIO
+    private val requestRecordAudioPermission = 200
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -96,6 +101,19 @@ class HomeScreenFragment : Fragment() {
         val fragmentManager = activity?.supportFragmentManager
         val handler = Handler(Looper.getMainLooper())
         val animationFadeOut = AnimationUtils.loadAnimation(context, R.anim.fade_out_very_quick)
+
+        val hasMicrophonePermission = context?.let {
+            ActivityCompat.checkSelfPermission(
+                it,
+                Manifest.permission.RECORD_AUDIO
+            )
+        } == PackageManager.PERMISSION_GRANTED
+
+        if(!hasMicrophonePermission){
+            requestMicrophonePermission()
+        }
+
+        // Check if the app has microphone permission
 
 
         ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -288,7 +306,28 @@ class HomeScreenFragment : Fragment() {
             return null
         }
     }
+    private fun requestMicrophonePermission() {
+        ActivityCompat.requestPermissions(
+            this.requireActivity(),
+            arrayOf(recordAudioPermission),
+            requestRecordAudioPermission
+        )
+    }
+    @Deprecated("Deprecated in Java")
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
 
+        if (requestCode == requestRecordAudioPermission) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+               Toast.makeText(context, "Permission granted", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(context, "Permission denied", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
     override fun onDestroy() {
         super.onDestroy()
         val handler = Handler(Looper.getMainLooper())

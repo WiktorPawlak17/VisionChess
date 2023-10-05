@@ -79,15 +79,14 @@ class GamePrepFragment : Fragment() {
                 var opponent = ""
                 val buttonClicked = whichButtonClicked.getString("buttonClicked")
                 val waitingForGameReference = databaseReference.child("waitingForGame")
-                val query = waitingForGameReference
-                    .orderByChild("gameMode").equalTo(buttonClicked)
-                    .orderByChild("timeFormat").equalTo(timeFormat)
-                    .orderByChild("howManyPeeks").equalTo(howManyPeeks)
-                query.addListenerForSingleValueEvent(object: ValueEventListener{
+                waitingForGameReference.addListenerForSingleValueEvent(object: ValueEventListener{
                     override fun onDataChange(snapshot: DataSnapshot) {
                         for(snap in snapshot.children){
-                            foundAnOpponent = true
-                            opponent = snap.key.toString()
+                            if(snap.child("timeFormat").value.toString() == timeFormat && snap.child("howManyPeeks").value.toString() == howManyPeeks && snap.child("gameMode").value.toString() == buttonClicked){
+                                foundAnOpponent = true
+                                opponent = snap.key.toString()
+                            }
+
                         }
                     }
 
@@ -119,7 +118,7 @@ class GamePrepFragment : Fragment() {
                     Toast.makeText(context, "Waiting for an opponent", Toast.LENGTH_SHORT).show()
 
                     while(!foundAnOpponent){
-                        query.addListenerForSingleValueEvent(object: ValueEventListener{
+                        waitingForGameReference.addListenerForSingleValueEvent(object: ValueEventListener{
                             override fun onDataChange(snapshot: DataSnapshot) {
                                 for(snap in snapshot.children){
                                     if(snap.key.toString() != currentUser.uid){
