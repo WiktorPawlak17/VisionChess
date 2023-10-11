@@ -1,4 +1,4 @@
-package com.example.visionchess
+package com.example.visionchess.Pieces
 
 import kotlin.math.abs
 

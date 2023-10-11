@@ -23,22 +23,11 @@ import java.io.File
 import java.util.Locale
 
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [HomeScreenFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+
 @Suppress("SameParameterValue", "DEPRECATION")
 class HomeScreenFragment : Fragment() {
-      //  var something = find
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//      super.onCreate(savedInstanceState)
-//    }
+
       private lateinit var playTextView: TextView
     private val recordAudioPermission = Manifest.permission.RECORD_AUDIO
     private val requestRecordAudioPermission = 200
@@ -346,13 +335,7 @@ class HomeScreenFragment : Fragment() {
          */
         // TODO: Rename and change types and number of parameters
         private var isFirstLaunch = true
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            HomeScreenFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+
+
     }
 }

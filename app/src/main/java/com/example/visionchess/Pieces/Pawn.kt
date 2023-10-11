@@ -1,4 +1,6 @@
-package com.example.visionchess
+package com.example.visionchess.Pieces
+
+import com.example.visionchess.Pieces.Piece
 
 class Pawn(name: String, color: String, position: String, isAlive: Boolean, isMoved: Boolean) :
     Piece(name, color, position, isAlive, isMoved) {

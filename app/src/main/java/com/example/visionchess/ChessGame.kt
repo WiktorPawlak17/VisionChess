@@ -1,5 +1,13 @@
 package com.example.visionchess
 
+import com.example.visionchess.Pieces.Bishop
+import com.example.visionchess.Pieces.King
+import com.example.visionchess.Pieces.Knight
+import com.example.visionchess.Pieces.Pawn
+import com.example.visionchess.Pieces.Piece
+import com.example.visionchess.Pieces.Queen
+import com.example.visionchess.Pieces.Rook
+
 
 class ChessGame {
 
