@@ -60,15 +60,17 @@ class GamePrepFragment : Fragment() {
                 var foundAnOpponent = false
                 var opponent = ""
                 val buttonClicked = whichButtonClicked.getString("buttonClicked")
-                val waitingForGameReference = databaseReference.child("waitingForGame")
-                waitingForGameReference.addListenerForSingleValueEvent(object: ValueEventListener{
+                val currentGameString = buttonClicked + timeFormat + howManyPeeks
+                val newGameReference = databaseReference.child(currentGameString)
+
+                newGameReference.addListenerForSingleValueEvent(object: ValueEventListener{
                     override fun onDataChange(snapshot: DataSnapshot) {
                         for(snap in snapshot.children){
-                            if(snap.child("timeFormat").value.toString() == timeFormat && snap.child("howManyPeeks").value.toString() == howManyPeeks && snap.child("gameMode").value.toString() == buttonClicked){
-                                foundAnOpponent = true
-                                opponent = snap.key.toString()
-                            }
-
+                                if(snap.key.toString() != currentUser!!.uid){
+                                    foundAnOpponent = true
+                                    opponent = snap.key.toString()
+                                    Toast.makeText(context, "Found an opponent", Toast.LENGTH_SHORT).show()
+                                }
                         }
                     }
 
@@ -80,44 +82,44 @@ class GamePrepFragment : Fragment() {
 
 
                 if(foundAnOpponent){
-                    databaseReference.child("waitingForGame").child(opponent).removeValue()
-                    databaseReference.child("waitingForGame").child(currentUser!!.uid).removeValue()
-                    databaseReference.child("games").child(currentUser.uid).child("opponent").setValue(opponent)
-                    databaseReference.child("games").child(opponent).child("opponent").setValue(currentUser.uid)
-                    databaseReference.child("games").child(currentUser.uid).child("timeFormat").setValue(timeFormat)
-                    databaseReference.child("games").child(opponent).child("timeFormat").setValue(timeFormat)
-                    databaseReference.child("games").child(currentUser.uid).child("howManyPeeks").setValue(howManyPeeks)
-                    databaseReference.child("games").child(opponent).child("howManyPeeks").setValue(howManyPeeks)
-                    databaseReference.child("games").child(currentUser.uid).child("gameMode").setValue(buttonClicked)
-                    databaseReference.child("games").child(opponent).child("gameMode").setValue(buttonClicked)
+                    databaseReference.child(currentGameString).child(opponent).removeValue()
+                    databaseReference.child(currentGameString).child(currentUser!!.uid).removeValue()
+                    databaseReference.child("gameLive").child(currentUser.uid).child("opponent").setValue(opponent)
+                    databaseReference.child("gameLive").child(opponent).child("opponent").setValue(currentUser.uid)
+                    databaseReference.child("gameLive").child(currentUser.uid).child("timeFormat").setValue(timeFormat)
+                    databaseReference.child("gameLive").child(opponent).child("timeFormat").setValue(timeFormat)
+                    databaseReference.child("gameLive").child(currentUser.uid).child("howManyPeeks").setValue(howManyPeeks)
+                    databaseReference.child("gameLive").child(opponent).child("howManyPeeks").setValue(howManyPeeks)
+                    databaseReference.child("gameLive").child(currentUser.uid).child("gameMode").setValue(buttonClicked)
+                    databaseReference.child("gameLive").child(opponent).child("gameMode").setValue(buttonClicked)
                     fragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView, nextFragment)?.addToBackStack(null)
                         ?.commit()
                 }else{
-                    databaseReference.child("waitingForGame").child(currentUser!!.uid).child("timeFormat").setValue(timeFormat)
-                    databaseReference.child("waitingForGame").child(currentUser.uid).child("howManyPeeks").setValue(howManyPeeks)
-                    databaseReference.child("waitingForGame").child(currentUser.uid).child("gameMode").setValue(buttonClicked)
+                    databaseReference.child(currentGameString).child(currentUser!!.uid).child("timeFormat").setValue(timeFormat)
+                    databaseReference.child(currentGameString).child(currentUser.uid).child("howManyPeeks").setValue(howManyPeeks)
+                    databaseReference.child(currentGameString).child(currentUser.uid).child("gameMode").setValue(buttonClicked)
                     // Waiting for an opponent
                     Toast.makeText(context, "Waiting for an opponent", Toast.LENGTH_SHORT).show()
 
-                    while(!foundAnOpponent){
-                        waitingForGameReference.addListenerForSingleValueEvent(object: ValueEventListener{
-                            override fun onDataChange(snapshot: DataSnapshot) {
-                                for(snap in snapshot.children){
-                                    if(snap.key.toString() != currentUser.uid){
-                                        foundAnOpponent = true
-                                        opponent = snap.key.toString()
-                                        fragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView, nextFragment)?.addToBackStack(null)
-                                            ?.commit()
-                                    }
-                                }
-
-                            }
-
-                            override fun onCancelled(error: DatabaseError) {
-                                //Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show()
-                            }
-                        })
-                    }
+//                    while(!foundAnOpponent){
+//                        waitingForGameReference.addListenerForSingleValueEvent(object: ValueEventListener{
+//                            override fun onDataChange(snapshot: DataSnapshot) {
+//                                for(snap in snapshot.children){
+//                                    if(snap.key.toString() != currentUser.uid){
+//                                        foundAnOpponent = true
+//                                        opponent = snap.key.toString()
+//                                        fragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView, nextFragment)?.addToBackStack(null)
+//                                            ?.commit()
+//                                    }
+//                                }
+//
+//                            }
+//
+//                            override fun onCancelled(error: DatabaseError) {
+//                                //Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show()
+//                            }
+//                        })
+//                    }
                 }
             }
 
