@@ -9,6 +9,11 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import java.util.Timer
 
 
@@ -32,16 +37,30 @@ class GameInvisible : Fragment() {
         val player1timer = rootView.findViewById<TextView>(R.id.player1Timer)
         val fragmentManager = activity?.supportFragmentManager
 
-        val currentGameMode = Bundle()
-        //val timeFormat = currentGameMode.getString("TimeFormat")
-        // howManyPeeks = currentGameMode.getString("HowManyPeeks")
+        val database = FirebaseDatabase.getInstance("https://visionchess-928e0-default-rtdb.europe-west1.firebasedatabase.app/")
+        val databaseReference = database.reference
+        val auth = FirebaseAuth.getInstance()
+        val currentUser = auth.currentUser
+        val gameLiveReference = databaseReference.child("gameLive")
+        val currentOpponentReference = gameLiveReference.child(currentUser!!.uid).child("opponent")
+        var opponent = ""
+        currentOpponentReference.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                opponent = snapshot.value.toString()
+                val opponentReference = databaseReference.child("users").child(opponent)
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show()
+            }
+        })
+
         val handler = android.os.Handler(android.os.Looper.getMainLooper())
         //TIME FORMAT CRASHES THE CODe
         var timerWhite = Timer()
-        //Toast.makeText(context, timeFormat, Toast.LENGTH_SHORT).show()
-        //val counterWhite = timeFormat!!.toInt()*60
         var timerBlack = Timer()
-        //val counterBlack = timeFormat!!.toInt()*60
+
 
 
 //        if(timeFormat!= null && howManyPeeks!=null) {

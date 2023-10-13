@@ -69,7 +69,6 @@ class GamePrepFragment : Fragment() {
                                 if(snap.key.toString() != currentUser!!.uid){
                                     foundAnOpponent = true
                                     opponent = snap.key.toString()
-                                    Toast.makeText(context, "Found an opponent", Toast.LENGTH_SHORT).show()
                                     databaseReference.child(currentGameString).child(opponent).removeValue()
                                     databaseReference.child(currentGameString).child(currentUser!!.uid).removeValue()
                                     databaseReference.child("gameLive").child(currentUser.uid).child("opponent").setValue(opponent)
@@ -80,7 +79,7 @@ class GamePrepFragment : Fragment() {
                                     databaseReference.child("gameLive").child(opponent).child("howManyPeeks").setValue(howManyPeeks)
                                     databaseReference.child("gameLive").child(currentUser.uid).child("gameMode").setValue(buttonClicked)
                                     databaseReference.child("gameLive").child(opponent).child("gameMode").setValue(buttonClicked)
-                                   //I NEED TO NOTIFY THE OPPONENT HERE //TODO()
+
                                     fragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView, nextFragment)?.addToBackStack(null)
                                         ?.commit()
 
@@ -105,6 +104,39 @@ class GamePrepFragment : Fragment() {
                         databaseReference.child(currentGameString).child(currentUser.uid).child("gameMode").setValue(buttonClicked)
                         // Waiting for an opponent
                         Toast.makeText(context, "Waiting for an opponent", Toast.LENGTH_SHORT).show()
+                        val liveGameReference = databaseReference.child("gameLive").child(currentUser.uid)
+                        val matchCheckingRunnable = object: Runnable{
+                            override fun run() {
+                                handler.postDelayed(this, 1000)
+
+                                liveGameReference.addListenerForSingleValueEvent(object: ValueEventListener {
+                                    override fun onDataChange(snapshot: DataSnapshot) {
+                                        for (snap in snapshot.children) {
+                                            if (snap.key.toString() != currentUser!!.uid) {
+                                                foundAnOpponent = true
+                                                opponent = snap.key.toString()
+
+                                                fragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView, nextFragment)?.addToBackStack(null)
+                                                    ?.commit()
+                                            }
+                                        }
+                                    }
+
+                                    override fun onCancelled(error: DatabaseError) {
+                                        //Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show()
+                                    }
+                                })
+
+                                if(foundAnOpponent){
+                                    handler.removeCallbacks(this)
+                                    handler.postDelayed({
+                                        fragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView, nextFragment)?.addToBackStack(null)
+                                            ?.commit()
+                                    }, 2000)
+                                }
+                            }
+                        }
+                        matchCheckingRunnable.run()
                     }
 
 
