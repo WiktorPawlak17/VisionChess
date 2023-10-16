@@ -138,7 +138,7 @@ class ChessGame {
 
     private fun start(){
 
-        //createChessGame()
+        createChessGame()
     }
     fun movePiece(fromRow:Int,fromCol:Int, toRow:Int, toCol:Int): Boolean {
 //        val piece = chessBoard[fromRow][fromCol]
@@ -162,9 +162,6 @@ class ChessGame {
     }
     fun setChessBoard(cb : HashMap<String, Piece?>) {
         chessBoard2 = cb
-    }
-    fun endGameBecauseTimeout(whoWon: String): String {
-        return "white"
     }
     fun isGameFinished(): Boolean {
         return false

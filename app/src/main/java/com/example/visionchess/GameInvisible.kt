@@ -1,5 +1,6 @@
 package com.example.visionchess
 
+import android.annotation.SuppressLint
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -26,6 +27,7 @@ class GameInvisible : Fragment() {
 
 
 
+    @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -51,7 +53,26 @@ class GameInvisible : Fragment() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 opponent = snapshot.value.toString()
                 val opponentReference = databaseReference.child("users").child(opponent)
+                val opponentNameReference = opponentReference.child("nickname")
+                opponentNameReference.addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        player2name.text = snapshot.value.toString()
+                    }
 
+                    override fun onCancelled(error: DatabaseError) {
+                        Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show()
+                    }
+                })
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show()
+            }
+        })
+        val currentUsernameReference = databaseReference.child("users").child(currentUser.uid).child("nickname")
+        currentUsernameReference.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                player1name.text = snapshot.value.toString()
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -65,44 +86,83 @@ class GameInvisible : Fragment() {
         var timerBlack = Timer()
         val timeReferenceMe = databaseReference.child("gameLive").child(currentUser.uid).child("timeFormat")
         val timeReferenceOpponent = databaseReference.child("gameLive").child(opponent).child("timeFormat")
-        var timerWhiteSeconds = 5
-        var timerBlackSeconds = 5
-        var timerWhiteMinutes = 5
-        var timerBlackMinutes = 5
+        var timerWhiteSeconds = 7
+        var timerBlackSeconds = 7
+        var timerWhiteMinutes = 7
+        var timerBlackMinutes = 7
         var timerWhiteSecondsIncrement = 0
         var timerBlackSecondsIncrement = 0
-//        timeReferenceMe.addListenerForSingleValueEvent(object : ValueEventListener {
-//            override fun onDataChange(snapshot: DataSnapshot) {
-//                val timeFormat = snapshot.value.toString()
-//                when(timeFormat.length){
-//                    5 -> {
-//                        timerWhiteMinutes = timeFormat.substring(0, 1).toInt()
-//                        timerBlackMinutes = timerWhiteMinutes
-//                    }
-//                    6 -> {
-//                        timerWhiteMinutes = timeFormat.substring(0, 2).toInt()
-//                        timerBlackMinutes = timerWhiteMinutes
-//                    }
-//                    13 -> {
-//                        timerWhiteMinutes = timeFormat.substring(0, 1).toInt()
-//                        timerBlackMinutes = timerWhiteMinutes
-//                        timerWhiteSecondsIncrement = timeFormat.substring(9, 10).toInt()
-//                        timerBlackSecondsIncrement = timerWhiteSecondsIncrement
-//                    }
-//                    14 -> {
-//                        timerWhiteMinutes = timeFormat.substring(0, 2).toInt()
-//                        timerBlackMinutes = timerWhiteMinutes
-//                        timerWhiteSecondsIncrement = timeFormat.substring(10, 11).toInt()
-//                        timerBlackSecondsIncrement = timerWhiteSecondsIncrement
-//                    }
-//
-//                }
-//            }
-//
-//            override fun onCancelled(error: DatabaseError) {
-//                Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show()
-//            }
-//        })
+        var color = ""
+        val referenceToGetColor = databaseReference.child("gameLive").child(currentUser.uid).child("color")
+        referenceToGetColor.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                color = snapshot.value.toString()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show()
+            }
+        })
+
+
+
+
+
+        player1timer.text = "$timerWhiteMinutes:$timerWhiteSeconds"
+        player2timer.text = "$timerBlackMinutes:$timerBlackSeconds"
+
+        timeReferenceMe.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val timeFormat = snapshot.value.toString()
+                when(timeFormat.length){
+                    5 -> {
+                        timerWhiteMinutes = timeFormat[0].toString().toInt()
+                        timerBlackMinutes = timerWhiteMinutes
+                        databaseReference.child("gameLive").child(currentUser.uid).child("timeLeft").setValue("$timerWhiteMinutes:00")
+                    }
+                    6 -> {
+                        timerWhiteMinutes = timeFormat.substring(0, 2).toInt()
+                        timerBlackMinutes = timerWhiteMinutes
+                        databaseReference.child("gameLive").child(currentUser.uid).child("timeLeft").setValue("$timerWhiteMinutes:00")
+
+                    }
+                    13 -> {
+                        timerWhiteMinutes = timeFormat[0].toString().toInt()
+                        timerBlackMinutes = timerWhiteMinutes
+                        timerWhiteSecondsIncrement = timeFormat[8].toString().toInt()
+                        timerBlackSecondsIncrement = timerWhiteSecondsIncrement
+                        databaseReference.child("gameLive").child(currentUser.uid).child("timeLeft").setValue("$timerWhiteMinutes:00")
+
+                    }
+                    14 -> {
+                        timerWhiteMinutes = timeFormat.substring(0, 2).toInt()
+                        timerBlackMinutes = timerWhiteMinutes
+                        timerWhiteSecondsIncrement = timeFormat[9].toString().toInt()
+                        timerBlackSecondsIncrement = timerWhiteSecondsIncrement
+                        databaseReference.child("gameLive").child(currentUser.uid).child("timeLeft").setValue("$timerWhiteMinutes:00")
+
+                    }
+                    15 -> {
+                        timerWhiteMinutes = timeFormat.substring(0, 2).toInt()
+                        timerBlackMinutes = timerWhiteMinutes
+                        timerWhiteSecondsIncrement = timeFormat.substring(9, 11).toInt()
+                        timerBlackSecondsIncrement = timerWhiteSecondsIncrement
+                        databaseReference.child("gameLive").child(currentUser.uid).child("timeLeft").setValue("$timerWhiteMinutes:00")
+
+                    }
+
+
+                }
+                timerWhiteSeconds = 0
+                timerBlackSeconds = 0
+                player1timer.text = "$timerWhiteMinutes:$timerWhiteSeconds"
+                player2timer.text = "$timerBlackMinutes:$timerBlackSeconds"
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show()
+            }
+        })
 
 
 
@@ -116,12 +176,25 @@ class GameInvisible : Fragment() {
                 if(timerWhiteSeconds == 0 && timerWhiteMinutes == 0){
                     Toast.makeText(context, "You lost on time", Toast.LENGTH_SHORT).show()
                 }
-                if(timerWhiteSeconds < 10){
-                    player1timer.text = "$timerWhiteMinutes:0$timerWhiteSeconds"
+                if(color == "black"){
+                    if(timerWhiteSeconds < 10) {
+                        player2timer.text = "$timerWhiteMinutes:0$timerWhiteSeconds"
+                    }
+                    else {
+                        player2timer.text = "$timerWhiteMinutes:$timerWhiteSeconds"
+                    }
+                }else {
+                    if(timerWhiteSeconds < 10){
+                        player1timer.text = "$timerWhiteMinutes:0$timerWhiteSeconds"
+                    }else {
+                        player1timer.text = "$timerWhiteMinutes:$timerWhiteSeconds"
+                    }
                 }
-                player1timer.text = "$timerWhiteMinutes:$timerWhiteSeconds"
+
+
                 handler.postDelayed(this, 1000)
             }
+
         }
         val timerBlackRunnable = object : Runnable {
             override fun run() {
@@ -133,10 +206,18 @@ class GameInvisible : Fragment() {
                 if(timerBlackSeconds == 0 && timerBlackMinutes == 0){
                     Toast.makeText(context, "You lost on time", Toast.LENGTH_SHORT).show()
                 }
+                if (color == "black") {
+                    if (timerWhiteSeconds < 10) {
+                        player1timer.text = "$timerWhiteMinutes:0$timerWhiteSeconds"
+                    } else {
+                        player1timer.text = "$timerWhiteMinutes:$timerWhiteSeconds"
+                    }
+                }
                 if(timerBlackSeconds < 10){
                     player2timer.text = "$timerBlackMinutes:0$timerBlackSeconds"
+                }else {
+                    player2timer.text = "$timerBlackMinutes:$timerBlackSeconds"
                 }
-                player2timer.text = "$timerBlackMinutes:$timerBlackSeconds"
                 handler.postDelayed(this, 1000)
             }
         }
@@ -144,68 +225,67 @@ class GameInvisible : Fragment() {
 
         val player1Reference = databaseReference.child("users").child(currentUser.uid)
         val player2Reference = databaseReference.child("users").child(opponent)
-//        try {
+
+        handler.postDelayed({
+           if(color == "black") {
+//                player2pic.rotation = 180f
+//                player2name.rotation = 180f
+//                player2timer.rotation = 180f
+//                player1pic.rotation = 180f
+//                player1name.rotation = 180f
+//                player1timer.rotation = 180f
+//                buttonShowBoard.rotation = 180f
+
+            }else {
 //
-//            val storage = FirebaseStorage.getInstance("gs://visionchess-928e0.appspot.com")
-//            val storageRef = storage.reference
-//            val avatarRef = storageRef.child("images/$currentUser")
-//            val localFile = File.createTempFile("images", "jpg")
-//            avatarRef.getFile(localFile).addOnSuccessListener {
-//                val bitmap = BitmapFactory.decodeFile(localFile.absolutePath)
-//                player1pic.setImageBitmap(bitmap)
-//            }
-//
-//            //val inputStream = context?.contentResolver?.openInputStream(uri)
-//            //val bitmap = BitmapFactory.decodeStream(inputStream)
-//            //avatar.setImageBitmap(bitmap)
-//        } catch (e: Exception) {
-//            Toast.makeText(context, "$e", Toast.LENGTH_SHORT).show()
-//
-//
-//        }
-//        try {
-//
-//            val storage = FirebaseStorage.getInstance("gs://visionchess-928e0.appspot.com")
-//            val storageRef = storage.reference
-//            val avatarRef = storageRef.child("images/$opponent")
-//            val localFile = File.createTempFile("images", "jpg")
-//            avatarRef.getFile(localFile).addOnSuccessListener {
-//                val bitmap = BitmapFactory.decodeFile(localFile.absolutePath)
-//                player2pic.setImageBitmap(bitmap)
-//            }
-//
-//            //val inputStream = context?.contentResolver?.openInputStream(uri)
-//            //val bitmap = BitmapFactory.decodeStream(inputStream)
-//            //avatar.setImageBitmap(bitmap)
-//        } catch (e: Exception) {
-//            Toast.makeText(context, "$e", Toast.LENGTH_SHORT).show()
-//        }
-//        player1Reference.addListenerForSingleValueEvent(object : ValueEventListener {
-//            override fun onDataChange(snapshot: DataSnapshot) {
-//                val player1Name = snapshot.child("nickname").value.toString()
-//                val player1Pic = snapshot.child("profilePic").value.toString()
-//                player1name.text = player1Name
-//                player1pic.setImageResource(player1Pic.toInt())
-//            }
-//
-//            override fun onCancelled(error: DatabaseError) {
-//                Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show()
-//            }
-//        })
-//        player2Reference.addListenerForSingleValueEvent(object : ValueEventListener {
-//            override fun onDataChange(snapshot: DataSnapshot) {
-//                val player2Name = snapshot.child("nickname").value.toString()
-//                val player2Pic = snapshot.child("profilePic").value.toString()
-//                player2name.text = player2Name
-//                player2pic.setImageResource(player2Pic.toInt())
-//            }
-//
-//            override fun onCancelled(error: DatabaseError) {
-//                Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show()
-//            }
-//        })
+            }
+        }, 600)
+
+
+
+
+
+        try {
+
+            val storage = FirebaseStorage.getInstance("gs://visionchess-928e0.appspot.com")
+            val storageRef = storage.reference
+            val avatarRef = storageRef.child("images/$currentUser")
+            val localFile = File.createTempFile("images", "jpg")
+            avatarRef.getFile(localFile).addOnSuccessListener {
+                val bitmap = BitmapFactory.decodeFile(localFile.absolutePath)
+                player1pic.setImageBitmap(bitmap)
+            }
+
+            //val inputStream = context?.contentResolver?.openInputStream(uri)
+            //val bitmap = BitmapFactory.decodeStream(inputStream)
+            //avatar.setImageBitmap(bitmap)
+        } catch (e: Exception) {
+            Toast.makeText(context, "$e", Toast.LENGTH_SHORT).show()
+
+
+        }
+        try {
+
+            val storage = FirebaseStorage.getInstance("gs://visionchess-928e0.appspot.com")
+            val storageRef = storage.reference
+            val avatarRef = storageRef.child("images/$opponent")
+            val localFile = File.createTempFile("images", "jpg")
+            avatarRef.getFile(localFile).addOnSuccessListener {
+                val bitmap = BitmapFactory.decodeFile(localFile.absolutePath)
+                player2pic.setImageBitmap(bitmap)
+            }
+
+            //val inputStream = context?.contentResolver?.openInputStream(uri)
+            //val bitmap = BitmapFactory.decodeStream(inputStream)
+            //avatar.setImageBitmap(bitmap)
+        } catch (e: Exception) {
+            Toast.makeText(context, "$e", Toast.LENGTH_SHORT).show()
+        }
 
         timerWhiteRunnable.run()
+        timerBlackRunnable.run()
+        val game = ChessGame()
+
 
 
         buttonShowBoard.setOnClickListener {

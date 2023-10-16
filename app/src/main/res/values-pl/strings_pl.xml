@@ -34,6 +34,7 @@
         <item>10 min + 30 sek</item>
     </string-array>
     <string-array name="peeks">
+        <item>0</item>
         <item>1</item>
         <item>3</item>
         <item>Nielimitowane</item>
