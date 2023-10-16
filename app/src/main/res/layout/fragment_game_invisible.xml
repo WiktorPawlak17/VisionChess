@@ -10,7 +10,7 @@
     tools:context=".GameInvisible" >
 
     <ImageView
-        android:id="@+id/player2pic2"
+        android:id="@+id/player1Picture"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -24,7 +24,7 @@
         app:layout_constraintVertical_bias="1.0" />
 
     <TextView
-        android:id="@+id/player2name2"
+        android:id="@+id/player1Name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -32,12 +32,12 @@
         android:layout_marginBottom="24dp"
         android:text="TextView"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/player2pic2"
+        app:layout_constraintStart_toEndOf="@+id/player1Picture"
 
         app:layout_constraintVertical_bias="1.0" />
 
     <ImageView
-        android:id="@+id/player1pic3"
+        android:id="@+id/player2Picture"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -48,7 +48,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/buttonShowBoard"
+        android:id="@+id/showBoardButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/watch_the_board"
@@ -64,10 +64,10 @@
         android:text="TextView"
         android:background="@drawable/rounded_background_green"
         android:textSize="100sp"
-        app:layout_constraintBottom_toTopOf="@+id/player2pic2"
+        app:layout_constraintBottom_toTopOf="@+id/player1Picture"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonShowBoard" />
+        app:layout_constraintTop_toBottomOf="@+id/showBoardButton" />
 
     <TextView
         android:id="@+id/player2Timer"
@@ -76,18 +76,18 @@
         android:text="TextView"
         android:background="@drawable/rounded_background_red"
         android:textSize="100sp"
-        app:layout_constraintBottom_toTopOf="@+id/buttonShowBoard"
+        app:layout_constraintBottom_toTopOf="@+id/showBoardButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/player1pic3" />
+        app:layout_constraintTop_toBottomOf="@+id/player2Picture" />
 
     <TextView
-        android:id="@+id/player1name2"
+        android:id="@+id/player2Name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
         android:text="TextView"
-        app:layout_constraintStart_toEndOf="@+id/player1pic3"
+        app:layout_constraintStart_toEndOf="@+id/player2Picture"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

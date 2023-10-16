@@ -54,15 +54,14 @@ class GamePrepFragment : Fragment() {
         letsPlayButton.setOnClickListener{
             val timeFormat = timeFormatSpinner.selectedItem.toString()
             val howManyPeeks = howManyPeeksSpinner.selectedItem.toString()
-            //currentGameMode.putString("timeFormat", timeFormat)
-            //currentGameMode.putString("howManyPeeks", howManyPeeks)
             if(whichButtonClicked != null) {
                 var foundAnOpponent = false
                 var opponent = ""
                 val buttonClicked = whichButtonClicked.getString("buttonClicked")
                 val currentGameString = buttonClicked + timeFormat + howManyPeeks
                 val newGameReference = databaseReference.child(currentGameString)
-
+                val randomNumberGenerated = mutableListOf(0,1)
+                val randomNumber = randomNumberGenerated.random()
                 newGameReference.addListenerForSingleValueEvent(object: ValueEventListener{
                     override fun onDataChange(snapshot: DataSnapshot) {
                         for(snap in snapshot.children){
@@ -79,7 +78,17 @@ class GamePrepFragment : Fragment() {
                                     databaseReference.child("gameLive").child(opponent).child("howManyPeeks").setValue(howManyPeeks)
                                     databaseReference.child("gameLive").child(currentUser.uid).child("gameMode").setValue(buttonClicked)
                                     databaseReference.child("gameLive").child(opponent).child("gameMode").setValue(buttonClicked)
-
+                                    if(randomNumber == 0) {
+                                        databaseReference.child("gameLive").child(currentUser.uid)
+                                            .child("color").setValue("white")
+                                        databaseReference.child("gameLive").child(opponent)
+                                            .child("color").setValue("black")
+                                    }else{
+                                        databaseReference.child("gameLive").child(currentUser.uid)
+                                            .child("color").setValue("black")
+                                        databaseReference.child("gameLive").child(opponent)
+                                            .child("color").setValue("white")
+                                    }
                                     fragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView, nextFragment)?.addToBackStack(null)
                                         ?.commit()
 
