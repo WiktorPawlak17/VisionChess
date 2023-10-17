@@ -18,7 +18,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import java.io.File
-import java.util.Timer
+
 
 
 
@@ -81,9 +81,6 @@ class GameInvisible : Fragment() {
         })
 
         val handler = android.os.Handler(android.os.Looper.getMainLooper())
-        //TIME FORMAT CRASHES THE CODe
-        var timerWhite = Timer()
-        var timerBlack = Timer()
         val timeReferenceMe = databaseReference.child("gameLive").child(currentUser.uid).child("timeFormat")
         val timeReferenceOpponent = databaseReference.child("gameLive").child(opponent).child("timeFormat")
         var timerWhiteSeconds = 7
