@@ -13,6 +13,8 @@ class ChessGame {
 
 //    private var chessBoard = Array(8) { Array(8) { null as Piece? } }
     private var chessBoard2 = HashMap<String, Piece?>()
+    var isTimeUp = false
+    var isGameFinished = false
 //
 //    private val letterToNumberMapDeveloperVersion = mapOf(
 //        "A" to 0,
@@ -44,16 +46,16 @@ class ChessGame {
         "G" to 7,
         "H" to 8
     )
-//    private val numberToLetterMapPlayerVersion = mapOf(
-//        1 to "A",
-//        2 to "B",
-//        3 to "C",
-//        4 to "D",
-//        5 to "E",
-//        6 to "F",
-//        7 to "G",
-//        8 to "H"
-//    )
+    private val numberToLetterMapPlayerVersion = mapOf(
+        1 to "A",
+        2 to "B",
+        3 to "C",
+        4 to "D",
+        5 to "E",
+        6 to "F",
+        7 to "G",
+        8 to "H"
+    )
     init {
         start()
     }
@@ -158,9 +160,11 @@ class ChessGame {
     fun setChessBoard(cb : HashMap<String, Piece?>) {
         chessBoard2 = cb
     }
-    fun isGameFinished(): Boolean {
-        return false
+
+    fun getPieceAtPosition(position: String): Piece? {
+        return chessBoard2[position]
     }
+
     fun isWhiteTurn(): Boolean {
         return false
     }

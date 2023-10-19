@@ -90,6 +90,7 @@ class GameInvisible : Fragment() {
         var timerWhiteSecondsIncrement = 0
         var timerBlackSecondsIncrement = 0
         var color = ""
+
         val referenceToGetColor = databaseReference.child("gameLive").child(currentUser.uid).child("color")
         referenceToGetColor.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -161,7 +162,7 @@ class GameInvisible : Fragment() {
             }
         })
 
-
+        val game = ChessGame()
 
         val timerWhiteRunnable = object : Runnable {
             override fun run() {
@@ -172,6 +173,8 @@ class GameInvisible : Fragment() {
                 }
                 if(timerWhiteSeconds == 0 && timerWhiteMinutes == 0){
                     Toast.makeText(context, "You lost on time", Toast.LENGTH_SHORT).show()
+                    game.isTimeUp = true
+                    game.isGameFinished = true
                 }
                 if(color == "black"){
                     if(timerWhiteSeconds < 10) {
@@ -202,6 +205,8 @@ class GameInvisible : Fragment() {
                 }
                 if(timerBlackSeconds == 0 && timerBlackMinutes == 0){
                     Toast.makeText(context, "You lost on time", Toast.LENGTH_SHORT).show()
+                    game.isTimeUp = true
+                    game.isGameFinished = true
                 }
                 if (color == "black") {
                     if (timerWhiteSeconds < 10) {
@@ -281,7 +286,13 @@ class GameInvisible : Fragment() {
 
         timerWhiteRunnable.run()
         timerBlackRunnable.run()
-        val game = ChessGame()
+        //PRINT ALL
+        for(i in 1..8){
+            Toast.makeText(context,
+                game.getPieceAtPosition("E$i")?.name.toString()+
+                        game.getPieceAtPosition("E$i")?.pieceSees().toString(),
+                Toast.LENGTH_SHORT).show()
+        }
 
 
 
