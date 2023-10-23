@@ -23,7 +23,7 @@ import java.io.File
 
 
 class GameInvisible : Fragment() {
-
+    val game = ChessGame()
 
 
 
@@ -162,7 +162,7 @@ class GameInvisible : Fragment() {
             }
         })
 
-        val game = ChessGame()
+
 
         val timerWhiteRunnable = object : Runnable {
             override fun run() {
@@ -287,12 +287,13 @@ class GameInvisible : Fragment() {
         timerWhiteRunnable.run()
         timerBlackRunnable.run()
         //PRINT ALL
-        for(i in 1..8){
-            Toast.makeText(context,
-                game.getPieceAtPosition("E$i")?.name.toString()+
-                        game.getPieceAtPosition("E$i")?.pieceSees().toString(),
-                Toast.LENGTH_SHORT).show()
-        }
+
+              val pos = "A1"
+                Toast.makeText(context,
+               "$pos"+     game.getPieceAtPosition(pos)?.name.toString()+
+                    pieceReallySees(pos),
+                    Toast.LENGTH_LONG).show()
+
 
 
 
@@ -305,6 +306,208 @@ class GameInvisible : Fragment() {
         // Inflate the layout for this fragment
         return rootView
     }
+private fun pieceReallySees(position : String): MutableList<String>? {
+    val list = game.getPieceAtPosition(position)?.pieceSees()
+    if(list !=null){
+        val col = game.letterToNumberMapPlayerVersion[position[0].toString()]
+        val row = position[1].toString().toInt()
+        var foundBlockade = false
+        val distanceToRightBound = 8 - col!!
+        val distanceToUpBound = 8 - row
+        val distanceToLeftBound = col - 1
+        val distanceToDownBound = row - 1
+        val distanceToRightUp = if(distanceToRightBound < distanceToUpBound) distanceToRightBound else distanceToUpBound
+        val distanceToLeftUp = if(distanceToLeftBound < distanceToUpBound) distanceToLeftBound else distanceToUpBound
+        val distanceToRightDown = if(distanceToRightBound < distanceToDownBound) distanceToRightBound else distanceToDownBound
+        val distanceToLeftDown = if(distanceToLeftBound < distanceToDownBound) distanceToLeftBound else distanceToDownBound
 
+        when(game.getPieceAtPosition(position)?.name){
+            "P" -> { //GONNA DO NOTHING
+            }
+            "R" -> {
+                //CHECKING FOR BLOCKADES IN ROWS
+
+                for (i in col + 1..8){
+                    if(foundBlockade){
+                        list.remove("${game.numberToLetterMapPlayerVersion[i]}$row")
+                    }
+                    if(game.getPieceAtPosition("${game.numberToLetterMapPlayerVersion[i]}$row")!=null){
+                        foundBlockade = true
+                    }
+
+                }
+                foundBlockade = false
+                for (i in col - 1 downTo 1){
+                    if(foundBlockade){
+                        list.remove("${game.numberToLetterMapPlayerVersion[i]}$row")
+                    }
+                    if(game.getPieceAtPosition("${game.numberToLetterMapPlayerVersion[i]}$row")!=null){
+                        foundBlockade = true
+                    }
+
+                }
+                foundBlockade = false
+                //CHECKING FOR BLOCKADES IN COLUMNS
+                for(i in row+1..8){
+                    if(foundBlockade){
+                        list.remove("${position[0]}$i")
+                    }
+                    if(game.getPieceAtPosition("${position[0]}$i")!=null){
+                        foundBlockade = true
+                    }
+
+                }
+                foundBlockade = false
+                for (i in row-1 downTo 1){
+                    if(foundBlockade){
+                        list.remove("${position[0]}$i")
+                    }
+                    if(game.getPieceAtPosition("${position[0]}$i")!=null){
+                        foundBlockade = true
+                    }
+
+                }
+            }
+            "N" -> { //GONNA DO NOTHING
+            }
+            "B" -> {
+                //CHECK FOR RIGHT UP
+
+                for(i in 1..distanceToRightUp) {
+                    if (foundBlockade) {
+                        list.remove("${game.numberToLetterMapPlayerVersion[col + i]}${row + i}")
+                    }
+                    if (game.getPieceAtPosition("${game.numberToLetterMapPlayerVersion[col + i]}${row + i}") != null) {
+                        foundBlockade = true
+                    }
+
+                }
+                foundBlockade = false
+                for(i in 1..distanceToLeftUp) {
+                    if (foundBlockade) {
+                        list.remove("${game.numberToLetterMapPlayerVersion[col - i]}${row + i}")
+                    }
+                    if (game.getPieceAtPosition("${game.numberToLetterMapPlayerVersion[col - i]}${row + i}") != null) {
+                        foundBlockade = true
+                    }
+
+                }
+                foundBlockade = false
+                for (i in 1..distanceToRightDown) {
+                    if (foundBlockade) {
+                        list.remove("${game.numberToLetterMapPlayerVersion[col + i]}${row - i}")
+                    }
+                    if (game.getPieceAtPosition("${game.numberToLetterMapPlayerVersion[col + i]}${row - i}") != null) {
+                        foundBlockade = true
+                    }
+
+                }
+                foundBlockade = false
+                for (i in 1..distanceToLeftDown) {
+                    if (foundBlockade) {
+                        list.remove("${game.numberToLetterMapPlayerVersion[col - i]}${row - i}")
+                    }
+                    if (game.getPieceAtPosition("${game.numberToLetterMapPlayerVersion[col - i]}${row - i}") != null) {
+                        foundBlockade = true
+                    }
+
+                }
+
+
+            }
+            "Q" -> {
+//CHECKING FOR BLOCKADES IN ROWS
+
+                for (i in col + 1..8){
+                    if(foundBlockade){
+                        list.remove("${game.numberToLetterMapPlayerVersion[i]}$row")
+                    }
+                    if(game.getPieceAtPosition("${game.numberToLetterMapPlayerVersion[i]}$row")!=null){
+                        foundBlockade = true
+                    }
+
+                }
+                foundBlockade = false
+                for (i in col - 1 downTo 1){
+                    if(foundBlockade){
+                        list.remove("${game.numberToLetterMapPlayerVersion[i]}$row")
+                    }
+                    if(game.getPieceAtPosition("${game.numberToLetterMapPlayerVersion[i]}$row")!=null){
+                        foundBlockade = true
+                    }
+
+                }
+                foundBlockade = false
+                //CHECKING FOR BLOCKADES IN COLUMNS
+                for(i in row+1..8){
+                    if(foundBlockade){
+                        list.remove("${position[0]}$i")
+                    }
+                    if(game.getPieceAtPosition("${position[0]}$i")!=null){
+                        foundBlockade = true
+                    }
+
+                }
+                foundBlockade = false
+                for (i in row-1 downTo 1){
+                    if(foundBlockade){
+                        list.remove("${position[0]}$i")
+                    }
+                    if(game.getPieceAtPosition("${position[0]}$i")!=null){
+                        foundBlockade = true
+                    }
+
+                }
+
+                //CHECK FOR RIGHT UP
+
+                for(i in 1..distanceToRightUp) {
+                    if (foundBlockade) {
+                        list.remove("${game.numberToLetterMapPlayerVersion[col + i]}${row + i}")
+                    }
+                    if (game.getPieceAtPosition("${game.numberToLetterMapPlayerVersion[col + i]}${row + i}") != null) {
+                        foundBlockade = true
+                    }
+
+                }
+                foundBlockade = false
+                for(i in 1..distanceToLeftUp) {
+                    if (foundBlockade) {
+                        list.remove("${game.numberToLetterMapPlayerVersion[col - i]}${row + i}")
+                    }
+                    if (game.getPieceAtPosition("${game.numberToLetterMapPlayerVersion[col - i]}${row + i}") != null) {
+                        foundBlockade = true
+                    }
+
+                }
+                foundBlockade = false
+
+                for (i in 1..distanceToRightDown) {
+
+                    if (foundBlockade) {
+                        list.remove("${game.numberToLetterMapPlayerVersion[col + i]}${row - i}")
+                    }
+                    if (game.getPieceAtPosition("${game.numberToLetterMapPlayerVersion[col + i]}${row - i}") != null) {
+                        foundBlockade = true
+                    }
+                }
+                foundBlockade = false
+                for (i in 1..distanceToLeftDown) {
+                    if (foundBlockade) {
+                        list.remove("${game.numberToLetterMapPlayerVersion[col - i]}${row - i}")
+                    }
+                    if (game.getPieceAtPosition("${game.numberToLetterMapPlayerVersion[col - i]}${row - i}") != null) {
+                        foundBlockade = true
+                    }
+
+                }
+
+            }
+            "K" -> { //DO NOTHING
+            }
+        }
+    }
+    return list
+}
 
 }

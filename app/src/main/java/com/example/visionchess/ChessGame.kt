@@ -36,7 +36,7 @@ class ChessGame {
 //        6 to "G",
 //        7 to "H"
 //    )
-    private val letterToNumberMapPlayerVersion = mapOf(
+     val letterToNumberMapPlayerVersion = mapOf(
         "A" to 1,
         "B" to 2,
         "C" to 3,
@@ -46,7 +46,7 @@ class ChessGame {
         "G" to 7,
         "H" to 8
     )
-    private val numberToLetterMapPlayerVersion = mapOf(
+     val numberToLetterMapPlayerVersion = mapOf(
         1 to "A",
         2 to "B",
         3 to "C",
