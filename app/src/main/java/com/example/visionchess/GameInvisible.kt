@@ -183,6 +183,7 @@ class GameInvisible : Fragment() {
                 if(timerWhiteSeconds == 0 && timerWhiteMinutes == 0){
                     Toast.makeText(context, "You lost on time", Toast.LENGTH_SHORT).show()
                     game.isTimeUp = true
+                    //handler.removeCallbacks(this)
                     game.isGameFinished = true
                 }
                 if(color == "black"){
@@ -203,6 +204,9 @@ class GameInvisible : Fragment() {
 
                 handler.postDelayed(this, 1000)
             }
+//            fun stop(){
+//                handler.removeCallbacks(this)
+//            }
 
         }
         val timerBlackRunnable = object : Runnable {
@@ -215,6 +219,7 @@ class GameInvisible : Fragment() {
                 if(timerBlackSeconds == 0 && timerBlackMinutes == 0){
                     Toast.makeText(context, "You lost on time", Toast.LENGTH_SHORT).show()
                     game.isTimeUp = true
+                    //handler.removeCallbacks(this)
                     game.isGameFinished = true
                 }
                 if (color == "black") {
@@ -231,6 +236,10 @@ class GameInvisible : Fragment() {
                 }
                 handler.postDelayed(this, 1000)
             }
+//            fun stop(){
+//                handler.removeCallbacks(this)
+//            }
+
         }
 
 
@@ -282,20 +291,21 @@ class GameInvisible : Fragment() {
         val speechHandler = SpeechRecognitionHandler(requireContext())
         val scope = CoroutineScope(Dispatchers.Main)
         scope.launch { while(!game.isGameFinished) {
+
             if (game.isWhiteTurn) {
                 if(!isWhiteTimerRunning){
                     timerWhiteRunnable.run()
                     isWhiteTimerRunning = true
                 }
 
+
                     speechHandler.startRecognition()
-//                    while(!speechHandler.youDone){
-//                        delay(100)
-//                    }
-//                    speechHandler.stopRecognition()
-//                    speechHandler.youDone = true
-//                    val message = speechHandler.recognizedMessage
-//                    receivedMess.text = message
+                    val message = speechHandler.recognizedMessage
+                    receivedMess.text = message
+                    //game.isWhiteTurn = false
+                    val currentBoardState = game.getChessBoard()
+
+
 
             } else {
                 if(!isBlackTimerRunning){
@@ -309,14 +319,21 @@ class GameInvisible : Fragment() {
 //                    }
 //                    speechHandler.stopRecognition()
 //                    speechHandler.youDone = true
-//                    val message = speechHandler.recognizedMessage
-//                    receivedMess.text = message
+                    val message = speechHandler.recognizedMessage
+                    receivedMess.text = message
+
+                    //game.isWhiteTurn = true
 
             }
 
             delay(1000)
         }
-        }
+
+                handler.removeCallbacks(timerWhiteRunnable)
+                handler.removeCallbacks(timerBlackRunnable)
+
+            }
+
 
 
 

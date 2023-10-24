@@ -30,9 +30,7 @@ class SpeechRecognitionHandler(private val context: Context){
     private inner class MyRecognitionListener : RecognitionListener {
         // Implement the recognition listener methods as needed
         override fun onReadyForSpeech(p0: Bundle?) {
-            val spokenText = p0?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
-            //Set the text of the TextView to the spoken text
-            recognizedMessage = spokenText.toString()
+
         }
 
         override fun onBeginningOfSpeech() {
@@ -50,6 +48,7 @@ class SpeechRecognitionHandler(private val context: Context){
         override fun onEndOfSpeech() {
             //Tell the user that the speech has ended and to stop the timer
         youDone = true
+
         }
 
         override fun onError(p0: Int) {
@@ -63,6 +62,7 @@ class SpeechRecognitionHandler(private val context: Context){
             val spokenText = results?.get(0)
             //Set the text of the TextView to the spoken text
             recognizedMessage = spokenText.toString()
+
         }
 
         override fun onPartialResults(p0: Bundle?) {
