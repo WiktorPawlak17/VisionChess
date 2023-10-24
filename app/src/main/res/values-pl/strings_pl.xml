@@ -98,4 +98,5 @@
     <string name="accept">Zaakceptuj</string>
     <string name="decline">Odrzuć</string>
     <string name="watch_the_board">Spójrz na Planszę</string>
+    <string name="received">Otrzymano:</string>
 </resources>

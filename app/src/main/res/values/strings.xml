@@ -98,6 +98,7 @@
     <string name="accept">Accept</string>
     <string name="decline">Decline</string>
     <string name="watch_the_board">Watch the board</string>
+    <string name="received">Received:</string>
 
 
 </resources>

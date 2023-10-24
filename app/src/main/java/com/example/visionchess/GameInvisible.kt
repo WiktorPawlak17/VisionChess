@@ -17,6 +17,10 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.io.File
 
 
@@ -40,6 +44,7 @@ class GameInvisible : Fragment() {
         val player1name = rootView.findViewById<TextView>(R.id.player1Name)
         val player2timer = rootView.findViewById<TextView>(R.id.player2Timer)
         val player1timer = rootView.findViewById<TextView>(R.id.player1Timer)
+        val receivedMess = rootView.findViewById<TextView>(R.id.receivedMessage)
         val fragmentManager = activity?.supportFragmentManager
 
         val database = FirebaseDatabase.getInstance("https://visionchess-928e0-default-rtdb.europe-west1.firebasedatabase.app/")
@@ -90,6 +95,10 @@ class GameInvisible : Fragment() {
         var timerWhiteSecondsIncrement = 0
         var timerBlackSecondsIncrement = 0
         var color = ""
+        var isWhiteTimerRunning = false
+        var isBlackTimerRunning = false
+        val player1Reference = databaseReference.child("users").child(currentUser.uid)
+        val player2Reference = databaseReference.child("users").child(opponent)
 
         val referenceToGetColor = databaseReference.child("gameLive").child(currentUser.uid).child("color")
         referenceToGetColor.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -225,23 +234,9 @@ class GameInvisible : Fragment() {
         }
 
 
-        val player1Reference = databaseReference.child("users").child(currentUser.uid)
-        val player2Reference = databaseReference.child("users").child(opponent)
 
-        handler.postDelayed({
-           if(color == "black") {
-//                player2pic.rotation = 180f
-//                player2name.rotation = 180f
-//                player2timer.rotation = 180f
-//                player1pic.rotation = 180f
-//                player1name.rotation = 180f
-//                player1timer.rotation = 180f
-//                buttonShowBoard.rotation = 180f
 
-            }else {
-//
-            }
-        }, 600)
+
 
 
 
@@ -283,16 +278,56 @@ class GameInvisible : Fragment() {
         } catch (e: Exception) {
             Toast.makeText(context, "$e", Toast.LENGTH_SHORT).show()
         }
+        //IMPLEMENT SPEECH RECON HERE
+        val speechHandler = SpeechRecognitionHandler(requireContext())
+        val scope = CoroutineScope(Dispatchers.Main)
+        scope.launch { while(!game.isGameFinished) {
+            if (game.isWhiteTurn) {
+                if(!isWhiteTimerRunning){
+                    timerWhiteRunnable.run()
+                    isWhiteTimerRunning = true
+                }
 
-        timerWhiteRunnable.run()
-        timerBlackRunnable.run()
-        //PRINT ALL
+                    speechHandler.startRecognition()
+//                    while(!speechHandler.youDone){
+//                        delay(100)
+//                    }
+//                    speechHandler.stopRecognition()
+//                    speechHandler.youDone = true
+//                    val message = speechHandler.recognizedMessage
+//                    receivedMess.text = message
 
-              val pos = "A1"
-                Toast.makeText(context,
-               "$pos"+     game.getPieceAtPosition(pos)?.name.toString()+
-                    pieceReallySees(pos),
-                    Toast.LENGTH_LONG).show()
+            } else {
+                if(!isBlackTimerRunning){
+                    timerBlackRunnable.run()
+                    isBlackTimerRunning = true
+                }
+
+                    speechHandler.startRecognition()
+//                    while(!speechHandler.youDone){
+//                        delay(100)
+//                    }
+//                    speechHandler.stopRecognition()
+//                    speechHandler.youDone = true
+//                    val message = speechHandler.recognizedMessage
+//                    receivedMess.text = message
+
+            }
+
+            delay(1000)
+        }
+        }
+
+
+
+
+        //PRINT SOME
+
+//        val pos = "D8"
+//        Toast.makeText(context,
+//               "$pos"+     game.getPieceAtPosition(pos)?.name.toString()+
+//                    pieceReallySees(pos),
+//                    Toast.LENGTH_LONG).show()
 
 
 

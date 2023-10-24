@@ -15,6 +15,7 @@ class ChessGame {
     private var chessBoard2 = HashMap<String, Piece?>()
     var isTimeUp = false
     var isGameFinished = false
+    var isWhiteTurn = true
 //
 //    private val letterToNumberMapDeveloperVersion = mapOf(
 //        "A" to 0,
@@ -120,24 +121,38 @@ class ChessGame {
         val fromCol = message[0].toString()
         val toRow = message[3].toString().toInt()
         val toCol = message[2].toString()
-        val fromColInt = letterToNumberMapPlayerVersion[fromCol]
-        val toColInt = letterToNumberMapPlayerVersion[toCol]
-        val fromPosition = "$fromCol$fromRow"
-        val toPosition = "$toCol$toRow"
-        val piece = chessBoard2[fromPosition]
-        if (piece != null) {
-            if (piece.moveIsValid(fromRow,fromColInt!!,toRow,toColInt!!)) {
-                if(chessBoard2[fromPosition]!!.color != chessBoard2[toPosition]!!.color){
-                    chessBoard2[toPosition]!!.isAlive = false
-                }
-                if(chessBoard2[fromPosition]!!.color == chessBoard2[toPosition]!!.color){
-                    return false
-                }
-                chessBoard2[toPosition] = piece
-                chessBoard2[fromPosition] = null
-                return true
+        var isMovePossible = true
+        if(isWhiteTurn){
+            if(chessBoard2["$fromCol$fromRow"]!!.color != "white"){
+                isMovePossible = false
             }
         }
+        else{
+            if(chessBoard2["$fromCol$fromRow"]!!.color != "black"){
+                isMovePossible = false
+            }
+        }
+        if(isMovePossible){
+            val fromColInt = letterToNumberMapPlayerVersion[fromCol]
+            val toColInt = letterToNumberMapPlayerVersion[toCol]
+            val fromPosition = "$fromCol$fromRow"
+            val toPosition = "$toCol$toRow"
+            val piece = chessBoard2[fromPosition]
+            if (piece != null) {
+                if (piece.moveIsValid(fromRow,fromColInt!!,toRow,toColInt!!)) {
+                    if(chessBoard2[fromPosition]!!.color != chessBoard2[toPosition]!!.color){
+                        chessBoard2[toPosition]!!.isAlive = false
+                    }
+                    if(chessBoard2[fromPosition]!!.color == chessBoard2[toPosition]!!.color){
+                        return false
+                    }
+                    chessBoard2[toPosition] = piece
+                    chessBoard2[fromPosition] = null
+                    return true
+                }
+            }
+        }
+
 //        val piece = chessBoard2[fromRow][fromCol]
 //        if (piece != null) {
 //            if (piece.moveIsValid(fromRow, fromCol, toRow, toCol)) {
@@ -165,9 +180,7 @@ class ChessGame {
         return chessBoard2[position]
     }
 
-    fun isWhiteTurn(): Boolean {
-        return false
-    }
+
 
 
 }

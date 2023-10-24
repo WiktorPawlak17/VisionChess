@@ -26,10 +26,10 @@ class Queen(name: String, color: String, position: String, isAlive: Boolean, isM
         for(i in allRows){
             for(j in allCols){
                 if(i==row){
-                    sees.add("$colString$i")
+                    sees.add("${numberToLetterMapPlayerVersion[j]}$i")
                 }
                 else if(j==col){
-                    sees.add("${numberToLetterMapPlayerVersion[j]}$row")
+                    sees.add("${numberToLetterMapPlayerVersion[j]}$i")
                 }
                 else if(abs(i-row)==abs(j- col!!)){
                     sees.add("${numberToLetterMapPlayerVersion[j]}$i")
