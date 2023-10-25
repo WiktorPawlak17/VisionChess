@@ -113,7 +113,7 @@ class ProfileFragment : Fragment() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val picture = snapshot.value?.toString() ?: ""
 
-                if (picture != "none") {
+           //     if (picture != "none") {
 
                     //This works but depreciated
                   //  Picasso.get().load(picture).into(avatar)
@@ -139,7 +139,7 @@ class ProfileFragment : Fragment() {
 
                     }
 
-                }
+              //  }
             }
 
             override fun onCancelled(error: com.google.firebase.database.DatabaseError) {

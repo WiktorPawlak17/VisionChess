@@ -12,7 +12,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
-class CustomAdapterReceived(private val receivedList: List<String>) : RecyclerView.Adapter<CustomAdapterReceived.ViewHolder>() {
+class CustomAdapterReceived(private val receivedList: ArrayList<String>, val listener: OnYesListener) : RecyclerView.Adapter<CustomAdapterReceived.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val nameTextView: TextView = itemView.findViewById(R.id.nameOfFriend)
@@ -47,7 +47,7 @@ class CustomAdapterReceived(private val receivedList: List<String>) : RecyclerVi
                         val userId = user.key
 
                         val currentUserNicknamePath = databaseReference.child("users/${currentUser?.uid}/nickname")
-                        currentUserNicknamePath.addValueEventListener(object : ValueEventListener {
+                        currentUserNicknamePath.addListenerForSingleValueEvent(object : ValueEventListener {
                             override fun onDataChange(snapshot: DataSnapshot) {
                                 if (snapshot.exists()) {
                                     val currentUserNickname = snapshot.value.toString()
@@ -104,13 +104,15 @@ class CustomAdapterReceived(private val receivedList: List<String>) : RecyclerVi
                     // Failed to read value
                 }
             })
-
+            receivedList.removeAt(position)
+            listener.yesClicked()
+            notifyDataSetChanged()
         }
         holder.buttonNo.setOnClickListener{
             val receivedDatabaseReference = databaseReference.child("$currentUserId/friendRequestsReceived")
             receivedDatabaseReference.child(receivedItemName).removeValue()
             val query = databaseReference.orderByChild("nickname").equalTo(receivedItemName)
-            query.addValueEventListener(object : ValueEventListener {
+            query.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     for (ds in snapshot.children) {
                         val key = ds.key
@@ -122,10 +124,15 @@ class CustomAdapterReceived(private val receivedList: List<String>) : RecyclerVi
                     //Log.w("TAG", "loadPost:onCancelled", error.toException())
                 }
             })
+            receivedList.removeAt(position)
+            notifyDataSetChanged()
         }
     }
 
     override fun getItemCount(): Int {
         return receivedList.size
     }
+}
+interface OnYesListener{
+    fun yesClicked()
 }

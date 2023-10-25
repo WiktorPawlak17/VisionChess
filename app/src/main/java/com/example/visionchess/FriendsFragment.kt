@@ -24,9 +24,9 @@ private const val ARG_PARAM2 = "param2"
  * Use the [FriendsFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class FriendsFragment : Fragment() {
+class FriendsFragment : Fragment(), OnYesListener {
     // TODO: Rename and change types of parameters
-
+    private lateinit var friendsAdapter: CustomAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -58,7 +58,7 @@ class FriendsFragment : Fragment() {
         val friendRequestsReceived = rootView.findViewById<RecyclerView>(R.id.friendRequestsReceived)
         val friendsList = mutableListOf<String>()
         val friendRequestsSentList = mutableListOf<String>()
-        val friendRequestsReceivedList = mutableListOf<String>()
+        val friendRequestsReceivedList = ArrayList<String>()
         val friendsReference = databaseReference.child("users/${currentUser?.uid}/friends")
         val friendsReceivedReference = databaseReference.child("users/${currentUser?.uid}/friendRequestsReceived")
         val friendsSentReference = databaseReference.child("users/${currentUser?.uid}/friendRequestsSent")
@@ -70,6 +70,13 @@ class FriendsFragment : Fragment() {
                     friendsList.add(friendNickname)
 
                 }
+
+                friendsAdapter = CustomAdapter(friendsList)
+            //    friendsAdapter.notifyDataSetChanged()
+                friends.startAnimation(animationFadeIn)
+                friends.layoutManager = LinearLayoutManager(context)
+                friends.adapter = friendsAdapter
+             //   (friends.adapter as CustomAdapter).notifyDataSetChanged()
             }
             override fun onCancelled(error: com.google.firebase.database.DatabaseError) {
             // Failed to read value
@@ -101,18 +108,19 @@ class FriendsFragment : Fragment() {
         }
 
         friendsReference.addValueEventListener(valueEventListenerFriends)
+        friendsReference.removeEventListener(valueEventListenerFriends)
         friendsSentReference.addValueEventListener(valueEventListenerSent)
         friendsReceivedReference.addValueEventListener(valueEventListenerReceived)
         handler.postDelayed({
-            friends.startAnimation(animationFadeIn)
+         //   friends.startAnimation(animationFadeIn)
             friendRequestsReceived.startAnimation(animationFadeIn)
             friendRequestsSent.startAnimation(animationFadeIn)
             friendRequestsReceived.startAnimation(animationFadeIn)
-            friends.adapter = CustomAdapter(friendsList)
-            friends.layoutManager = LinearLayoutManager(context)
+            //friends.adapter = CustomAdapter(friendsList)
+       //     friends.layoutManager = LinearLayoutManager(context)
             friendRequestsSent.adapter = CustomAdapter(friendRequestsSentList)
             friendRequestsSent.layoutManager = LinearLayoutManager(context)
-            friendRequestsReceived.adapter = CustomAdapterReceived(friendRequestsReceivedList)
+            friendRequestsReceived.adapter = CustomAdapterReceived(friendRequestsReceivedList,this)
             friendRequestsReceived.layoutManager = LinearLayoutManager(context)
         },1000)
 
@@ -168,6 +176,7 @@ class FriendsFragment : Fragment() {
             friendsTextView.startAnimation(animationFadeOut)
             friendRequestsTextView.startAnimation(animationFadeOut)
             friendRequestsSentTextView.startAnimation(animationFadeOut)
+
             handler.postDelayed({
                 fragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView, HomeScreenFragment())?.addToBackStack(null)
                     ?.commit()
@@ -179,6 +188,10 @@ class FriendsFragment : Fragment() {
     }
 
     companion object {
+
+    }
+
+    override fun yesClicked() {
 
     }
 }
