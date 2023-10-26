@@ -327,49 +327,54 @@ handler.postDelayed({
     private fun whiteToMove(){
         if(!game.isGameFinished){
             timerWhiteRunnable.run()
-
-            speechHandler = SpeechRecognitionHandler(requireContext())
-            scope = CoroutineScope(Dispatchers.Main)
-            scope.launch {
-                speechHandler.startRecognition()
-                while(!speechHandler.youDone){
-                    delay(500)
-                }
-                handler.postDelayed({
-                    val message = speechHandler.recognizedMessage
-                    receivedMess.text = message
+            if(color=="white"){
+                speechHandler = SpeechRecognitionHandler(requireContext())
+                scope = CoroutineScope(Dispatchers.Main)
+                scope.launch {
+                    speechHandler.startRecognition()
+                    while(!speechHandler.youDone){
+                        delay(500)
+                    }
+                    handler.postDelayed({
+                        val message = speechHandler.recognizedMessage
+                        receivedMess.text = message
 //                    textToSpeech.speak(message, TextToSpeech.QUEUE_FLUSH, null, null)
 
 
 
-                    handler.removeCallbacks(timerWhiteRunnable)
-                    timerWhiteSeconds += timerWhiteSecondsIncrement
-                    blackToMove()
-                },750)
+                        handler.removeCallbacks(timerWhiteRunnable)
+                        timerWhiteSeconds += timerWhiteSecondsIncrement
+                        blackToMove()
+                    },750)
+                }
             }
-        }
+            }
+
 
     }
     private fun blackToMove(){
         if(!game.isGameFinished){
             timerBlackRunnable.run()
-            speechHandler = SpeechRecognitionHandler(requireContext())
-            scope = CoroutineScope(Dispatchers.Main)
-            scope.launch {
-                speechHandler.startRecognition()
-                while(!speechHandler.youDone){
-                    delay(125)
-                }
-                handler.postDelayed({
-                    val message = speechHandler.recognizedMessage
-                    receivedMess.text = message
+            if(color=="black"){
+                speechHandler = SpeechRecognitionHandler(requireContext())
+                scope = CoroutineScope(Dispatchers.Main)
+                scope.launch {
+                    speechHandler.startRecognition()
+                    while(!speechHandler.youDone){
+                        delay(125)
+                    }
+                    handler.postDelayed({
+                        val message = speechHandler.recognizedMessage
+                        receivedMess.text = message
 
 //              textToSpeech.speak(message, TextToSpeech.QUEUE_FLUSH, null, null)
-                    handler.removeCallbacks(timerBlackRunnable)
-                    timerBlackSeconds += timerBlackSecondsIncrement
-                    whiteToMove()
-                },750)
+                        handler.removeCallbacks(timerBlackRunnable)
+                        timerBlackSeconds += timerBlackSecondsIncrement
+                        whiteToMove()
+                    },750)
+                }
             }
+
         }
 
     }
