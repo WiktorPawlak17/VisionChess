@@ -1,4 +1,4 @@
-package com.example.visionchess
+package com.example.visionchess.Fragments
 
 import android.Manifest
 import android.content.Context
@@ -17,6 +17,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
+import com.example.visionchess.R
+import com.example.visionchess.Settings
 import com.google.firebase.auth.FirebaseAuth
 import org.json.JSONObject
 import java.io.File

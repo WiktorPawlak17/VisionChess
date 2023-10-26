@@ -6,7 +6,7 @@
     android:background="@drawable/whitetile"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FriendsFragment" >
+    tools:context=".Fragments.FriendsFragment" >
 
     <Button
         android:id="@+id/buttonGoBackFromFriends"

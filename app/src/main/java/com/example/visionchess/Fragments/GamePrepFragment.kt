@@ -1,4 +1,4 @@
-package com.example.visionchess
+package com.example.visionchess.Fragments
 
 import android.os.Bundle
 import android.os.Handler
@@ -12,6 +12,8 @@ import android.widget.Button
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
+import com.example.visionchess.GameInvisible
+import com.example.visionchess.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -56,7 +58,7 @@ class GamePrepFragment : Fragment() {
             val howManyPeeks = howManyPeeksSpinner.selectedItem.toString()
             if(whichButtonClicked != null) {
                 var foundAnOpponent = false
-                var opponent = ""
+                var opponent: String
                 val buttonClicked = whichButtonClicked.getString("buttonClicked")
                 val currentGameString = buttonClicked + timeFormat + howManyPeeks
                 val newGameReference = databaseReference.child(currentGameString)
@@ -69,7 +71,7 @@ class GamePrepFragment : Fragment() {
                                     foundAnOpponent = true
                                     opponent = snap.key.toString()
                                     databaseReference.child(currentGameString).child(opponent).removeValue()
-                                    databaseReference.child(currentGameString).child(currentUser!!.uid).removeValue()
+                                    databaseReference.child(currentGameString).child(currentUser.uid).removeValue()
                                     databaseReference.child("gameLive").child(currentUser.uid).child("opponent").setValue(opponent)
                                     databaseReference.child("gameLive").child(opponent).child("opponent").setValue(currentUser.uid)
                                     databaseReference.child("gameLive").child(currentUser.uid).child("timeFormat").setValue(timeFormat)
@@ -121,7 +123,7 @@ class GamePrepFragment : Fragment() {
                                 liveGameReference.addListenerForSingleValueEvent(object: ValueEventListener {
                                     override fun onDataChange(snapshot: DataSnapshot) {
                                         for (snap in snapshot.children) {
-                                            if (snap.key.toString() != currentUser!!.uid) {
+                                            if (snap.key.toString() != currentUser.uid) {
                                                 foundAnOpponent = true
                                                 opponent = snap.key.toString()
 
@@ -192,7 +194,5 @@ class GamePrepFragment : Fragment() {
 
 
 
-    companion object {
 
-    }
 }

@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/whitetile"
-    tools:context=".GamePrepFragment" >
+    tools:context=".Fragments.GamePrepFragment" >
 
     <Spinner
         android:id="@+id/spinner3"

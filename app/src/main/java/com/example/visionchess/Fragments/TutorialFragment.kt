@@ -1,11 +1,9 @@
-package com.example.visionchess
-
+package com.example.visionchess.Fragments
 
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +11,8 @@ import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.MediaController
 import android.widget.VideoView
-
+import androidx.fragment.app.Fragment
+import com.example.visionchess.R
 
 class TutorialFragment : Fragment() {
 
@@ -42,14 +41,20 @@ class TutorialFragment : Fragment() {
             goBackButton.startAnimation(animationFadeOut)
             tutorialVideoView.startAnimation(animationFadeOut)
             handler.postDelayed({
-                fragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView, HomeScreenFragment())?.addToBackStack(null)?.commit()
+                fragmentManager?.beginTransaction()?.replace(
+                    R.id.fragmentContainerView,
+                    HomeScreenFragment()
+                )?.addToBackStack(null)?.commit()
             }, 250)
         }
         tutorialVideoView.setOnCompletionListener {
             tutorialVideoView.startAnimation(animationFadeOut)
             goBackButton.startAnimation(animationFadeOut)
             handler.postDelayed({
-                fragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView, HomeScreenFragment())?.addToBackStack(null)?.commit()
+                fragmentManager?.beginTransaction()?.replace(
+                    R.id.fragmentContainerView,
+                    HomeScreenFragment()
+                )?.addToBackStack(null)?.commit()
             }, 250)
         }
         // Inflate the layout for this fragment

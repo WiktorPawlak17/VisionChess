@@ -1,4 +1,4 @@
-package com.example.visionchess
+package com.example.visionchess.Fragments
 
 import android.content.ContentValues.TAG
 import android.os.Bundle
@@ -13,11 +13,10 @@ import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
-import com.google.firebase.FirebaseApp
+import com.example.visionchess.Person
+import com.example.visionchess.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
 import java.security.MessageDigest
 
 

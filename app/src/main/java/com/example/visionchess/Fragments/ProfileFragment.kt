@@ -1,4 +1,4 @@
-package com.example.visionchess
+package com.example.visionchess.Fragments
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -6,7 +6,6 @@ import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.provider.MediaStore
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +13,8 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.fragment.app.Fragment
+import com.example.visionchess.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.FirebaseDatabase
@@ -21,28 +22,11 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import java.io.File
 
-
-
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-
 @Suppress("DEPRECATION")
 class ProfileFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+
     private lateinit var avatar: ImageView
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -57,10 +41,15 @@ class ProfileFragment : Fragment() {
         val rapidRating = rootView.findViewById<TextView>(R.id.rapidRating)
         val logOut = rootView.findViewById<Button>(R.id.logOut)
         val fragmentManager = activity?.supportFragmentManager
-        val animationFadeOut = android.view.animation.AnimationUtils.loadAnimation(context, R.anim.fade_out_very_quick)
-        val animationFadeIn = android.view.animation.AnimationUtils.loadAnimation(context, R.anim.fade_in_very_quick)
+        val animationFadeOut = android.view.animation.AnimationUtils.loadAnimation(context,
+            R.anim.fade_out_very_quick
+        )
+        val animationFadeIn = android.view.animation.AnimationUtils.loadAnimation(context,
+            R.anim.fade_in_very_quick
+        )
         val auth = FirebaseAuth.getInstance()
-        val database = FirebaseDatabase.getInstance("https://visionchess-928e0-default-rtdb.europe-west1.firebasedatabase.app/")
+        val database =
+            FirebaseDatabase.getInstance("https://visionchess-928e0-default-rtdb.europe-west1.firebasedatabase.app/")
         /////////////////////////////////////////////
         //Random stuff added itself???
         /////////////////////////////////////////////
@@ -72,7 +61,7 @@ class ProfileFragment : Fragment() {
         val rapidRatingReferencePath = userReference.child("ratings/1")
 
 
-        usernamePath.addValueEventListener(object:ValueEventListener{
+        usernamePath.addValueEventListener(object: ValueEventListener {
             @SuppressLint("SetTextI18n")
             override fun onDataChange(snapshot: DataSnapshot) {
                 gameName.text = getString(R.string.nickname)+ " : "+ snapshot.value.toString()
@@ -84,7 +73,7 @@ class ProfileFragment : Fragment() {
             }
 
         })
-        blitzRatingReferencePath.addValueEventListener(object:ValueEventListener{
+        blitzRatingReferencePath.addValueEventListener(object: ValueEventListener {
             @SuppressLint("SetTextI18n")
             override fun onDataChange(snapshot: DataSnapshot) {
                 blitzRating.text = getString(R.string.blitz)+ " : "+ snapshot.value.toString()
@@ -96,7 +85,7 @@ class ProfileFragment : Fragment() {
             }
 
         })
-        rapidRatingReferencePath.addValueEventListener(object:ValueEventListener{
+        rapidRatingReferencePath.addValueEventListener(object: ValueEventListener {
             @SuppressLint("SetTextI18n")
             override fun onDataChange(snapshot: DataSnapshot) {
                 rapidRating.text = getString(R.string.rapid)+ " : " + snapshot.value.toString()
@@ -109,9 +98,9 @@ class ProfileFragment : Fragment() {
 
         })
         val avatarReferencePath = userReference.child("picture")
-        avatarReferencePath.addValueEventListener(object:ValueEventListener{
+        avatarReferencePath.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                val picture = snapshot.value?.toString() ?: ""
+
 
            //     if (picture != "none") {
 
@@ -119,7 +108,8 @@ class ProfileFragment : Fragment() {
                   //  Picasso.get().load(picture).into(avatar)
                     try {
 
-                        val storage = FirebaseStorage.getInstance("gs://visionchess-928e0.appspot.com")
+                        val storage =
+                            FirebaseStorage.getInstance("gs://visionchess-928e0.appspot.com")
                         val storageRef = storage.reference
                         val avatarRef = storageRef.child("images/$uid")
                         val localFile = File.createTempFile("images", "jpg")
@@ -171,7 +161,10 @@ class ProfileFragment : Fragment() {
             rapidRating.startAnimation(animationFadeOut)
             logOut.startAnimation(animationFadeOut)
             handler.postDelayed({
-                fragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView, HomeScreenFragment())?.addToBackStack(null)
+                fragmentManager?.beginTransaction()?.replace(
+                    R.id.fragmentContainerView,
+                    HomeScreenFragment()
+                )?.addToBackStack(null)
                     ?.commit()
 
             }, 250)
@@ -186,7 +179,10 @@ class ProfileFragment : Fragment() {
             rapidRating.startAnimation(animationFadeOut)
             logOut.startAnimation(animationFadeOut)
             handler.postDelayed({
-                fragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView, LoginFragment())?.addToBackStack(null)
+                fragmentManager?.beginTransaction()?.replace(
+                    R.id.fragmentContainerView,
+                    LoginFragment()
+                )?.addToBackStack(null)
                     ?.commit()
 
             }, 250)
@@ -220,8 +216,4 @@ class ProfileFragment : Fragment() {
         }
     }
 
-
-    companion object {
-
-    }
 }

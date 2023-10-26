@@ -246,51 +246,57 @@ class GameInvisible : Fragment() {
 
 
 
+handler.postDelayed({
+
+    try {
+
+        val storage = FirebaseStorage.getInstance("gs://visionchess-928e0.appspot.com")
+        val storageRef = storage.reference
+        val avatarRef = storageRef.child("images/$currentUser")
+        val localFile = File.createTempFile("images", "jpg")
+        avatarRef.getFile(localFile).addOnSuccessListener {
+            val bitmap = BitmapFactory.decodeFile(localFile.absolutePath)
+            player1pic.setImageBitmap(bitmap)
+        }
+
+        //val inputStream = context?.contentResolver?.openInputStream(uri)
+        //val bitmap = BitmapFactory.decodeStream(inputStream)
+        //avatar.setImageBitmap(bitmap)
+    } catch (e: Exception) {
+        Toast.makeText(context, "$e", Toast.LENGTH_SHORT).show()
 
 
+    }
+    },3000  )
 
+        handler.postDelayed({
+            try {
 
+                val storage = FirebaseStorage.getInstance("gs://visionchess-928e0.appspot.com")
+                val storageRef = storage.reference
+                val avatarRef = storageRef.child("images/$opponent")
+                val localFile = File.createTempFile("images", "jpg")
+                avatarRef.getFile(localFile).addOnSuccessListener {
+                    val bitmap = BitmapFactory.decodeFile(localFile.absolutePath)
+                    player2pic.setImageBitmap(bitmap)
+                }
 
-        try {
-
-            val storage = FirebaseStorage.getInstance("gs://visionchess-928e0.appspot.com")
-            val storageRef = storage.reference
-            val avatarRef = storageRef.child("images/$currentUser")
-            val localFile = File.createTempFile("images", "jpg")
-            avatarRef.getFile(localFile).addOnSuccessListener {
-                val bitmap = BitmapFactory.decodeFile(localFile.absolutePath)
-                player1pic.setImageBitmap(bitmap)
+                //val inputStream = context?.contentResolver?.openInputStream(uri)
+                //val bitmap = BitmapFactory.decodeStream(inputStream)
+                //avatar.setImageBitmap(bitmap)
+            } catch (e: Exception) {
+                Toast.makeText(context, "$e", Toast.LENGTH_SHORT).show()
             }
 
-            //val inputStream = context?.contentResolver?.openInputStream(uri)
-            //val bitmap = BitmapFactory.decodeStream(inputStream)
-            //avatar.setImageBitmap(bitmap)
-        } catch (e: Exception) {
-            Toast.makeText(context, "$e", Toast.LENGTH_SHORT).show()
+        },4000)
 
 
-        }
-        try {
 
-            val storage = FirebaseStorage.getInstance("gs://visionchess-928e0.appspot.com")
-            val storageRef = storage.reference
-            val avatarRef = storageRef.child("images/$opponent")
-            val localFile = File.createTempFile("images", "jpg")
-            avatarRef.getFile(localFile).addOnSuccessListener {
-                val bitmap = BitmapFactory.decodeFile(localFile.absolutePath)
-                player2pic.setImageBitmap(bitmap)
-            }
 
-            //val inputStream = context?.contentResolver?.openInputStream(uri)
-            //val bitmap = BitmapFactory.decodeStream(inputStream)
-            //avatar.setImageBitmap(bitmap)
-        } catch (e: Exception) {
-            Toast.makeText(context, "$e", Toast.LENGTH_SHORT).show()
-        }
         //IMPLEMENT SPEECH RECON HERE
         val speechHandler = SpeechRecognitionHandler(requireContext())
-        val scope = CoroutineScope(Dispatchers.Main)
-        scope.launch { while(!game.isGameFinished) {
+
+
 
             if (game.isWhiteTurn) {
                 if(!isWhiteTimerRunning){
@@ -326,13 +332,13 @@ class GameInvisible : Fragment() {
 
             }
 
-            delay(1000)
-        }
 
-                handler.removeCallbacks(timerWhiteRunnable)
-                handler.removeCallbacks(timerBlackRunnable)
 
-            }
+
+             //   handler.removeCallbacks(timerWhiteRunnable)
+             //   handler.removeCallbacks(timerBlackRunnable)
+
+
 
 
 

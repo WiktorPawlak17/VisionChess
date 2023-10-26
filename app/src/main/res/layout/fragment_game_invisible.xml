@@ -11,8 +11,8 @@
 
     <ImageView
         android:id="@+id/player1Picture"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
         android:layout_marginBottom="24dp"
@@ -38,8 +38,8 @@
 
     <ImageView
         android:id="@+id/player2Picture"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
         android:contentDescription="profilePic"

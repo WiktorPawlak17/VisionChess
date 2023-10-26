@@ -1,4 +1,4 @@
-package com.example.visionchess
+package com.example.visionchess.Fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -11,19 +11,14 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.visionchess.CustomAdapter
+import com.example.visionchess.CustomAdapterReceived
+import com.example.visionchess.OnYesListener
+import com.example.visionchess.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [FriendsFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class FriendsFragment : Fragment(), OnYesListener {
     // TODO: Rename and change types of parameters
     private lateinit var friendsAdapter: CustomAdapter
@@ -187,9 +182,7 @@ class FriendsFragment : Fragment(), OnYesListener {
         return rootView
     }
 
-    companion object {
 
-    }
 
     override fun yesClicked() {
 
