@@ -1,6 +1,7 @@
 package com.example.visionchess
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
@@ -22,6 +23,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import org.json.JSONObject
 import java.io.File
 import java.util.Locale
 
@@ -51,6 +53,8 @@ class GameInvisible : Fragment(), TextToSpeech.OnInitListener {
     private lateinit var player2timer: TextView
     private var opponent : String = ""
     private lateinit var receivedMess: TextView
+    val settings = context?.let { readSettingsFromFile(it,"settings.json") }
+    val allPieces = ArrayList<String>()
 
     @SuppressLint("SetTextI18n")
     override fun onCreateView(
@@ -317,8 +321,56 @@ handler.postDelayed({
 //                    pieceReallySees(pos),
 //                    Toast.LENGTH_LONG).show()
         // Inflate the layout for this fragment
+
+
+        //GET THE SETTINGS
+        when(settings?.language){
+            "PL" -> {
+                allPieces.add("pion")
+                allPieces.add("wieża")
+                allPieces.add("skoczek")
+                allPieces.add("goniec")
+                allPieces.add("królowa")
+                allPieces.add("król")
+            }
+            "ENG" -> {
+                allPieces.add("pawn")
+                allPieces.add("rook")
+                allPieces.add("knight")
+                allPieces.add("bishop")
+                allPieces.add("queen")
+                allPieces.add("king")
+            }
+        }
+
+
         beginGameInvisible()
         return rootView
+    }
+    private fun readSettingsFromFile(context: Context, fileName: String): Settings? {
+        try {
+            val file = File(context.filesDir, fileName)
+            if (!file.exists()) {
+                return null
+            }
+
+            val jsonString = file.readText()
+            val jsonObject = JSONObject(jsonString)
+            val settingsJson = jsonObject.getJSONObject("Settings")
+
+            return Settings(
+                firstLaunch = settingsJson.getBoolean("firstLaunch"),
+                sayPawn = settingsJson.getBoolean("sayPawn"),
+                sayTakes = settingsJson.getBoolean("sayTakes"),
+                sayPromotion = settingsJson.getBoolean("sayPromotion"),
+                sayCheck = settingsJson.getBoolean("sayCheck"),
+                sayOpponentPlayed = settingsJson.getBoolean("sayOpponentPlayed"),
+                language = settingsJson.getString("language")
+            )
+        } catch (e: Exception) {
+            e.printStackTrace() // Print the error stack trace for debugging
+            return null
+        }
     }
 
     private fun beginGameInvisible() {
@@ -338,6 +390,11 @@ handler.postDelayed({
                     handler.postDelayed({
                         val message = speechHandler.recognizedMessage
                         receivedMess.text = message
+                        //HERE SHOULD BE THE CODE FOR ANALYZING THE MESSAGE AND MAKING THE MOVE
+                        //Detect the piece that is moving
+
+                        val sizeOfMessage = message.length
+
 //                    textToSpeech.speak(message, TextToSpeech.QUEUE_FLUSH, null, null)
 
 
