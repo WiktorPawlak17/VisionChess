@@ -53,8 +53,8 @@ class GameInvisible : Fragment(), TextToSpeech.OnInitListener {
     private lateinit var player2timer: TextView
     private var opponent : String = ""
     private lateinit var receivedMess: TextView
-    val settings = context?.let { readSettingsFromFile(it,"settings.json") }
-    val allPieces = ArrayList<String>()
+    private val settings = context?.let { readSettingsFromFile(it,"settings.json") }
+    private val allPieces = ArrayList<String>()
 
     @SuppressLint("SetTextI18n")
     override fun onCreateView(
@@ -388,17 +388,22 @@ handler.postDelayed({
                         delay(500)
                     }
                     handler.postDelayed({
-                        val message = speechHandler.recognizedMessage
+                        var message = speechHandler.recognizedMessage
                         receivedMess.text = message
-                        //HERE SHOULD BE THE CODE FOR ANALYZING THE MESSAGE AND MAKING THE MOVE
-                        //Detect the piece that is moving
-
-                        val sizeOfMessage = message.length
-
-//                    textToSpeech.speak(message, TextToSpeech.QUEUE_FLUSH, null, null)
-
-
-
+                        detectPieceInMessage(message)
+                        val currentPieceToMove = detectPieceInMessage(message)
+                        val parsedMessage = parseMessage(message)
+                        for(row in 1..8){
+                            for(col in 1..8){
+                                val position = "${game.numberToLetterMapPlayerVersion[col]}$row"
+                                if(game.getPieceAtPosition(position)?.name == currentPieceToMove){
+                                    if(pieceReallySees(position)?.contains(parsedMessage) == true){
+                                        game.movePiece("$position$parsedMessage")
+                                    }
+                                }
+                            }
+                    }
+                        checkIfMoveIsCheck()
                         handler.removeCallbacks(timerWhiteRunnable)
                         timerWhiteSeconds += timerWhiteSecondsIncrement
                         blackToMove()
@@ -409,9 +414,52 @@ handler.postDelayed({
 
 
     }
+private fun checkIfMoveIsCheck(): Boolean {
+    var positionOfWhiteKing = ""
+    var positionOfBlackKing = ""
+    var squaresCoveredByWhite = ArrayList<String>()
+    var squaresCoveredByBlack = ArrayList<String>()
+    for (row in 1..8) {
+        for (col in 'A'..'H') {
+            val position = "$col$row"
+            if (game.getPieceAtPosition(position)?.name == "King") {
+                for (row2 in 1..8) {
+                    for (col2 in 'A'..'H') {
+                        val position2 = "$col2$row2"
+                        val currColorOfKing = game.getPieceAtPosition(position)?.color
+                        if (game.getPieceAtPosition(position2)?.color != currColorOfKing) {
+                            if (game.getPieceAtPosition(position2)?.pieceSees()
+                                    ?.contains(position) == true
+                            ) {
+                                if (currColorOfKing == "white") {
+                                    squaresCoveredByBlack.add(position2)
+                                } else {
+                                    squaresCoveredByWhite.add(position2)
+                                }
+                            }
+                        }
+                    }
+                }
+
+            }
+        }
+    }
+    val uniqueListWhite = squaresCoveredByWhite.distinct()
+    val uniqueListBlack = squaresCoveredByBlack.distinct()
+    if(uniqueListWhite.contains(positionOfBlackKing) || uniqueListBlack.contains(positionOfWhiteKing)){
+        return true
+    }
+    return false
+}
+
+    private fun checkForGameEnd() {
+
+    }
+
     private fun blackToMove(){
         if(!game.isGameFinished){
             timerBlackRunnable.run()
+            checkIfMoveIsCheck()
             if(color=="black"){
                 speechHandler = SpeechRecognitionHandler(requireContext())
                 scope = CoroutineScope(Dispatchers.Main)
@@ -421,8 +469,20 @@ handler.postDelayed({
                         delay(125)
                     }
                     handler.postDelayed({
-                        val message = speechHandler.recognizedMessage
+                        var message = speechHandler.recognizedMessage
                         receivedMess.text = message
+                        detectPieceInMessage(message)
+                        val currentPieceToMove = detectPieceInMessage(message)
+                        val parsedMessage = parseMessage(message)
+                        for(row in 1..8)
+                            for(col in 'A'..'H'){
+                            val position = "$col$row"
+                            if(game.getPieceAtPosition(position)?.name == currentPieceToMove){
+                                if(pieceReallySees(position)?.contains(parsedMessage) == true){
+                                    game.movePiece("$position$parsedMessage")
+                                }
+                            }
+                        }
 
 //              textToSpeech.speak(message, TextToSpeech.QUEUE_FLUSH, null, null)
                         handler.removeCallbacks(timerBlackRunnable)
@@ -435,6 +495,73 @@ handler.postDelayed({
         }
 
     }
+    private fun detectPieceInMessage(message: String):String {
+    var currPiece = ""
+    for(piece in allPieces){
+        var piece = piece.lowercase(Locale.ROOT)
+        if(message.contains(piece)){
+            currPiece = piece
+        }
+    }
+        return currPiece
+    }
+
+    private fun parseMessage(mess: String): String {
+        var message = mess
+        if(settings?.sayPawn == true){
+            //PL CODE
+            if(message.contains("pion")){
+                message = message.replace("pion","")
+            }
+            //ENG CODE
+            if(message.contains("pawn")){
+                message = message.replace("pawn","")
+            }
+        }
+        if(settings?.sayTakes == true){
+            //PL CODE
+            if(message.contains("bierze")){
+                message = message.replace("bierze","")
+            }
+            //ENG CODE
+            if(message.contains("takes")){
+                message = message.replace("takes","")
+            }
+        }
+        if(settings?.sayPromotion == true) {
+            //PL CODE
+            if (message.contains("promocja")) {
+                message = message.replace("promocja", "")
+            }
+            //ENG CODE
+            if (message.contains("promotes to a")) {
+                message = message.replace("promotes to a", "")
+            }
+            if (message.contains("promotion")) {
+                message = message.replace("promotion", "")
+            }
+            if (message.contains("promote")) {
+                message = message.replace("promote", "")
+            }
+            if (message.contains("promotes")) {
+                message = message.replace("promotes", "")
+            }
+
+        }
+        if(settings?.sayCheck == true){
+            //PL CODE
+            if(message.contains("szach")){
+                message = message.replace("szach","")
+            }
+            //ENG CODE
+            if(message.contains("check")){
+                message = message.replace("check","")
+            }
+        }
+        return message
+    }
+
+
     private fun pieceReallySees(position : String): MutableList<String>? {
     val list = game.getPieceAtPosition(position)?.pieceSees()
     if(list !=null){

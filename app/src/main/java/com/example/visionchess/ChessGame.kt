@@ -12,7 +12,7 @@ import com.example.visionchess.Pieces.Rook
 class ChessGame {
 
 //    private var chessBoard = Array(8) { Array(8) { null as Piece? } }
-    private var chessBoard2 = HashMap<String, Piece?>()
+var chessBoard2 = HashMap<String, Piece?>()
     var isTimeUp = false
     var isGameFinished = false
     var isWhiteTurn = true
@@ -67,40 +67,40 @@ class ChessGame {
             for (col in 'A'..'H') {
                 val position = "$col$row"
                 if(row == 2){
-                    chessBoard2[position] = Pawn("P", "white", position, true, isMoved = false)
+                    chessBoard2[position] = Pawn("Pawn", "white", position, true, isMoved = false)
                 }
                 if(row == 7) {
-                    chessBoard2[position] = Pawn("P", "black", position, true, isMoved = false)
+                    chessBoard2[position] = Pawn("Pawn", "black", position, true, isMoved = false)
                 }
                 if(row == 1 && (col == 'A' || col == 'H')){
-                    chessBoard2[position] = Rook("R", "white", position, true, isMoved = false)
+                    chessBoard2[position] = Rook("Rook", "white", position, true, isMoved = false)
                 }
                 if(row == 8 && (col == 'A' || col == 'H')){
-                    chessBoard2[position] = Rook("R", "black", position, true, isMoved = false)
+                    chessBoard2[position] = Rook("Rook", "black", position, true, isMoved = false)
                 }
                 if(row == 1 && (col == 'B' || col == 'G')){
-                    chessBoard2[position] = Knight("N", "white", position, true, isMoved = false)
+                    chessBoard2[position] = Knight("Knight", "white", position, true, isMoved = false)
                 }
                 if(row == 8 && (col == 'B' || col == 'G')){
-                    chessBoard2[position] = Knight("N", "black", position, true, isMoved = false)
+                    chessBoard2[position] = Knight("Knight", "black", position, true, isMoved = false)
                 }
                 if(row == 1 && (col == 'C' || col == 'F')){
-                    chessBoard2[position] = Bishop("B", "white", position, true, isMoved = false)
+                    chessBoard2[position] = Bishop("Bishop", "white", position, true, isMoved = false)
                 }
                 if(row == 8 && (col == 'C' || col == 'F')){
-                    chessBoard2[position] = Bishop("B", "black", position, true, isMoved = false)
+                    chessBoard2[position] = Bishop("Bishop", "black", position, true, isMoved = false)
                 }
                 if(row == 1 && col == 'D'){
-                    chessBoard2[position] = Queen("Q", "white", position, true, isMoved = false)
+                    chessBoard2[position] = Queen("Queen", "white", position, true, isMoved = false)
                 }
                 if(row == 8 && col == 'D'){
-                    chessBoard2[position] = Queen("Q", "black", position, true, isMoved = false)
+                    chessBoard2[position] = Queen("Queen", "black", position, true, isMoved = false)
                 }
                 if(row == 1 && col == 'E'){
-                    chessBoard2[position] = King("K", "white", position, true, isMoved = false)
+                    chessBoard2[position] = King("King", "white", position, true, isMoved = false)
                 }
                 if(row == 8 && col == 'E'){
-                    chessBoard2[position] = King("K", "black", position, true, isMoved = false)
+                    chessBoard2[position] = King("King", "black", position, true, isMoved = false)
                 }
                 if(row in 3..6){
                     chessBoard2[position] = null
