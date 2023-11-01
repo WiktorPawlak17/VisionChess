@@ -12,7 +12,7 @@ import com.example.visionchess.Pieces.Rook
 class ChessGame {
 
 //    private var chessBoard = Array(8) { Array(8) { null as Piece? } }
-var chessBoard2 = HashMap<String, Piece?>()
+    var chessBoard2 = HashMap<String, Piece?>()
     var isTimeUp = false
     var isGameFinished = false
     var isWhiteTurn = true
@@ -123,12 +123,12 @@ var chessBoard2 = HashMap<String, Piece?>()
         val toCol = message[2].toString()
         var isMovePossible = true
         if(isWhiteTurn){
-            if(chessBoard2["$fromCol$fromRow"]!!.color != "white"){
+            if(chessBoard2["$fromCol$fromRow"]?.color != "white"){
                 isMovePossible = false
             }
         }
         else{
-            if(chessBoard2["$fromCol$fromRow"]!!.color != "black"){
+            if(chessBoard2["$fromCol$fromRow"]?.color != "black"){
                 isMovePossible = false
             }
         }
@@ -140,10 +140,10 @@ var chessBoard2 = HashMap<String, Piece?>()
             val piece = chessBoard2[fromPosition]
             if (piece != null) {
                 if (piece.moveIsValid(fromRow,fromColInt!!,toRow,toColInt!!)) {
-                    if(chessBoard2[fromPosition]!!.color != chessBoard2[toPosition]!!.color){
-                        chessBoard2[toPosition]!!.isAlive = false
+                    if(chessBoard2[fromPosition]!!.color != chessBoard2[toPosition]?.color){
+                        chessBoard2[toPosition]?.isAlive = false
                     }
-                    if(chessBoard2[fromPosition]!!.color == chessBoard2[toPosition]!!.color){
+                    if(chessBoard2[fromPosition]!!.color == chessBoard2[toPosition]?.color){
                         return false
                     }
                     chessBoard2[toPosition] = piece
@@ -153,27 +153,8 @@ var chessBoard2 = HashMap<String, Piece?>()
             }
         }
 
-//        val piece = chessBoard2[fromRow][fromCol]
-//        if (piece != null) {
-//            if (piece.moveIsValid(fromRow, fromCol, toRow, toCol)) {
-//                if(chessBoard[fromRow][fromCol]!!.color != chessBoard[toRow][toCol]!!.color){
-//                    chessBoard[toRow][toCol]!!.isAlive = false
-//                }
-//                if(chessBoard[fromRow][fromCol]!!.color == chessBoard[toRow][toCol]!!.color){
-//                    return false
-//                }
-//                chessBoard[toRow][toCol] = piece
-//                chessBoard[fromRow][fromCol] = null
-//                return true
-//            }
-//        }
+
         return false
-    }
-    fun getChessBoard(): HashMap<String, Piece?> {
-        return chessBoard2
-    }
-    fun setChessBoard(cb : HashMap<String, Piece?>) {
-        chessBoard2 = cb
     }
 
     fun getPieceAtPosition(position: String): Piece? {
