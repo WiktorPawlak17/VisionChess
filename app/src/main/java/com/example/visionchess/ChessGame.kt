@@ -10,33 +10,11 @@ import com.example.visionchess.Pieces.Rook
 
 
 class ChessGame {
-
-//    private var chessBoard = Array(8) { Array(8) { null as Piece? } }
     var chessBoard2 = HashMap<String, Piece?>()
     var isTimeUp = false
     var isGameFinished = false
     var isWhiteTurn = true
-//
-//    private val letterToNumberMapDeveloperVersion = mapOf(
-//        "A" to 0,
-//        "B" to 1,
-//        "C" to 2,
-//        "D" to 3,
-//        "E" to 4,
-//        "F" to 5,
-//        "G" to 6,
-//        "H" to 7
-//    )
-//    private val numberToLetterMapDeveloperVersion = mapOf(
-//        0 to "A",
-//        1 to "B",
-//        2 to "C",
-//        3 to "D",
-//        4 to "E",
-//        5 to "F",
-//        6 to "G",
-//        7 to "H"
-//    )
+
      val letterToNumberMapPlayerVersion = mapOf(
         "A" to 1,
         "B" to 2,
@@ -60,7 +38,6 @@ class ChessGame {
     init {
         start()
     }
-
     private fun createChessGame() {
 
         for (row in 1..8) {
@@ -108,12 +85,7 @@ class ChessGame {
             }
         }
     }
-
-
-
-
     private fun start(){
-
         createChessGame()
     }
     fun movePiece(message:String): Boolean {
@@ -156,12 +128,34 @@ class ChessGame {
 
         return false
     }
-
     fun getPieceAtPosition(position: String): Piece? {
         return chessBoard2[position]
     }
-
-
-
-
+    fun setChessBoard(chessBoard: HashMap<String, Piece?>){
+        chessBoard2 = chessBoard
+    }
+    fun returnBoardAsString(): String {
+        var board = ""
+        for (row in 8 downTo 1) {
+            if(row==8){
+                board += "  ABCDEFGH\n"
+            }
+            board += "$row"
+            for (col in 'A'..'H') {
+                val position = "$col$row"
+                if (chessBoard2[position] != null) {
+                    if(chessBoard2[position]!!.name=="Knight"){
+                        board += "N"
+                    }
+                    else{
+                        board += chessBoard2[position]!!.name[0]
+                    }
+                } else {
+                    board += "|  "
+                }
+            }
+            board += "\n"
+        }
+        return board
+    }
 }

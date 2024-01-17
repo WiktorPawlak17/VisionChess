@@ -14,11 +14,10 @@ class Pawn(name: String, color: String, position: String, isAlive: Boolean, isMo
                  return true
                 }
             }
-            else{
                 if(toRow-fromRow == 1 && fromCol==toCol){
                     return true
                 }
-            }
+
         }
         else if(color=="black"){
             if(!isMoved){
@@ -26,11 +25,10 @@ class Pawn(name: String, color: String, position: String, isAlive: Boolean, isMo
                     return true
                 }
             }
-            else{
                 if(fromRow-toRow == 1 && fromCol==toCol){
                     return true
                 }
-            }
+
         }
         return false
     }

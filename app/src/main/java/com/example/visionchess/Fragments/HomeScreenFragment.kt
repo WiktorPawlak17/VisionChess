@@ -19,6 +19,7 @@ import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import com.example.visionchess.R
 import com.example.visionchess.Settings
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import org.json.JSONObject
 import java.io.File
@@ -92,7 +93,6 @@ class HomeScreenFragment : Fragment() {
         val fragmentManager = activity?.supportFragmentManager
         val handler = Handler(Looper.getMainLooper())
         val animationFadeOut = AnimationUtils.loadAnimation(context, R.anim.fade_out_very_quick)
-
         val hasMicrophonePermission = context?.let {
             ActivityCompat.checkSelfPermission(
                 it,
@@ -103,9 +103,6 @@ class HomeScreenFragment : Fragment() {
         if(!hasMicrophonePermission){
             requestMicrophonePermission()
         }
-
-        // Check if the app has microphone permission
-
 
         ////////////////////////////////////////////////////////////////////////////////////////////////
         // This is the code that makes the settings file (read and write)

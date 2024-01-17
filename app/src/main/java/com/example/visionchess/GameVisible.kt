@@ -1,40 +1,74 @@
 package com.example.visionchess
 
 import android.os.Bundle
+import android.speech.tts.TextToSpeech
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
+import com.example.visionchess.Pieces.Piece
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import java.util.Locale
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [GameVisible.newInstance] factory method to
- * create an instance of this fragment.
- */
-class GameVisible : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
-
+class GameVisible : Fragment(),TextToSpeech.OnInitListener {
+    private lateinit var textToSpeech: TextToSpeech
+    private lateinit var receivedHashMap: HashMap<String, Piece?>
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
+        textToSpeech = TextToSpeech(requireContext(), this)
+//        val numberToLetterSmallVersion = mapOf(
+//            1 to "a",
+//            2 to "b",
+//            3 to "c",
+//            4 to "d",
+//            5 to "e",
+//            6 to "f",
+//            7 to "g",
+//            8 to "h"
+//        )
+//        val letterToNumberSmallVersion = mapOf(
+//            "a" to 1,
+//            "b" to 2,
+//            "c" to 3,
+//            "d" to 4,
+//            "e" to 5,
+//            "f" to 6,
+//            "g" to 7,
+//            "h" to 8
+//        )
+        val handler = android.os.Handler(android.os.Looper.getMainLooper())
+        val fragmentManager = activity?.supportFragmentManager
+        textToSpeech = TextToSpeech(requireContext(), this)
+        var timeLeft = 15
+        val timerCounter = object : Runnable {
+            override fun run() {
+                timeLeft--
+                if (timeLeft == 10) {
+                    textToSpeech.speak("10", TextToSpeech.QUEUE_FLUSH, null, null)
+                }
+                if (timeLeft == 3) {
+                    textToSpeech.speak("3", TextToSpeech.QUEUE_FLUSH, null, null)
+                }
+                if (timeLeft == 2) {
+                    textToSpeech.speak("2", TextToSpeech.QUEUE_FLUSH, null, null)
+                }
+                if (timeLeft == 1) {
+                    textToSpeech.speak("1", TextToSpeech.QUEUE_FLUSH, null, null)
+                }
+                handler.postDelayed(this, 1000)
+            }
+
+        }
+
+        timerCounter.run()
         // Inflate the layout for this fragment
         val rootView = inflater.inflate(R.layout.fragment_game_visible, container, false)
         val a1 = rootView.findViewById<ImageView>(R.id.a1)
@@ -108,43 +142,220 @@ class GameVisible : Fragment() {
         val blackRook1 = rootView.findViewById<ImageView>(R.id.blackRook1)
         val blackKnight1 = rootView.findViewById<ImageView>(R.id.blackKnight1)
         val blackBishop1 = rootView.findViewById<ImageView>(R.id.blackBishop1)
-        val blackQueen = rootView.findViewById<ImageView>(R.id.blackQueen)
+        val blackQueen1 = rootView.findViewById<ImageView>(R.id.blackQueen)
         val blackKing = rootView.findViewById<ImageView>(R.id.blackKing)
         val blackBishop2 = rootView.findViewById<ImageView>(R.id.blackBishop2)
         val blackKnight2 = rootView.findViewById<ImageView>(R.id.blackKnight2)
         val blackRook2 = rootView.findViewById<ImageView>(R.id.blackRook2)
-        val blackAPawn = rootView.findViewById<ImageView>(R.id.blackAPawn)
-        val blackBPawn = rootView.findViewById<ImageView>(R.id.blackBPawn)
-        val blackCPawn = rootView.findViewById<ImageView>(R.id.blackCPawn)
-        val blackDPawn = rootView.findViewById<ImageView>(R.id.blackDPawn)
-        val blackEPawn = rootView.findViewById<ImageView>(R.id.blackEPawn)
-        val blackFPawn = rootView.findViewById<ImageView>(R.id.blackFPawn)
-        val blackGPawn = rootView.findViewById<ImageView>(R.id.blackGPawn)
-        val blackHPawn = rootView.findViewById<ImageView>(R.id.blackHPawn)
+        val blackPawn1 = rootView.findViewById<ImageView>(R.id.blackAPawn)
+        val blackPawn2 = rootView.findViewById<ImageView>(R.id.blackBPawn)
+        val blackPawn3 = rootView.findViewById<ImageView>(R.id.blackCPawn)
+        val blackPawn4 = rootView.findViewById<ImageView>(R.id.blackDPawn)
+        val blackPawn5 = rootView.findViewById<ImageView>(R.id.blackEPawn)
+        val blackPawn6 = rootView.findViewById<ImageView>(R.id.blackFPawn)
+        val blackPawn7 = rootView.findViewById<ImageView>(R.id.blackGPawn)
+        val blackPawn8 = rootView.findViewById<ImageView>(R.id.blackHPawn)
         val whiteRook1 = rootView.findViewById<ImageView>(R.id.whiteRook1)
         val whiteKnight1 = rootView.findViewById<ImageView>(R.id.whiteKnight1)
         val whiteBishop1 = rootView.findViewById<ImageView>(R.id.whiteBishop1)
-        val whiteQueen = rootView.findViewById<ImageView>(R.id.whiteQueen)
+        val whiteQueen1 = rootView.findViewById<ImageView>(R.id.whiteQueen)
         val whiteKing = rootView.findViewById<ImageView>(R.id.whiteKing)
         val whiteBishop2 = rootView.findViewById<ImageView>(R.id.whiteBishop2)
         val whiteKnight2 = rootView.findViewById<ImageView>(R.id.whiteKnight2)
         val whiteRook2 = rootView.findViewById<ImageView>(R.id.whiteRook2)
-        val whiteAPawn = rootView.findViewById<ImageView>(R.id.whiteAPawn)
-        val whiteBPawn = rootView.findViewById<ImageView>(R.id.whiteBPawn)
-        val whiteCPawn = rootView.findViewById<ImageView>(R.id.whiteCPawn)
-        val whiteDPawn = rootView.findViewById<ImageView>(R.id.whiteDPawn)
-        val whiteEPawn = rootView.findViewById<ImageView>(R.id.whiteEPawn)
-        val whiteFPawn = rootView.findViewById<ImageView>(R.id.whiteFPawn)
-        val whiteGPawn = rootView.findViewById<ImageView>(R.id.whiteGPawn)
-        val whiteHPawn = rootView.findViewById<ImageView>(R.id.whiteHPawn)
+        val whitePawn1 = rootView.findViewById<ImageView>(R.id.whiteAPawn)
+        val whitePawn2 = rootView.findViewById<ImageView>(R.id.whiteBPawn)
+        val whitePawn3 = rootView.findViewById<ImageView>(R.id.whiteCPawn)
+        val whitePawn4 = rootView.findViewById<ImageView>(R.id.whiteDPawn)
+        val whitePawn5 = rootView.findViewById<ImageView>(R.id.whiteEPawn)
+        val whitePawn6 = rootView.findViewById<ImageView>(R.id.whiteFPawn)
+        val whitePawn7 = rootView.findViewById<ImageView>(R.id.whiteGPawn)
+        val whitePawn8 = rootView.findViewById<ImageView>(R.id.whiteHPawn)
+        var whiteKnightCount = 0
+        var whiteRookCount = 0
+        var whiteBishopCount = 0
+        var whiteQueenCount = 0
+        var whitePawnCount = 0
+        var blackKnightCount = 0
+        var blackRookCount = 0
+        var blackBishopCount = 0
+        var blackQueenCount = 0
+        var blackPawnCount = 0
+        val getString = arguments?.getString("chessBoard2")
+
+//        val database = FirebaseDatabase.getInstance("https://visionchess-928e0-default-rtdb.europe-west1.firebasedatabase.app/")
+//        val databaseReference = database.reference
+//        val auth = FirebaseAuth.getInstance()
+//        val currentUser = auth.currentUser
+//        val gameLiveReference = databaseReference.child("gameLive")
+//        val findChessBoard = gameLiveReference.child("${currentUser!!.uid}/currentBoardState")
+//        findChessBoard.addListenerForSingleValueEvent(object : com.google.firebase.database.ValueEventListener {
+//            override fun onDataChange(snapshot: com.google.firebase.database.DataSnapshot) {
+//                val chessBoard = snapshot.value as HashMap<String, Piece?>
+//                receivedHashMap = chessBoard
+//            }
+//
+//            override fun onCancelled(error: DatabaseError) {
+//                println("error")
+//            }
+//            })
 
 
+        for (row in 1..8) {
+            for (col in 'A'..'H') {
+                if (receivedHashMap["$row$col"] != null) {
+                    var currCount = 0
+                    val name = receivedHashMap["$row$col"]!!.name
+                    val color = receivedHashMap["$row$col"]!!.color
+                    val position = receivedHashMap["$row$col"]!!.position
+                    val isAlive = receivedHashMap["$row$col"]!!.isAlive
+                    val col2 = col.lowercaseChar()
+                    val currPos = "$col2$row"
+                    val currID =
+                        resources.getIdentifier(currPos, "id", requireContext().packageName)
+                    val currTile = rootView.findViewById<ImageView>(currID)
+                    //val constraintLayout = rootView.findViewById<ConstraintLayout>(R.id.frameLayout6)
+                    when (name) {
+                        "Knight" -> {
+                            currCount = if (color == "white") {
+                                whiteKnightCount++
+                                whiteKnightCount
+                            } else {
+                                blackKnightCount++
+                                blackKnightCount
+                            }
+                        }
+
+                        "Rook" -> {
+                            currCount = if (color == "white") {
+                                whiteRookCount++
+                                whiteRookCount
+                            } else {
+                                blackRookCount++
+                                blackRookCount
+                            }
+                        }
+
+                        "Bishop" -> {
+                            currCount = if (color == "white") {
+                                whiteBishopCount++
+                                whiteBishopCount
+                            } else {
+                                blackBishopCount++
+                                blackBishopCount
+                            }
+                        }
+
+                        "Queen" -> {
+                            currCount = if (color == "white") {
+                                whiteQueenCount++
+                                whiteQueenCount
+                            } else {
+                                blackQueenCount++
+                                blackQueenCount
+                            }
+                        }
+
+                        "King" -> {
+//                                if(color=="white"){
+//
+//                                }else {
+//
+//                                }
+                        }
+
+                        "Pawn" -> {
+                            currCount = if (color == "white") {
+                                whitePawnCount++
+                                whitePawnCount
+                            } else {
+                                blackPawnCount++
+                                blackPawnCount
+                            }
+                        }
+
+                    }
+                    val currPiece = if (name == "King") {
+                        resources.getIdentifier("$color$name", "id", requireContext().packageName)
+                    } else {
+                        resources.getIdentifier(
+                            "$color$name$currCount",
+                            "id",
+                            requireContext().packageName
+                        )
+
+                    }
+                    val currPieceImageView = rootView.findViewById<ImageView>(currPiece)
+                    currPieceImageView.visibility = View.VISIBLE
+                    val currTileHeight = currTile.height
+                    val currTileWidth = currTile.width
+
+                    val layoutParams =
+                        currPieceImageView.layoutParams as ConstraintLayout.LayoutParams
+                    layoutParams.topToTop = currTile.id
+                    layoutParams.bottomToBottom = currTile.id
+                    layoutParams.startToStart = currTile.id
+                    layoutParams.endToEnd = currTile.id
+                    layoutParams.width = currTileWidth / 2
+                    layoutParams.height = currTileHeight / 2
+                    currPieceImageView.layoutParams = layoutParams
+                }
+
+
+            }
+        }
+
+        handler.postDelayed({
+            fragmentManager?.beginTransaction()
+                ?.replace(R.id.fragmentContainerView, GameInvisible())?.addToBackStack(null)
+                ?.commit()
+            val bundle = Bundle()
+            bundle.putString("chessBoard2", receivedHashMap.toString())
+            val receiverFragment = GameVisible()
+            receiverFragment.arguments = bundle
+        }, 15000)
 
 
         return rootView
     }
 
-    companion object {
+    override fun onInit(status: Int) {
+        if (status == TextToSpeech.SUCCESS) {
+            val locale = Locale.getDefault()
 
+            if (textToSpeech.isLanguageAvailable(locale) == TextToSpeech.LANG_AVAILABLE) {
+                textToSpeech.language = locale
+            } else {
+                textToSpeech.language = Locale.US
+            }
+        }
     }
 }
+//    fun findSubStringsAndReturnHashmap(mainString:String, subStringsToFind:HashMap<String,Piece?>):HashMap<String, Piece?>{
+//        val piecesToFind = arrayListOf<String>()
+//        piecesToFind.add("King")
+//        piecesToFind.add("Queen")
+//        piecesToFind.add("Bishop")
+//        piecesToFind.add("Knight")
+//        piecesToFind.add("Rook")
+//        piecesToFind.add("Pawn")
+//
+//        val substrings = mainString.split(",")
+//
+//        for(substring in substrings){
+//            for(piece in piecesToFind){
+//                if(substring.contains(piece)){
+//                    val position = substring.substring(0,2)
+//                    subStringsToFind[position] = when(substring){
+//                        "King" -> {
+//                            Piece("King",
+//                }
+//            }
+//        }
+//        }
+//
+//
+//
+//    }
+//
+//}
